@@ -1,0 +1,54 @@
+:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+::-webkit-scrollbar {
+  width: var(--scrollbar-thickness);
+  height: var(--scrollbar-thickness);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+::selection {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+::-moz-selection {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+::-webkit-selection {
+  background: var(--foreground);
+  color: var(--background);
+}
+
+a,
+a:link,
+a:visited,
+a:hover {
+  text-decoration: none;
+  color: var(--accent);
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  flex-grow: 1;
+}
+
+foreignObject > svg {
+  vertical-align: top !important;
+}
