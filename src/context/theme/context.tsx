@@ -1,30 +1,36 @@
 import { Helmet } from 'react-helmet-async'
-import { createGlobalStyle } from 'styled-components'
-
 import { createContext } from '../../libs/react-utils'
+import { getBaseTheme, GlobalTheme, PRESETS } from './foundations/theme'
+import type { Theme, ThemeOptions } from './foundations/types'
 
-// const GlobalTheme = createGlobalStyle<{ theme: Theme }>`
-// :root {
-// 	${(props) => generateVariables(props.theme)}
-// }
-// `
+interface ThemeContext extends Theme {}
 
-interface ThemeContext {}
-
-const [ThemeProvider] = createContext<ThemeContext>({
+const [Provider, useThemeContext] = createContext<ThemeContext>({
   name: 'ThemeContext',
   errorMessage: 'useThemeContext: `context` is undefined.',
+  defaultValue: PRESETS['dark'],
 })
 
 interface ThemeProps {
   children: React.ReactNode
-  options?: any
+  options?: ThemeOptions
 }
 
-function Theme({}: ThemeProps) {
+function ThemeProvider({ children, options }: ThemeProps) {
+  const theme: Theme = {
+    ...getBaseTheme(options?.base ?? 'dark'),
+    ...options?.custom,
+  }
+
   return (
-    <ThemeProvider value={{}}>
-      <Helmet>{/* <meta name="theme-color" content={theme["background"]} /> */}</Helmet>
-    </ThemeProvider>
+    <Provider value={theme}>
+      <Helmet>
+        <meta name="theme-color" content={theme['background']} />
+      </Helmet>
+      <GlobalTheme theme={theme} />
+      {children}
+    </Provider>
   )
 }
+
+export { ThemeProvider, useThemeContext }

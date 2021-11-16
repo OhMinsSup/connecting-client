@@ -14,14 +14,23 @@ export interface CreateContextOptions {
    * 컨텍스트의 표시 이름
    */
   name?: string
+  /**
+   * 컨텍스트의 기본값
+   */
+  defaultValue?: any
 }
 
 type CreateContextReturn<T> = [React.Provider<T>, () => T, React.Context<T>]
 
 export function createContext<ContextType>(options: CreateContextOptions = {}) {
-  const { strict = true, errorMessage = 'useContext: `context` is undefined. Seems you forgot to wrap component within the Provider', name } = options
+  const {
+    strict = true,
+    errorMessage = 'useContext: `context` is undefined. Seems you forgot to wrap component within the Provider',
+    name,
+    defaultValue = undefined,
+  } = options
 
-  const Context = React.createContext<ContextType | undefined>(undefined)
+  const Context = React.createContext<ContextType | undefined>(defaultValue)
 
   Context.displayName = name
 

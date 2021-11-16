@@ -41,3 +41,19 @@ export type Fonts =
   | 'Ubuntu'
   | 'Comic Neue'
 export type MonospaceFonts = 'Fira Code' | 'Roboto Mono' | 'Source Code Pro' | 'Space Mono' | 'Ubuntu Mono' | 'JetBrains Mono'
+export type FontValue = { name: string; load: () => void }
+
+export type Theme = {
+  [variable in Variables]: string
+} & {
+  light?: boolean
+  font?: Fonts
+  css?: string
+  monospaceFont?: MonospaceFonts
+}
+
+export interface ThemeOptions {
+  base?: string
+  ligatures?: boolean
+  custom?: Partial<Theme>
+}

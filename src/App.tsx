@@ -11,13 +11,18 @@ import Preloader from './components/ui/Preloader'
 import location from './libs/routes/location'
 import routes from './libs/routes/routes'
 
+// context
+import { ThemeProvider } from './context'
+
 const App = () => {
   return (
     <HelmetProvider>
-      <Masks />
-      <Suspense fallback={<Preloader type="spinner" />}>
-        <Router location={location} routes={routes} defaultPendingElement={<Preloader type="spinner" />} />
-      </Suspense>
+      <ThemeProvider>
+        <Masks />
+        <Suspense fallback={<Preloader type="spinner" />}>
+          <Router location={location} routes={routes} defaultPendingElement={<Preloader type="spinner" />} />
+        </Suspense>
+      </ThemeProvider>
     </HelmetProvider>
   )
 }

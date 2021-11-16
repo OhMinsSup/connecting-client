@@ -13,6 +13,10 @@ export interface IState {
   actions: Record<ActionNames, () => void>
   get: Getter
   set: Setter
+
+  // themes
+  themes: any
+  // theme
 }
 
 const useStoreImpl = create<IState>((set: SetState<IState>, get: GetState<IState>) => {
@@ -21,6 +25,7 @@ const useStoreImpl = create<IState>((set: SetState<IState>, get: GetState<IState
     actions,
     get,
     set,
+    themes: {},
   }
 })
 
