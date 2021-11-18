@@ -1,15 +1,8 @@
 import React from 'react'
-import styles from '../styles/login/login.module.scss'
+import { AuthLayout } from '../components/auth/common'
 
 const LoginPage = () => {
-  return (
-    <div className={styles.login}>
-      {/* TODO: Helmet background color */}
-      <div className={styles.content}>
-        <div className={styles.modal}>???</div>
-      </div>
-    </div>
-  )
+  return <AuthLayout>Login</AuthLayout>
 }
 
 export default LoginPage
