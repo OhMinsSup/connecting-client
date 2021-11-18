@@ -23,6 +23,7 @@ export function isEmptyArray(value: any) {
 }
 
 // function assertion
+// eslint-disable-next-line @typescript-eslint/ban-types
 export function isFunction<T extends Function = Function>(value: any): value is T {
   return typeof value === 'function'
 }
@@ -46,6 +47,7 @@ export function isEmptyObject(value: any) {
   return isObject(value) && Object.keys(value).length === 0
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 export function isNotEmptyObject(value: any): value is object {
   return value && !isEmptyObject(value)
 }
