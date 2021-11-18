@@ -1,1 +1,1 @@
-export * from './useInfiniteList'
+export * from './useInfinitePages'

@@ -21,7 +21,7 @@ type DataParams<P> = Partial<P & { pageSize?: number }>
 
 type ConfigOptions = Partial<SWRInfiniteConfiguration & Options>
 
-export function useInfiniteList<Item = any, Params = any>(url: string, params: DataParams<Params> = {}, options: ConfigOptions = {}) {
+export function useInfinitePages<Item = any, Params = any>(url: string, params: DataParams<Params> = {}, options: ConfigOptions = {}) {
   const {
     path = 'list',
     enable = true,
@@ -37,21 +37,14 @@ export function useInfiniteList<Item = any, Params = any>(url: string, params: D
     ...(revalidateAll ? { revalidateAll } : {}),
   }
 
-  const swrKeyLoader = (_: number, previousPage: any) => {
+  const swrKeyLoader = (pageIndex: number) => {
     if (!enable) return null
-    if (previousPage && !previousPage.continue) {
-      return null
-    }
-    if (!previousPage) {
-      return [url, makeQueryString(params), -1]
-    }
-    const lastItem: Record<string, any> | undefined = last(previousPage.list)
-    if (!lastItem) return null
-    return [url, makeQueryString(params), lastItem.id]
+    const cursor = pageIndex === 0 ? 1 : pageIndex + 1
+    return [url, makeQueryString(params), cursor]
   }
 
-  const wrappedFetcher = async (url: string, q: string, cursor: number | string) => {
-    const pathQuery = q ? `${url}${q}&cursor=${cursor}` : `${url}${q}?cursor=${cursor}`
+  const wrappedFetcher = async (url: string, q: string, pageNo: number) => {
+    const pathQuery = q ? `${url}${q}&pageNo=${pageNo}` : `${url}${q}?pageNo=${pageNo}`
     const data = await fetcher(pathQuery)
     return serialize(data, path, result)
   }
