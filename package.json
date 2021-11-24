@@ -15,7 +15,7 @@
     "react-dom": "^18.0.0-beta-4ff5f5719-20211115",
     "react-helmet-async": "^1.1.2",
     "react-hook-form": "^7.19.5",
-    "react-location": "^3.1.7",
+    "react-location": "^3.2.14",
     "react-use": "^17.3.1",
     "sass": "^1.43.4",
     "styled-components": "^5.3.3",

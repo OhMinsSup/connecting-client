@@ -1,7 +1,7 @@
 import React from 'react'
 
 // hooks
-import { useSearch, Link } from 'react-location'
+import { Link } from 'react-location'
 
 // validator
 import { useForm } from 'react-hook-form'
@@ -19,41 +19,29 @@ import styles from './style/auth.module.scss'
 import wideSVG from '../../assets/svg/wide.svg'
 
 import type { SubmitHandler } from 'react-hook-form'
-import type { MakeGenerics } from 'react-location'
-
-type LocationGenerics = MakeGenerics<{
-  Search: {
-    code: string
-  }
-}>
 
 const initialValues = {
   email: '',
   password: '',
-  nickname: '',
-  code: '',
 }
 
 interface SignupFormProps {}
 const SignupForm: React.FC<SignupFormProps> = () => {
-  const search = useSearch<LocationGenerics>()
-  console.log(search)
-
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<SignupFormFieldValues>({
+  } = useForm<LoginFormFieldValues>({
     mode: 'onChange',
     reValidateMode: 'onChange',
-    resolver: yupResolver(schema.signup),
+    resolver: yupResolver(schema.signin),
     defaultValues: {
       ...initialValues,
     },
     criteriaMode: 'firstError',
   })
 
-  const onSubmit: SubmitHandler<SignupFormFieldValues> = (input) => {
+  const onSubmit: SubmitHandler<LoginFormFieldValues> = (input) => {
     console.log(input)
   }
 
@@ -73,23 +61,15 @@ const SignupForm: React.FC<SignupFormProps> = () => {
           </Overline>
           <InputBox type="text" placeholder="비밀번호를 입력하세요." className="fbc-has-badge" {...register('password')} />
         </>
-        <>
-          <Overline formKey="nickname" errors={errors}>
-            닉네임
-          </Overline>
-          <InputBox type="text" placeholder="닉네임을 입력하세요." className="fbc-has-badge" {...register('nickname')} />
-        </>
-        <>
-          <Overline formKey="inviteCode" errors={errors}>
-            초대코드
-          </Overline>
-          <InputBox type="text" placeholder="초대 코드를 입력하세요." className="fbc-has-badge" {...register('code')} />
-        </>
         <Button type="submit">가입</Button>
       </form>
       <span className={styles.create}>
-        이미 계정이 있으신가요?
-        <Link to="/login">로그인</Link>
+        Connecting이 처음이신가요?
+        <Link to="/signup">회원가입</Link>
+      </span>
+      <span className={styles.create}>
+        비밀번호를 잊어버렸나요?
+        <Link to="/signup">비밀번호 재설정</Link>
       </span>
       <Legal />
     </div>

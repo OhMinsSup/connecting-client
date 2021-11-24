@@ -2576,10 +2576,10 @@ react-is@^16.7.0, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-location@^3.1.7:
-  version "3.1.7"
-  resolved "https://registry.yarnpkg.com/react-location/-/react-location-3.1.7.tgz#689a176d88af1e6837fa409abec57453dc5875f2"
-  integrity sha512-dMTs253MPpZWxRIXuuPlFQfB+YGuVoSYJxCCHHvNVro4ebeRTEYaWLGjrSRtfwHWVUTDoYgwoCXsXasBQYsbhQ==
+react-location@^3.2.14:
+  version "3.2.14"
+  resolved "https://registry.yarnpkg.com/react-location/-/react-location-3.2.14.tgz#18c9e407c39a76a65dadd4a2948115f57d0a51d1"
+  integrity sha512-gsfbJLAhFwSDQFjeNk/GKRoZOcbnC8Kus9+7BHSa3vxt787A5HbjqKxUl+njZVQe/gSY6IZB7m5eUBxTuDpWKA==
   dependencies:
     "@babel/runtime" "^7.15.4"
     core-js "^3.18.3"

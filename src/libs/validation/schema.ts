@@ -10,12 +10,18 @@ export const common = {
     }
     return false
   }),
+  nickname: yup.string().min(2, '2자 이상 입력해주세요.').max(20, '20자 이하로 입력해주세요.'),
 }
 
 export const schema = {
   signup: yup.object().shape({
     email: common.email.required('이메일을 입력해 주세요.'),
     password: common.password.required('비밀번호를 입력해 주세요.'),
-    inviteCode: yup.string().required('초대코드를 입력해 주세요.'),
+    nickname: common.nickname.required('닉네임을 입력해 주세요.'),
+    code: yup.string().required('초대코드를 입력해 주세요.'),
+  }),
+  signin: yup.object().shape({
+    email: common.email.required('이메일을 입력해 주세요.'),
+    password: common.password.required('비밀번호를 입력해 주세요.'),
   }),
 }
