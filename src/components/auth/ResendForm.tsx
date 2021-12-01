@@ -22,26 +22,27 @@ import type { SubmitHandler } from 'react-hook-form'
 
 const initialValues = {
   email: '',
-  password: '',
 }
 
-interface SignupFormProps {}
-const SignupForm: React.FC<SignupFormProps> = () => {
+interface ResendFormProps {
+  isReset?: boolean
+}
+const ResendForm: React.FC<ResendFormProps> = ({ isReset }) => {
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<LoginFormFieldValues>({
+  } = useForm<typeof initialValues>({
     mode: 'onChange',
     reValidateMode: 'onChange',
-    resolver: yupResolver(schema.signin),
+    resolver: yupResolver(schema.resned),
     defaultValues: {
       ...initialValues,
     },
     criteriaMode: 'firstError',
   })
 
-  const onSubmit: SubmitHandler<LoginFormFieldValues> = (input) => {
+  const onSubmit: SubmitHandler<typeof initialValues> = (input) => {
     console.log(input)
   }
 
@@ -55,25 +56,14 @@ const SignupForm: React.FC<SignupFormProps> = () => {
           </Overline>
           <InputBox type="text" placeholder="이메일을 입력하세요." className="fbc-has-badge" {...register('email')} />
         </>
-        <>
-          <Overline formKey="password" errors={errors}>
-            비밀번호
-          </Overline>
-          <InputBox type="text" placeholder="비밀번호를 입력하세요." className="fbc-has-badge" {...register('password')} />
-        </>
-        <Button type="submit">로그인</Button>
+        <Button type="submit">{isReset ? '비밀번호 재설정' : '인증 메일 재전송'}</Button>
       </form>
       <span className={styles.create}>
-        Connecting이 처음이신가요?
-        <Link to="/signup">회원가입</Link>
-      </span>
-      <span className={styles.create}>
-        비밀번호를 잊어버렸나요?
-        <Link to="/login/resend">비밀번호 재설정</Link>
+        <Link to="/login">로그인으로 돌아가기.</Link>
       </span>
       <Legal />
     </div>
   )
 }
 
-export default SignupForm
+export default ResendForm
