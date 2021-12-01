@@ -301,7 +301,7 @@
     "@babel/plugin-syntax-jsx" "^7.14.5"
     "@babel/types" "^7.14.9"
 
-"@babel/runtime@^7.1.2", "@babel/runtime@^7.12.5":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.10.5", "@babel/runtime@^7.12.5", "@babel/runtime@^7.15.3":
   version "7.16.3"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.16.3.tgz#b86f0db02a04187a3c17caa77de69840165d42d5"
   integrity sha512-WBwekcqacdY2e9AF/Q7WLFUWmdJGJTkbjqTjoMDgXkVZ3ZRUvOPsLb5KdwISoQVsbP+DQzVZW4Zhci0DvpbNTQ==
@@ -379,7 +379,7 @@
     "@babel/helper-validator-identifier" "^7.15.7"
     to-fast-properties "^2.0.0"
 
-"@emotion/is-prop-valid@^0.8.8":
+"@emotion/is-prop-valid@^0.8.7", "@emotion/is-prop-valid@^0.8.8":
   version "0.8.8"
   resolved "https://registry.yarnpkg.com/@emotion/is-prop-valid/-/is-prop-valid-0.8.8.tgz#db28b1c4368a259b60a97311d6a952d4fd01ac1a"
   integrity sha512-u5WtneEAr5IDG2Wv65yhunPSMLIpuKsbuOktRojfrEiEvRyC85LgPMZI63cr7NUqT8ZIGdSVg8ZKGxIug4lXcA==
@@ -554,6 +554,30 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
+"@styled-icons/boxicons-regular@^10.38.0":
+  version "10.38.0"
+  resolved "https://registry.yarnpkg.com/@styled-icons/boxicons-regular/-/boxicons-regular-10.38.0.tgz#1eb80b4f94a18a9b77b11dee5204aa23378d37ec"
+  integrity sha512-xjhafoa0/EeYtQOyTw+ohuSlBx599t8l8++JH1tQlM0l73dP4icTpF4znYL+HhZeaUe3D+UhrkfWuBBua2w2Qw==
+  dependencies:
+    "@babel/runtime" "^7.15.3"
+    "@styled-icons/styled-icon" "^10.6.3"
+
+"@styled-icons/boxicons-solid@^10.38.0":
+  version "10.38.0"
+  resolved "https://registry.yarnpkg.com/@styled-icons/boxicons-solid/-/boxicons-solid-10.38.0.tgz#bb2a6e21f3412c97ae8029396e3ca9fb107c7658"
+  integrity sha512-uuMtF1R61smQT5r6HIYMHvpVD0XSErXXNQYl5d6lCtMyefd0gIE5Rw+iD9i/RxHFUHNHbvL69LvitCLtNWrSqw==
+  dependencies:
+    "@babel/runtime" "^7.15.3"
+    "@styled-icons/styled-icon" "^10.6.3"
+
+"@styled-icons/styled-icon@^10.6.3":
+  version "10.6.3"
+  resolved "https://registry.yarnpkg.com/@styled-icons/styled-icon/-/styled-icon-10.6.3.tgz#eae0e5e18fd601ac47e821bb9c2e099810e86403"
+  integrity sha512-/A95L3peioLoWFiy+/eKRhoQ9r/oRrN/qzbSX4hXU1nGP2rUXcX3LWUhoBNAOp9Rw38ucc/4ralY427UUNtcGQ==
+  dependencies:
+    "@babel/runtime" "^7.10.5"
+    "@emotion/is-prop-valid" "^0.8.7"
+
 "@supabase/gotrue-js@^1.18.0":
   version "1.18.0"
   resolved "https://registry.yarnpkg.com/@supabase/gotrue-js/-/gotrue-js-1.18.0.tgz#1642c2605a24349b9bfbcd2ad83d19df3908371e"
@@ -648,17 +672,26 @@
   resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.7.tgz#63bb7d067db107cc1e457c303bc25d511febf6cb"
   integrity sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==
 
-"@types/react-dom@^17.0.9":
-  version "17.0.10"
-  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-17.0.10.tgz#d6972ec018d23cf22b99597f1289343d99ea9d9d"
-  integrity sha512-8oz3NAUId2z/zQdFI09IMhQPNgIbiP8Lslhv39DIDamr846/0spjZK0vnrMak0iB8EKb9QFTTIdg2Wj2zH5a3g==
+"@types/react-dom@^17.0.11":
+  version "17.0.11"
+  resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-17.0.11.tgz#e1eadc3c5e86bdb5f7684e00274ae228e7bcc466"
+  integrity sha512-f96K3k+24RaLGVu/Y2Ng3e1EbZ8/cVJvypZWd7cy0ofCBaf2lcM46xNhycMZ2xGwbBjRql7hOlZ+e2WlJ5MH3Q==
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^17.0.15":
+"@types/react@*":
   version "17.0.31"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.31.tgz#fe05ebf91ff3ae35bb6b13f6c1b461db8089dff8"
   integrity sha512-MQSR5EL4JZtdWRvqDgz9kXhSDDoy2zMTYyg7UhP+FZ5ttUOocWyxiqFJiI57sUG0BtaEX7WDXYQlkCYkb3X9vQ==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@^17.0.37":
+  version "17.0.37"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.37.tgz#6884d0aa402605935c397ae689deed115caad959"
+  integrity sha512-2FS1oTqBGcH/s0E+CjrCCR9+JMpsu9b69RTFO+40ua43ZqP5MmQ4iUde/dMjWR909KxZwmOQIFq6AV6NjEG5xg==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -2541,14 +2574,21 @@ queue-microtask@^1.2.2:
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
-react-dom@^18.0.0-beta-4ff5f5719-20211115:
-  version "18.0.0-beta-4ff5f5719-20211115"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.0.0-beta-4ff5f5719-20211115.tgz#35b1dcdfc24eb9f9719226e678963aa39628eb11"
-  integrity sha512-GV/GkDV0Kvi/CC9Gbkipw5Cn4V/bl0DZHseldxW8laW2Ghb9CuwXcfBwT72pYL5ZKTf/BmCKMrjfMZN6ICcEJA==
+react-device-detect@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/react-device-detect/-/react-device-detect-2.1.2.tgz#60abb6fa361ec4cc839469a0c4c3e9b8ea17d6b5"
+  integrity sha512-N42xttwez3ECgu4KpOL2ICesdfoz8NCBfmc1rH9FRYSjH7NmMyANPSrQ3EvAtJyj/6TzJNhrANSO38iXjCB2Ug==
+  dependencies:
+    ua-parser-js "^0.7.30"
+
+react-dom@^18.0.0-beta-0cc724c77-20211125:
+  version "18.0.0-beta-0cc724c77-20211125"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.0.0-beta-0cc724c77-20211125.tgz#7f7ac2a37e69c16cb97a42a52ffe24e80ab02027"
+  integrity sha512-SzWHSBjNIzn43jB+IeQhqgQE3zLJTFMv5KzvSFttKC9QSBS11vuYLdELjpiUNAMaAOmY4qmcnLEQvmKNwGK5fQ==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
-    scheduler "0.21.0-beta-4ff5f5719-20211115"
+    scheduler "0.21.0-beta-0cc724c77-20211125"
 
 react-fast-compare@^3.2.0:
   version "3.2.0"
@@ -2576,16 +2616,21 @@ react-is@^16.7.0, react-is@^16.8.1:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
 
-react-location@^3.2.14:
-  version "3.2.14"
-  resolved "https://registry.yarnpkg.com/react-location/-/react-location-3.2.14.tgz#18c9e407c39a76a65dadd4a2948115f57d0a51d1"
-  integrity sha512-gsfbJLAhFwSDQFjeNk/GKRoZOcbnC8Kus9+7BHSa3vxt787A5HbjqKxUl+njZVQe/gSY6IZB7m5eUBxTuDpWKA==
+react-location@^3.2.15:
+  version "3.2.15"
+  resolved "https://registry.yarnpkg.com/react-location/-/react-location-3.2.15.tgz#06c3ea9a1bcef327fcc6ca8b4849e4ab24afad2f"
+  integrity sha512-i6YFBii3DRYYvcCZ5c1FAibUf5yFQxPtglsDxf/cUsZfP7TVBzBu0fh9PaHx1NEVLCJ4BhPsVDlYvwNBlVAhuA==
   dependencies:
     "@babel/runtime" "^7.15.4"
     core-js "^3.18.3"
     fast-async "7"
     history "^5.0.0"
     ts-toolbelt "^9.6.0"
+
+react-overlapping-panels@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/react-overlapping-panels/-/react-overlapping-panels-1.2.2.tgz#16b60ed60045a7fa40bcf321de113c655f6e0acd"
+  integrity sha512-jZ8ZT4tnqM2YQF91Ct+9dLk7rSjnNiudxzgKlsaVfgwEjdBAWtE8nWJX9d2jDZZ9qimWgg43u5+SF6U+ELjyKQ==
 
 react-refresh@^0.10.0:
   version "0.10.0"
@@ -2617,10 +2662,10 @@ react-use@^17.3.1:
     ts-easing "^0.2.0"
     tslib "^2.1.0"
 
-react@^18.0.0-beta-4ff5f5719-20211115:
-  version "18.0.0-beta-4ff5f5719-20211115"
-  resolved "https://registry.yarnpkg.com/react/-/react-18.0.0-beta-4ff5f5719-20211115.tgz#fd2e0a9c8ddadae4a0d922ac48ff3b64be31888f"
-  integrity sha512-eCOzEV0VUTdSm/UNvw4bz8iLbURkycXIByvk83Cy9qa/sJ2UtjMalwS1/0I0UHaq7WwqEQSfiF5+0mEGpZVruQ==
+react@^18.0.0-beta-0cc724c77-20211125:
+  version "18.0.0-beta-0cc724c77-20211125"
+  resolved "https://registry.yarnpkg.com/react/-/react-18.0.0-beta-0cc724c77-20211125.tgz#e0050eb21c398902c5c0f7da9f4b8b52b8effd66"
+  integrity sha512-odsMe3EsqWSZy/ksPiSGuUcs41iAQQGEcws0565jsSQskJMLm7NOZ51AAoClIj8kZI4i3uHe/o22tZff9EsGnA==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
@@ -2741,10 +2786,10 @@ sass@^1.43.4:
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
 
-scheduler@0.21.0-beta-4ff5f5719-20211115:
-  version "0.21.0-beta-4ff5f5719-20211115"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.21.0-beta-4ff5f5719-20211115.tgz#298012b681e11e81488a8e43c3b6f37725f99b17"
-  integrity sha512-Yd/nK9tshp16jIi4xAwOFLSJp5oW6veB0l+W2UtJfWJKmOd7ALxgUAYacaujIhaba+fhyC8VzEPGmMjujAv+fw==
+scheduler@0.21.0-beta-0cc724c77-20211125:
+  version "0.21.0-beta-0cc724c77-20211125"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.21.0-beta-0cc724c77-20211125.tgz#2251f681a2e4e24bb0ad42909ce6dae253a39925"
+  integrity sha512-ZqjVAbosIfddFmNMdlJO/F0kr33qdgTGlLFCgIXsNIz/SjNq0Hn+lIaYtaIQPhZRFPwIgYOt+ssui0zZJ58rVg==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
@@ -3122,6 +3167,11 @@ typescript@^4.3.5:
   version "4.4.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.4.4.tgz#2cd01a1a1f160704d3101fd5a58ff0f9fcb8030c"
   integrity sha512-DqGhF5IKoBl8WNf8C1gu8q0xZSInh9j1kJJMqT3a94w1JzVaBU4EXOSMrz9yDqMT0xt3selp83fuFMQ0uzv6qA==
+
+ua-parser-js@^0.7.30:
+  version "0.7.31"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.31.tgz#649a656b191dffab4f21d5e053e27ca17cbff5c6"
+  integrity sha512-qLK/Xe9E2uzmYI3qLeOmI0tEOt+TBBQyUIAh4aAgU05FVYzeZrKUdkAZfBNVGRaHVgV0TDkdEngJSw/SyQchkQ==
 
 unbox-primitive@^1.0.1:
   version "1.0.1"

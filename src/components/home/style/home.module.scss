@@ -1,0 +1,32 @@
+.home {
+  user-select: none;
+
+  h3 {
+    margin: 1em 0;
+    font-size: 48px;
+    text-align: center;
+
+    img {
+      height: 36px;
+    }
+  }
+
+  .actions {
+    gap: 8px;
+    width: 240px;
+
+    margin: auto;
+    display: flex;
+    width: fit-content;
+    align-items: stretch;
+    flex-direction: column;
+
+    a {
+      width: 100%;
+    }
+  }
+}
+
+[data-light='true'] .home svg {
+  filter: invert(100%);
+}
