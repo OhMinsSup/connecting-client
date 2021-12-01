@@ -12,16 +12,18 @@ import location from './libs/routes/location'
 import routes from './libs/routes/routes'
 
 // context
-import { ThemeProvider } from './context'
+import { ClientProvider, ThemeProvider } from './context'
 
 const App = () => {
   return (
     <HelmetProvider>
       <ThemeProvider>
-        <Masks />
-        <Suspense fallback={<Preloader type="spinner" />}>
-          <Router location={location} routes={routes} defaultPendingElement={<Preloader type="spinner" />} />
-        </Suspense>
+        <ClientProvider>
+          <Masks />
+          <Suspense fallback={<Preloader type="spinner" />}>
+            <Router location={location} routes={routes} defaultPendingElement={<Preloader type="spinner" />} />
+          </Suspense>
+        </ClientProvider>
       </ThemeProvider>
     </HelmetProvider>
   )
