@@ -9,6 +9,7 @@ const HomePage = React.lazy(() => import('../../pages/home'))
 const InvitePage = React.lazy(() => import('../../pages/invite'))
 const LoginResetPage = React.lazy(() => import('../../pages/login-reset'))
 const LoginResendPage = React.lazy(() => import('../../pages/login-resend'))
+const VerifyPage = React.lazy(() => import('../../pages/verify'))
 
 const routes: Route<any>[] = [
   { path: '/', element: <HomePage /> },
@@ -32,14 +33,15 @@ const routes: Route<any>[] = [
         path: 'resend',
         element: <LoginResendPage />,
       },
-      // {
-      //   path: 'verify',
-      //   children: [
-      //     {
-      //       path: ':token',
-      //     },
-      //   ],
-      // },
+      {
+        path: 'verify',
+        element: <VerifyPage />,
+        children: [
+          {
+            path: ':token',
+          },
+        ],
+      },
     ],
   },
   {
