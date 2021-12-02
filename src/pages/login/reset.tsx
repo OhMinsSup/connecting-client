@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-location'
-import { AuthLayout } from '../components/auth/common'
-import ResendForm from '../components/auth/ResendForm'
+import { AuthLayout } from '../../components/auth/common'
+import ResendForm from '../../components/auth/ResendForm'
 
 const LoginResetPage = () => {
   const { current } = useLocation()

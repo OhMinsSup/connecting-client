@@ -6,10 +6,10 @@ import type { Route } from 'react-location'
 const LoginPage = React.lazy(() => import('../../pages/login'))
 const SignupPage = React.lazy(() => import('../../pages/signup'))
 const HomePage = React.lazy(() => import('../../pages/home'))
-const InvitePage = React.lazy(() => import('../../pages/invite'))
-const LoginResetPage = React.lazy(() => import('../../pages/login-reset'))
-const LoginResendPage = React.lazy(() => import('../../pages/login-resend'))
-const VerifyPage = React.lazy(() => import('../../pages/verify'))
+const InvitePage = React.lazy(() => import('../../pages/login/invite'))
+const LoginResetPage = React.lazy(() => import('../../pages/login/reset'))
+const LoginResendPage = React.lazy(() => import('../../pages/login/resend'))
+const VerifyPage = React.lazy(() => import('../../pages/login/verify'))
 
 const routes: Route<any>[] = [
   { path: '/', element: <HomePage /> },

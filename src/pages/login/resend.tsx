@@ -1,6 +1,6 @@
 import React from 'react'
-import { AuthLayout } from '../components/auth/common'
-import ResendForm from '../components/auth/ResendForm'
+import { AuthLayout } from '../../components/auth/common'
+import ResendForm from '../../components/auth/ResendForm'
 
 const LoginResendPage = () => {
   return (
