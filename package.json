@@ -21,9 +21,10 @@
     "react-location": "^3.2.15",
     "react-overlapping-panels": "^1.2.2",
     "react-use": "^17.3.1",
+    "recoil": "^0.5.2",
     "sass": "^1.43.4",
     "styled-components": "^5.3.3",
-    "swr": "^1.0.1",
+    "swr": "^1.1.0",
     "yup": "^0.32.11",
     "zustand": "^3.5.7"
   },

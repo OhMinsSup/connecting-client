@@ -1,5 +1,4 @@
 import { createGlobalStyle } from 'styled-components'
-import { getState } from '../../../store'
 import type { Theme, Variables } from './types'
 
 export const PRESETS: Record<string, Theme> = {
@@ -67,14 +66,14 @@ export function getBaseTheme(name: string): Theme {
     return PRESETS[name]
   }
   // TODO: properly initialize `themes` in state instead of letting it be undefined
-  const themes = getState().themes ?? {}
-  if (name in themes) {
-    const { theme } = themes[name]
-    return {
-      ...PRESETS[theme.light ? 'light' : 'dark'],
-      ...theme,
-    }
-  }
+  // const themes = getState().themes ?? {}
+  // if (name in themes) {
+  //   const { theme } = themes[name]
+  //   return {
+  //     ...PRESETS[theme.light ? 'light' : 'dark'],
+  //     ...theme,
+  //   }
+  // }
   // how did we get here
   return PRESETS['dark']
 }

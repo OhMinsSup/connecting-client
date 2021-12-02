@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react'
 import { Router } from 'react-location'
 import { HelmetProvider } from 'react-helmet-async'
+import { RecoilRoot } from 'recoil'
 
 import Masks from './components/ui/Masks'
 
@@ -12,19 +13,19 @@ import location from './libs/routes/location'
 import routes from './libs/routes/routes'
 
 // context
-import { ClientProvider, ThemeProvider } from './context'
+import { ThemeProvider } from './context'
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <HelmetProvider>
-      <ThemeProvider>
-        <ClientProvider>
+      <RecoilRoot>
+        <ThemeProvider>
           <Masks />
           <Suspense fallback={<Preloader type="spinner" />}>
             <Router location={location} routes={routes} defaultPendingElement={<Preloader type="spinner" />} />
           </Suspense>
-        </ClientProvider>
-      </ThemeProvider>
+        </ThemeProvider>
+      </RecoilRoot>
     </HelmetProvider>
   )
 }
