@@ -30,7 +30,7 @@ const SignupForm: React.FC<SignupFormProps> = () => {
   const {
     handleSubmit,
     register,
-    formState: { errors },
+    formState: { errors, isDirty, isValid },
   } = useForm<LoginFormFieldValues>({
     mode: 'onChange',
     reValidateMode: 'onChange',
@@ -44,6 +44,8 @@ const SignupForm: React.FC<SignupFormProps> = () => {
   const onSubmit: SubmitHandler<LoginFormFieldValues> = (input) => {
     console.log(input)
   }
+
+  const disabled = !isDirty || !isValid
 
   return (
     <div className={styles.form}>
@@ -59,9 +61,11 @@ const SignupForm: React.FC<SignupFormProps> = () => {
           <Overline formKey="password" errors={errors}>
             비밀번호
           </Overline>
-          <InputBox type="text" placeholder="비밀번호를 입력하세요." className="fbc-has-badge" {...register('password')} />
+          <InputBox type="password" placeholder="비밀번호를 입력하세요." className="fbc-has-badge" {...register('password')} />
         </>
-        <Button type="submit">로그인</Button>
+        <Button type="submit" disabled={disabled}>
+          로그인
+        </Button>
       </form>
       <span className={styles.create}>
         Connecting이 처음이신가요?

@@ -1,15 +1,20 @@
 import axios from 'axios'
 import * as Sentry from '@sentry/browser'
-import { API_HOST, IS_PROD } from '@contants/env'
-import { PAGE_ENDPOINTS, RESULT_CODE, STATUS_CODE, STORAGE_KEY } from '@contants/constant'
+import { RESULT_CODE, STATUS_CODE, STORAGE_KEY } from '../constants'
+
+const serverConfig = {
+  baseURL: import.meta.env.VITE_API_URL,
+  isProd: import.meta.env.DEV,
+  isDev: import.meta.env.DEV,
+}
 
 export const client = axios.create({
-  baseURL: API_HOST,
+  baseURL: serverConfig.baseURL,
 })
 
 // * 요청이 발생하기 전에 작동합니다.
 client.interceptors.request.use((config) => {
-  if (!IS_PROD && typeof window !== 'undefined') {
+  if (serverConfig.isDev && typeof window !== 'undefined') {
     // * 브라우저에서 개발 중에 어떠한 요청이 송신되고 있는지를 알려줍니다.
     console.log(`%c📦 API 요청 송신  주소:${config.url} 유형:${config.method?.toUpperCase()}`, 'color: #E19A56;', config.params)
   }
@@ -20,7 +25,7 @@ client.interceptors.request.use((config) => {
 // * 요청이 발생한 후에 작동합니다.
 client.interceptors.response.use(
   (response) => {
-    if (!IS_PROD && typeof window !== 'undefined') {
+    if (serverConfig.isDev && typeof window !== 'undefined') {
       const {
         data: { header },
       } = response
@@ -54,11 +59,7 @@ client.interceptors.response.use(
 
       if (response.status === STATUS_CODE.UNAUTHORIZED) {
         if (typeof window !== 'undefined') {
-          // localStorage.removeItem(STORAGE_KEY.TOKEN_KEY);
-          // localStorage.removeItem(STORAGE_KEY.USER_KEY);
-          sessionStorage.removeItem(STORAGE_KEY.USER_KEY)
-          sessionStorage.removeItem(STORAGE_KEY.TOKEN_KEY)
-          location.href = PAGE_ENDPOINTS.LOGIN
+          localStorage.removeItem(STORAGE_KEY.TOKEN_KEY)
         }
       } else {
         // 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.

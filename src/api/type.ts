@@ -1,9 +1,9 @@
-import type { AxiosError, AxiosResponse } from 'axios'
+import type { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 
 export interface Params<Body = any> {
   url: string
   body?: Body
-  headers?: Record<string, string>
+  config?: AxiosRequestConfig | undefined
 }
 
 export interface Schema<Result = any> {

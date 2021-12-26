@@ -1,5 +1,8 @@
 import { client } from './client'
+import omit from 'lodash-es/omit'
+
 import type { Params, Schema } from './type'
+import type { AxiosRequestConfig } from 'axios'
 
 const STORAGE_KEY = {
   TOKEN_KEY: '',
@@ -22,60 +25,34 @@ class APIMoudle {
     return authorization
   }
 
-  deleteResponse = async <D = any>({ url, headers = {} }: Params) => {
+  baseConfig = (config: AxiosRequestConfig | undefined) => {
     const authorization = this.authorized()
-    const result = await client.delete<Schema<D>>(url, {
+    return {
+      ...(config && omit(config, ['headers'])),
       headers: {
         'Content-Type': 'application/json',
         ...([authorization, !this.withCredentials].every(Boolean) && {
           Authorization: `Bearer ${authorization}`,
         }),
-        ...headers,
+        ...(config && config.headers),
       },
-    })
-    return result
+    }
   }
 
-  postResponse = async <D = any>({ url, body = {}, headers = {} }: Params) => {
-    const authorization = this.authorized()
-    const result = await client.post<Schema<D>>(url, body, {
-      headers: {
-        'Content-Type': 'application/json',
-        ...([authorization, !this.withCredentials].every(Boolean) && {
-          Authorization: `Bearer ${authorization}`,
-        }),
-        ...headers,
-      },
-    })
-    return result
+  put = <D = any>({ url, body = {}, config = {} }: Params) => {
+    return client.put<Schema<D>>(url, body, this.baseConfig(config))
   }
 
-  putResponse = async <D = any>({ url, body = {}, headers = {} }: Params) => {
-    const authorization = this.authorized()
-    const result = await client.put<Schema<D>>(url, body, {
-      headers: {
-        'Content-Type': 'application/json',
-        ...([authorization, !this.withCredentials].every(Boolean) && {
-          Authorization: `Bearer ${authorization}`,
-        }),
-        ...headers,
-      },
-    })
-    return result
+  get = <D = any>({ url, config = undefined }: Params) => {
+    return client.get<Schema<D>>(url, this.baseConfig(config))
   }
 
-  getResponse = async <D = any>({ url, headers = {} }: Params) => {
-    const authorization = this.authorized()
-    const result = await client.get<Schema<D>>(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        ...([authorization, !this.withCredentials].every(Boolean) && {
-          Authorization: `Bearer ${authorization}`,
-        }),
-        ...headers,
-      },
-    })
-    return result
+  delete = <D = any>({ url, config = undefined }: Params) => {
+    return client.delete<Schema<D>>(url, this.baseConfig(config))
+  }
+
+  post = <D = any>({ url, body = {}, config = undefined }: Params) => {
+    return client.post<Schema<D>>(url, body, this.baseConfig(config))
   }
 }
 
