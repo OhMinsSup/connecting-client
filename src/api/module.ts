@@ -1,7 +1,7 @@
 import { client } from './client'
 import omit from 'lodash-es/omit'
 
-import type { Params, Schema } from './type'
+import type { Params, Schema } from './schema/common'
 import type { AxiosRequestConfig } from 'axios'
 
 const STORAGE_KEY = {

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import * as Sentry from '@sentry/browser'
 import { RESULT_CODE, STATUS_CODE, STORAGE_KEY } from '../constants'
+import { isBrowser } from '../libs/utils/utils'
 
 const serverConfig = {
   baseURL: import.meta.env.VITE_API_URL,
@@ -25,16 +26,16 @@ client.interceptors.request.use((config) => {
 // * 요청이 발생한 후에 작동합니다.
 client.interceptors.response.use(
   (response) => {
-    if (serverConfig.isDev && typeof window !== 'undefined') {
+    if (serverConfig.isDev) {
       const {
-        data: { header },
+        data: { resultCode },
       } = response
       // http response, api response
       // http status가 200이 아닐때
       // api response code가 200이 아닐때
-      if (header.resultCode !== RESULT_CODE.OK) {
+      if (resultCode !== RESULT_CODE.OK) {
         console.log(
-          `%c🚫 API Error 응답 수신 주소:${response.config.url} 유형:${response.config.method?.toUpperCase()} \nAPI상태코드: ${header.resultCode}`,
+          `%c🚫 API Error 응답 수신 주소:${response.config.url} 유형:${response.config.method?.toUpperCase()} \nAPI상태코드: ${resultCode}`,
           'color: #e03131;',
           response,
         )
@@ -58,7 +59,7 @@ client.interceptors.response.use(
       }
 
       if (response.status === STATUS_CODE.UNAUTHORIZED) {
-        if (typeof window !== 'undefined') {
+        if (isBrowser) {
           localStorage.removeItem(STORAGE_KEY.TOKEN_KEY)
         }
       } else {

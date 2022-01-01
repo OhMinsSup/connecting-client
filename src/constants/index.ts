@@ -1,8 +1,24 @@
-export const PAGE_ENDPOINTS = {}
+export const PAGE_ENDPOINTS = {
+  INDEX: '/',
+  SIGNUP: {
+    ROOT: '/signup',
+  },
+  LOGIN: {
+    ROOT: '/login',
+    RESET: '/login/reset',
+    RESEND: '/login/resend',
+    VERIFY: '/login/verify',
+  },
+  INVITE: {
+    ROOT: '/invite',
+  },
+}
 
 export const API_ENDPOINTS = {
   USERS: {
     SIGNUP: 'users/signup',
+    LOGIN: 'users/signin',
+    ME: '/users/me',
   },
 }
 
