@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 // hooks
-import { Link } from 'react-location'
+import { Link, useNavigate } from 'react-location'
 
 // validator
 import { useForm } from 'react-hook-form'
@@ -12,7 +12,7 @@ import { schema } from '../../libs/validation/schema'
 import Overline from '../ui/Overline'
 import InputBox from '../ui/InputBox'
 import Button from '../ui/Button'
-import Legal from './common/Legal'
+import { Legal } from './common'
 
 // styles
 import styles from './style/auth.module.scss'
@@ -20,18 +20,26 @@ import wideSVG from '../../assets/svg/wide.svg'
 
 // utils
 import { API_ENDPOINTS, PAGE_ENDPOINTS } from '../../constants'
-
-import type { SubmitHandler } from 'react-hook-form'
 import { isAxiosError } from '../../libs/utils/utils'
+
+// api
 import { api } from '../../api/module'
+
+// hooks
+import { useMutateProfile } from '../../atoms/authState'
+
+// types
+import type { SubmitHandler } from 'react-hook-form'
 
 const initialValues = {
   email: '',
   password: '',
 }
 
-interface SignupFormProps {}
-const SignupForm: React.FC<SignupFormProps> = () => {
+const LoginForm: React.FC = () => {
+  const [error, setError] = useState('')
+  const navigate = useNavigate()
+
   const {
     handleSubmit,
     register,
@@ -46,6 +54,8 @@ const SignupForm: React.FC<SignupFormProps> = () => {
     criteriaMode: 'firstError',
   })
 
+  const setProfile = useMutateProfile()
+
   const onSubmit: SubmitHandler<LoginFormFieldValues> = async (input) => {
     try {
       const { data } = await api.post<{ accessToken: string }>({
@@ -54,6 +64,9 @@ const SignupForm: React.FC<SignupFormProps> = () => {
       })
 
       if (data.ok) {
+        const { result } = data
+        await setProfile(result.accessToken)
+        navigate({ to: PAGE_ENDPOINTS.INDEX, replace: true })
         return
       }
 
@@ -63,14 +76,15 @@ const SignupForm: React.FC<SignupFormProps> = () => {
       throw error
     } catch (error) {
       if (isAxiosError(error)) {
+        setError('오류가 발생했습니다.\n나중에 다시 시도해 주세요.')
         throw error
       }
 
+      // custom error
       if (error instanceof Error) {
-        // custom error
         const { message } = error
         const parsedError = JSON.parse(message)
-        console.log(parsedError)
+        setError(parsedError.message)
       }
     }
   }
@@ -96,6 +110,7 @@ const SignupForm: React.FC<SignupFormProps> = () => {
         <Button type="submit" disabled={disabled}>
           로그인
         </Button>
+        {error && <Overline type="error">{error}</Overline>}
       </form>
       <span className={styles.create}>
         Connecting이 처음이신가요?
@@ -110,4 +125,4 @@ const SignupForm: React.FC<SignupFormProps> = () => {
   )
 }
 
-export default SignupForm
+export default LoginForm

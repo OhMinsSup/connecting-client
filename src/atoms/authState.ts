@@ -63,7 +63,11 @@ export function useMutateProfile() {
   const { mutate } = useSWRConfig()
 
   return useCallback(async (token?: string) => {
-    if (!token) return
+    if (!token) {
+      const error = new Error('Token is empty')
+      error.name = 'EmptyToken'
+      throw error
+    }
     const thenFn = (data: any) => data.result ?? null
     // set validate cahce mutate swr
     const profile = await mutate(API_ENDPOINTS.USERS.ME, fetcher(API_ENDPOINTS.USERS.ME).then(thenFn))

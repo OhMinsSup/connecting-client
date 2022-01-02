@@ -15,18 +15,36 @@ import routes from './libs/routes/routes'
 // context
 import { ThemeProvider } from './context'
 
-const App: React.FC = () => {
+// atoms
+import { useProfileQuery } from './atoms/authState'
+
+const Core: React.FC = ({ children }) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const _ = useProfileQuery()
+
+  return <>{children}</>
+}
+
+const WrappedProvider: React.FC = ({ children }) => {
   return (
     <HelmetProvider>
       <RecoilRoot>
         <ThemeProvider>
           <Masks />
-          <Suspense fallback={<Preloader type="spinner" />}>
-            <Router location={location} routes={routes} defaultPendingElement={<Preloader type="spinner" />} />
-          </Suspense>
+          <Core>{children}</Core>
         </ThemeProvider>
       </RecoilRoot>
     </HelmetProvider>
+  )
+}
+
+const App: React.FC = () => {
+  return (
+    <WrappedProvider>
+      <Suspense fallback={<Preloader type="spinner" />}>
+        <Router location={location} routes={routes} defaultPendingElement={<Preloader type="spinner" />} />
+      </Suspense>
+    </WrappedProvider>
   )
 }
 
