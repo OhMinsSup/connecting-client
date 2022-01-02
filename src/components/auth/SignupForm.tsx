@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 // hooks
-import { useSearch, Link } from 'react-location'
+import { useSearch, Link, useNavigate } from 'react-location'
 import { useIsomorphicLayoutEffect } from 'react-use'
 
 // validator
@@ -13,17 +13,23 @@ import { schema } from '../../libs/validation/schema'
 import Overline from '../ui/Overline'
 import InputBox from '../ui/InputBox'
 import Button from '../ui/Button'
-import Legal from './common/Legal'
+import { Legal } from './common'
+
+// api
+import { api } from '../../api/module'
+
+// utils
+import { API_ENDPOINTS, PAGE_ENDPOINTS } from '../../constants'
+import { generateKey, isAxiosError } from '../../libs/utils/utils'
 
 // styles
 import styles from './style/auth.module.scss'
 import wideSVG from '../../assets/svg/wide.svg'
 
+// types
 import type { SubmitHandler } from 'react-hook-form'
 import type { MakeGenerics } from 'react-location'
-import { api } from '../../api/module'
-import { API_ENDPOINTS, RESULT_CODE } from '../../constants'
-import { isAxiosError } from '../../libs/utils/utils'
+import type { SignupFormFieldValues } from './type/form'
 
 type LocationGenerics = MakeGenerics<{
   Search: {
@@ -38,9 +44,10 @@ const initialValues = {
   code: undefined,
 }
 
-interface SignupFormProps {}
-const SignupForm: React.FC<SignupFormProps> = () => {
+const SignupForm: React.FC = () => {
+  const [error, setError] = useState('')
   const search = useSearch<LocationGenerics>()
+  const navigate = useNavigate()
 
   const {
     handleSubmit,
@@ -62,36 +69,36 @@ const SignupForm: React.FC<SignupFormProps> = () => {
       const body = {
         ...input,
         code: code || undefined,
+        avatarSvg: generateKey(),
       }
 
-      const res = await api.post<boolean>({
+      const { data } = await api.post({
         url: API_ENDPOINTS.USERS.SIGNUP,
         body,
       })
 
-      if (res.data.resultCode === RESULT_CODE.OK) {
-        // TODO: 회원가입 성공
+      if (data.ok) {
+        navigate({ to: PAGE_ENDPOINTS.LOGIN.ROOT, replace: true })
         return
       }
 
-      // TODO: 회원가입 실패
-
       const error = new Error()
-      error.name = res.data.resultCode.toString()
-      error.message = res.data.message ?? '회원가입 실패'
+      error.name = 'APIError'
+      error.message = JSON.stringify(data)
       throw error
     } catch (error) {
-      beforeRethrow(error)
-      throw error
-    }
-  }
+      if (isAxiosError(error)) {
+        setError('오류가 발생했습니다.\n나중에 다시 시도해 주세요.')
+        throw error
+      }
 
-  const beforeRethrow = (error: unknown) => {
-    console.error(error)
-    if (isAxiosError(error)) {
-      return
+      // custom error
+      if (error instanceof Error) {
+        const { message } = error
+        const parsedError = JSON.parse(message)
+        setError(parsedError.message)
+      }
     }
-    return
   }
 
   // 초대 코드를 타고 들어온 경우 초대 코드를 입력하도록 한다.
@@ -132,10 +139,11 @@ const SignupForm: React.FC<SignupFormProps> = () => {
         <Button type="submit" disabled={disabled}>
           가입
         </Button>
+        {error && <Overline type="error">{error}</Overline>}
       </form>
       <span className={styles.create}>
         이미 계정이 있으신가요?
-        <Link to="/login">로그인</Link>
+        <Link to={PAGE_ENDPOINTS.LOGIN.ROOT}>로그인</Link>
       </span>
       <Legal />
     </div>

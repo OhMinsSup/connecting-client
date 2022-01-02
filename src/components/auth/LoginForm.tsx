@@ -30,6 +30,7 @@ import { useMutateProfile } from '../../atoms/authState'
 
 // types
 import type { SubmitHandler } from 'react-hook-form'
+import type { LoginFormFieldValues } from './type/form'
 
 const initialValues = {
   email: '',
