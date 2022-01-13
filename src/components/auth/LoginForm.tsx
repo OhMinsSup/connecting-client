@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 
 // hooks
-import { Link, useNavigate } from 'react-location'
+import { Link, useNavigate } from 'react-router-dom'
 
 // validator
 import { useForm } from 'react-hook-form'
@@ -12,20 +12,21 @@ import { schema } from '../../libs/validation/schema'
 import Overline from '../ui/Overline'
 import InputBox from '../ui/InputBox'
 import Button from '../ui/Button'
-import { Legal } from './common'
+import { Legal } from './ui'
 
 // styles
 import styles from './style/auth.module.scss'
 import wideSVG from '../../assets/svg/wide.svg'
 
 // utils
-import { API_ENDPOINTS, PAGE_ENDPOINTS } from '../../constants'
+import { API_ENDPOINTS, PAGE_ENDPOINTS, STORAGE_KEY } from '../../constants'
 import { isAxiosError } from '../../libs/utils/utils'
 
 // api
 import { api } from '../../api/module'
 
 // hooks
+import { ConnectingStorage } from '../../libs/storage'
 import { useMutateProfile } from '../../atoms/authState'
 
 // types
@@ -66,8 +67,9 @@ const LoginForm: React.FC = () => {
 
       if (data.ok) {
         const { result } = data
+        await ConnectingStorage.setItem(STORAGE_KEY.TOKEN_KEY, result.accessToken)
         await setProfile(result.accessToken)
-        navigate({ to: PAGE_ENDPOINTS.INDEX, replace: true })
+        navigate(PAGE_ENDPOINTS.INDEX)
         return
       }
 
@@ -106,7 +108,7 @@ const LoginForm: React.FC = () => {
           <Overline formKey="password" errors={errors}>
             비밀번호
           </Overline>
-          <InputBox type="password" placeholder="비밀번호를 입력하세요." className="fbc-has-badge" {...register('password')} />
+          <InputBox type="password" autoComplete="on" placeholder="비밀번호를 입력하세요." className="fbc-has-badge" {...register('password')} />
         </>
         <Button type="submit" disabled={disabled}>
           로그인
@@ -119,7 +121,7 @@ const LoginForm: React.FC = () => {
       </span>
       <span className={styles.create}>
         비밀번호를 잊어버렸나요?
-        <Link to={PAGE_ENDPOINTS.LOGIN.RESEND}>비밀번호 재설정</Link>
+        <Link to={PAGE_ENDPOINTS.RESET_PASSWORD.ROOT}>비밀번호 재설정</Link>
       </span>
       <Legal />
     </div>

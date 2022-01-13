@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 
 // hooks
-import { useSearch, Link, useNavigate } from 'react-location'
 import { useIsomorphicLayoutEffect } from 'react-use'
+import { useSearchParams, useNavigate, Link } from 'react-router-dom'
 
 // validator
 import { useForm } from 'react-hook-form'
@@ -13,7 +13,7 @@ import { schema } from '../../libs/validation/schema'
 import Overline from '../ui/Overline'
 import InputBox from '../ui/InputBox'
 import Button from '../ui/Button'
-import { Legal } from './common'
+import { Legal } from './ui'
 
 // api
 import { api } from '../../api/module'
@@ -28,25 +28,21 @@ import wideSVG from '../../assets/svg/wide.svg'
 
 // types
 import type { SubmitHandler } from 'react-hook-form'
-import type { MakeGenerics } from 'react-location'
 import type { SignupFormFieldValues } from './type/form'
-
-type LocationGenerics = MakeGenerics<{
-  Search: {
-    code: string
-  }
-}>
 
 const initialValues = {
   email: '',
   password: '',
+  passwordConfirm: '',
   nickname: '',
   code: undefined,
 }
 
 const SignupForm: React.FC = () => {
   const [error, setError] = useState('')
-  const search = useSearch<LocationGenerics>()
+  const [searchParams] = useSearchParams()
+  const code = searchParams.get('code')
+
   const navigate = useNavigate()
 
   const {
@@ -64,7 +60,7 @@ const SignupForm: React.FC = () => {
     criteriaMode: 'firstError',
   })
 
-  const onSubmit: SubmitHandler<SignupFormFieldValues> = async ({ code, ...input }) => {
+  const onSubmit: SubmitHandler<SignupFormFieldValues> = async ({ code, passwordConfirm, ...input }) => {
     try {
       const body = {
         ...input,
@@ -78,7 +74,7 @@ const SignupForm: React.FC = () => {
       })
 
       if (data.ok) {
-        navigate({ to: PAGE_ENDPOINTS.LOGIN.ROOT, replace: true })
+        navigate(PAGE_ENDPOINTS.LOGIN.ROOT)
         return
       }
 
@@ -103,8 +99,8 @@ const SignupForm: React.FC = () => {
 
   // 초대 코드를 타고 들어온 경우 초대 코드를 입력하도록 한다.
   useIsomorphicLayoutEffect(() => {
-    if (search.code) setValue('code', search.code)
-  }, [search])
+    if (code) setValue('code', code)
+  }, [code])
 
   const disabled = !isDirty || !isValid
 
@@ -122,7 +118,13 @@ const SignupForm: React.FC = () => {
           <Overline formKey="password" errors={errors}>
             비밀번호
           </Overline>
-          <InputBox type="password" placeholder="비밀번호를 입력하세요." className="fbc-has-badge" {...register('password')} />
+          <InputBox type="password" autoComplete="on" placeholder="비밀번호를 입력하세요." className="fbc-has-badge" {...register('password')} />
+        </>
+        <>
+          <Overline formKey="passwordConfirm" errors={errors}>
+            비밀번호 확인
+          </Overline>
+          <InputBox type="password" autoComplete="on" placeholder="비밀번호 확인을 입력하세요." className="fbc-has-badge" {...register('passwordConfirm')} />
         </>
         <>
           <Overline formKey="nickname" errors={errors}>

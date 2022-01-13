@@ -1,6 +1,7 @@
 export interface SignupFormFieldValues {
   email: string
   password: string
+  passwordConfirm: string
   nickname: string
   code?: string
 }

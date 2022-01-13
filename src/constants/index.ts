@@ -3,11 +3,11 @@ export const PAGE_ENDPOINTS = {
   SIGNUP: {
     ROOT: '/signup',
   },
+  RESET_PASSWORD: {
+    ROOT: '/reset-password',
+  },
   LOGIN: {
     ROOT: '/login',
-    RESET: '/login/reset',
-    RESEND: '/login/resend',
-    VERIFY: '/login/verify',
   },
   INVITE: {
     ROOT: '/invite',
@@ -16,17 +16,19 @@ export const PAGE_ENDPOINTS = {
 
 export const API_ENDPOINTS = {
   USERS: {
-    SIGNUP: 'users/signup',
-    LOGIN: 'users/signin',
-    ME: '/users/me',
+    SIGNUP: 'users/signup', // 회원가입
+    LOGIN: 'users/signin', // 로그인
+    ME: '/users/me', // 내 정보 조회
+    RESET_PASSWORD: 'users/reset-password', // 비밀번호 재설정
+    CHANGE_PASSWORD: 'users/change-password', // 비밀번호 변경
   },
 }
 
 export const WEB_APP = '@@Connecting-Web-App'
 
 export const STORAGE_KEY = {
-  TOKEN_KEY: `${WEB_APP}/authToken`,
-  USER_KEY: `${WEB_APP}/userInfo`,
+  TOKEN_KEY: 'authToken',
+  USER_KEY: 'userInfo',
 }
 
 export const STATUS_CODE = {

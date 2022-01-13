@@ -4,17 +4,19 @@ import useSWR, { useSWRConfig } from 'swr'
 
 import isEmpty from 'lodash-es/isEmpty'
 import noop from 'lodash-es/noop'
+import { useIsomorphicLayoutEffect } from 'react-use'
+import { ConnectingStorage } from '../libs/storage'
 
 // api
 import { fetcher } from '../api/fetcher'
-import { API_ENDPOINTS } from '../constants'
-import { getToken } from '../libs/utils/utils'
+import { API_ENDPOINTS, STORAGE_KEY } from '../constants'
 
 import type { SWRConfiguration, Middleware } from 'swr'
+import type { UserSchema } from '../api/schema/model'
 
 export interface AuthState {
   isLoggedIn: boolean
-  profile: Record<string, any> | null
+  profile: UserSchema | null
 }
 
 export const authState = atom<AuthState>({
@@ -46,9 +48,9 @@ interface ProfileConfig extends Pick<SWRConfiguration, 'onError' | 'onSuccess'> 
 
 const middleware: Middleware = (useSWRNext) => {
   return (key, fetcher, config) => {
-    const extendedFetcher = (...args: any[]) => {
-      const token = getToken()
-      if (!token) {
+    const extendedFetcher = async (...args: any[]) => {
+      const token = await ConnectingStorage.getItem(STORAGE_KEY.TOKEN_KEY)
+      if (!token || typeof token !== 'string') {
         return Promise.resolve<any>(null)
       }
       return fetcher?.(...args)
@@ -92,6 +94,25 @@ export function useProfileQuery(config: ProfileConfig = {}) {
   const [state, setState] = useAuthState()
   const { cache } = useSWRConfig()
 
+  useIsomorphicLayoutEffect(() => {
+    const promise = async () => {
+      const token = await ConnectingStorage.getItem(STORAGE_KEY.TOKEN_KEY)
+      if (!token) {
+        setState((state) => ({
+          ...state,
+          isLoggedIn: false,
+        }))
+        return
+      } else {
+        setState((state) => ({
+          ...state,
+          isLoggedIn: true,
+        }))
+      }
+    }
+    promise()
+  }, [])
+
   const swrKeyLoader = () => {
     // enabled 이 false일 경우 가져오지 않음
     if (!enable) return null
@@ -114,7 +135,7 @@ export function useProfileQuery(config: ProfileConfig = {}) {
     use: [middleware],
     revalidateOnFocus: false,
     onSuccess: (result) => {
-      if (result) setState(result)
+      if (result) setState((state) => ({ ...state, profile: result }))
       if (onSuccess) onSuccess(result)
     },
     onError: (error) => {
@@ -122,7 +143,7 @@ export function useProfileQuery(config: ProfileConfig = {}) {
     },
   })
 
-  const updateProfile = async (profile?: Record<string, any> | null) => {
+  const updateProfile = async (profile?: UserSchema | null) => {
     if (profile) {
       // profile 정보가 존재하면 cache 데이터 업데이트
       await mutate(profile, false)
@@ -150,7 +171,7 @@ export function useProfileQuery(config: ProfileConfig = {}) {
 
   useEffect(() => {
     if (!state.profile) updateProfile()
-  }, [state])
+  }, [state.profile])
 
   return {
     profile: state.profile,

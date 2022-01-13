@@ -6,7 +6,7 @@ import styled, { css } from 'styled-components'
 import { isTouchscreenDevice } from '../../../libs/utils/utils'
 
 // components
-import ConditionalLink from '../../common/ConditionalLink'
+// import ConditionalLink from '../../common/ConditionalLink'
 
 interface ServerListSidebarProps {}
 const ServerListSidebar: React.FC<ServerListSidebarProps> = () => {
@@ -17,19 +17,19 @@ const ServerListSidebar: React.FC<ServerListSidebarProps> = () => {
     <ServersBase>
       <ServerList>
         {/* to={lastOpened.home ? `/channel/${lastOpened.home}` : "/"} */}
-        <ConditionalLink condition={homeActive} to="/">
-          <ServerEntry home active={homeActive}>
-            <Swoosh />
-            <div>
-              {/* <UserHover user={client.user}>
+        {/* <ConditionalLink condition={homeActive} to="/"> */}
+        <ServerEntry home active={homeActive}>
+          <Swoosh />
+          <div>
+            {/* <UserHover user={client.user}>
                 <Icon size={42} unread={homeUnread} count={alertCount}>
                   <UserIcon target={client.user} size={32} status hover />
                 </Icon>
               </UserHover> */}
-              Icon
-            </div>
-          </ServerEntry>
-        </ConditionalLink>
+            Icon
+          </div>
+        </ServerEntry>
+        {/* </ConditionalLink> */}
       </ServerList>
     </ServersBase>
   )
