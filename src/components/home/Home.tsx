@@ -1,10 +1,10 @@
 import React from 'react'
-import { Link } from 'react-location'
+import { Link } from 'react-router-dom'
 
 // components
 import { Home as HomeIcon } from '@styled-icons/boxicons-solid'
 import Header from '../ui/Header'
-import { IconContainer } from './common'
+import { IconContainer } from './ui'
 
 // styles
 import styles from './style/home.module.scss'

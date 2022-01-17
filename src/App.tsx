@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { HelmetProvider } from 'react-helmet-async'
 import { RecoilRoot } from 'recoil'
 
@@ -11,6 +11,7 @@ import { ThemeProvider } from './context'
 // atoms
 import { useProfileQuery } from './atoms/authState'
 
+import HomePage from './pages/home'
 import LoginPage from './pages/login'
 import SignupPage from './pages/signup'
 import ResetPasswordPage from './pages/reset-password'
@@ -44,15 +45,7 @@ const App: React.FC = () => {
   return (
     <WrappedProvider>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <div>
-              메인
-              <Link to="/login">로그인</Link>
-            </div>
-          }
-        />
+        <Route path="/" element={<HomePage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<SignupPage />} />
         <Route path="reset-password" element={<ResetPasswordPage />} />

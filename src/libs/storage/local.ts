@@ -28,10 +28,6 @@ class LocalforageStorage {
     return keys
   }
 
-  /**
-   * @public
-   * @description localstorage에 저장된 모든 키값의 데이터를 가져온다
-   */
   async getData() {
     await this.readyStorage()
     const output: Record<string, any> = {}
