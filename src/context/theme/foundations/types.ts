@@ -18,6 +18,7 @@ export type Variables =
   | 'secondary-header'
   | 'tertiary-background'
   | 'tertiary-foreground'
+  | 'tooltip'
   | 'status-online'
   | 'status-away'
   | 'status-busy'
@@ -34,26 +35,36 @@ export type Fonts =
   | 'Roboto'
   | 'Noto Sans'
   | 'Lato'
-  | 'Bree Serif'
+  | 'Bitter'
   | 'Montserrat'
   | 'Poppins'
   | 'Raleway'
   | 'Ubuntu'
   | 'Comic Neue'
+  | 'Lexend'
+
 export type MonospaceFonts = 'Fira Code' | 'Roboto Mono' | 'Source Code Pro' | 'Space Mono' | 'Ubuntu Mono' | 'JetBrains Mono'
 export type FontValue = { name: string; load: () => void }
 
-export type Theme = {
+export type Overrides = {
   [variable in Variables]: string
-} & {
+}
+
+export type Theme = Overrides & {
   light?: boolean
   font?: Fonts
   css?: string
   monospaceFont?: MonospaceFonts
+  'min-opacity'?: number
 }
 
 export interface ThemeOptions {
   base?: string
   ligatures?: boolean
   custom?: Partial<Theme>
+}
+
+export type ComputedVariables = Theme & {
+  'header-height'?: string
+  'effective-bottom-offset'?: string
 }

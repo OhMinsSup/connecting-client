@@ -19,7 +19,7 @@ class LocalforageStorage {
 
     this.localforage = localforage.createInstance({
       name: this.storageKey,
-      driver: [localforage.LOCALSTORAGE, localforage.INDEXEDDB],
+      driver: [localforage.INDEXEDDB, localforage.LOCALSTORAGE],
     })
   }
 

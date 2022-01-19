@@ -3,7 +3,6 @@ import type { Theme, Variables } from './types'
 
 export const PRESETS: Record<string, Theme> = {
   light: {
-    light: true,
     accent: '#FD6671',
     background: '#F6F6F6',
     foreground: '#000000',
@@ -12,6 +11,7 @@ export const PRESETS: Record<string, Theme> = {
     mention: 'rgba(251, 255, 0, 0.40)',
     success: '#65E572',
     warning: '#FAA352',
+    tooltip: '#FFF',
     error: '#ED4245',
     hover: 'rgba(0, 0, 0, 0.2)',
     'scrollbar-thumb': '#CA525A',
@@ -30,7 +30,6 @@ export const PRESETS: Record<string, Theme> = {
     'status-invisible': '#A5A5A5',
   },
   dark: {
-    light: false,
     accent: '#FD6671',
     background: '#191919',
     foreground: '#F6F6F6',
@@ -39,6 +38,7 @@ export const PRESETS: Record<string, Theme> = {
     mention: 'rgba(251, 255, 0, 0.06)',
     success: '#65E572',
     warning: '#FAA352',
+    tooltip: '#000000',
     error: '#ED4245',
     hover: 'rgba(0, 0, 0, 0.1)',
     'scrollbar-thumb': '#CA525A',

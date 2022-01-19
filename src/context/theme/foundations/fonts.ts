@@ -1,11 +1,12 @@
-import type { Fonts, MonospaceFonts, FontValue } from './types'
+import type { Fonts, MonospaceFonts } from './types'
 
-export const FONTS: Record<Fonts, FontValue> = {
+export const FONTS: Record<Fonts, { name: string; load: () => void }> = {
   'Open Sans': {
     name: 'Open Sans',
     load: async () => {
       await import('@fontsource/open-sans/300.css')
       await import('@fontsource/open-sans/400.css')
+      await import('@fontsource/open-sans/500.css')
       await import('@fontsource/open-sans/600.css')
       await import('@fontsource/open-sans/700.css')
       await import('@fontsource/open-sans/400-italic.css')
@@ -44,9 +45,14 @@ export const FONTS: Record<Fonts, FontValue> = {
       await import('@fontsource/noto-sans/400-italic.css')
     },
   },
-  'Bree Serif': {
-    name: 'Bree Serif',
-    load: () => import('@fontsource/bree-serif/400.css'),
+  Bitter: {
+    name: 'Bitter',
+    load: async () => {
+      await import('@fontsource/bitter/300.css')
+      await import('@fontsource/bitter/400.css')
+      await import('@fontsource/bitter/600.css')
+      await import('@fontsource/bitter/700.css')
+    },
   },
   Lato: {
     name: 'Lato',
@@ -55,6 +61,14 @@ export const FONTS: Record<Fonts, FontValue> = {
       await import('@fontsource/lato/400.css')
       await import('@fontsource/lato/700.css')
       await import('@fontsource/lato/400-italic.css')
+    },
+  },
+  Lexend: {
+    name: 'Lexend',
+    load: async () => {
+      await import('@fontsource/lexend/300.css')
+      await import('@fontsource/lexend/400.css')
+      await import('@fontsource/lexend/700.css')
     },
   },
   Montserrat: {
@@ -107,8 +121,7 @@ export const FONTS: Record<Fonts, FontValue> = {
     },
   },
 }
-
-export const MONOSPACE_FONTS: Record<MonospaceFonts, FontValue> = {
+export const MONOSPACE_FONTS: Record<MonospaceFonts, { name: string; load: () => void }> = {
   'Fira Code': {
     name: 'Fira Code',
     load: () => import('@fontsource/fira-code/400.css'),
