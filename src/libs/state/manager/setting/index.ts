@@ -1,7 +1,5 @@
 import { MemoryStorage } from '../../../storage'
 import { Theme } from './theme'
-import { Sound } from './sound'
-import { Security } from './security'
 
 import type { PersistentInterface } from '../interface/persistent'
 import type { StoreInterface } from '../interface/store'
@@ -10,19 +8,13 @@ import type { SettingManagerState } from './types'
 
 export class Setting implements StoreInterface, PersistentInterface<SettingManagerState>, SyncableInterface {
   private _id = 'setting'
-
   private _data: MemoryStorage
 
   _theme: Theme // 각각 객체로 관리
-  _sounds: Sound // 각각 객체로 관리
-  _security: Security // 각각 객체로 관리
-
   constructor() {
     this._data = new MemoryStorage()
 
     this._theme = new Theme(this)
-    this._sounds = new Sound()
-    this._security = new Security()
   }
 
   get id() {
@@ -31,14 +23,6 @@ export class Setting implements StoreInterface, PersistentInterface<SettingManag
 
   get theme() {
     return this._theme
-  }
-
-  get sound() {
-    return this._sounds
-  }
-
-  get security() {
-    return this._security
   }
 
   toJSON(): unknown {

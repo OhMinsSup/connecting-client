@@ -421,6 +421,11 @@
   resolved "https://registry.yarnpkg.com/@fontsource/atkinson-hyperlegible/-/atkinson-hyperlegible-4.5.1.tgz#7d14141d4b3f2ad6b1bd9f785fa6961c3ad28a07"
   integrity sha512-ohzzQVkjj9YBMZx3cmxDBPPjN1nbDU8tVbgHjD3ViDsto97ONxcegYeUA5Fa8bUpTHYhLZSRWYASSU0e96r3JQ==
 
+"@fontsource/bitter@^4.5.0":
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/@fontsource/bitter/-/bitter-4.5.0.tgz#002bd1caf7ad96730aec9d758f7643f11db599d8"
+  integrity sha512-kDOQwzCrbq1TaG3ddDnKMmudgoIDiaVtvpw+QxZ5+/iYyV+87qFlOxgZQJUBrG90RR0uD0nbFEbfTiicH9IfWA==
+
 "@fontsource/bree-serif@^4.4.5":
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/@fontsource/bree-serif/-/bree-serif-4.5.0.tgz#89c5cc3613aaeaea7df77d909a8bbd18f8becf13"
@@ -450,6 +455,11 @@
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/@fontsource/lato/-/lato-4.5.0.tgz#c248b083be330daafade76995fed9088d5b76c04"
   integrity sha512-Y1qluoF+5b2U6MWcEz70+euZwl4TEV+9v7nZCmuRgNHb5McYc3VmbNmYNEiLsnb1HHwlAHA70P/LktP9EJ61ag==
+
+"@fontsource/lexend@^4.5.2":
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/@fontsource/lexend/-/lexend-4.5.2.tgz#eb2949e46831b9a89ece254145d053ad52a3a637"
+  integrity sha512-8wcqpW5ohWGptW8T9HYT20MDrfBmaAkmI/eE/ytwaqRT7WmxZjido72WjSZmKf5F872HHoaIOQWmZbYMdgMdcg==
 
 "@fontsource/montserrat@^4.4.5":
   version "4.5.1"
