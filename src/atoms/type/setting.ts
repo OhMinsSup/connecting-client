@@ -1,3 +1,20 @@
+export type MonospaceFonts = 'Fira Code' | 'Roboto Mono' | 'Source Code Pro' | 'Space Mono' | 'Ubuntu Mono' | 'JetBrains Mono'
+
+export type Fonts =
+  | 'Open Sans'
+  | 'Inter'
+  | 'Atkinson Hyperlegible'
+  | 'Roboto'
+  | 'Noto Sans'
+  | 'Lato'
+  | 'Bitter'
+  | 'Montserrat'
+  | 'Poppins'
+  | 'Raleway'
+  | 'Ubuntu'
+  | 'Comic Neue'
+  | 'Lexend'
+
 export type Variables =
   | 'accent'
   | 'background'
@@ -25,27 +42,6 @@ export type Variables =
   | 'status-streaming'
   | 'status-invisible'
 
-// While this isn't used, it'd be good to keep this up to date as a reference or for future use
-export type HiddenVariables = 'font' | 'ligatures' | 'app-height' | 'sidebar-active' | 'monospace-font'
-
-export type Fonts =
-  | 'Open Sans'
-  | 'Inter'
-  | 'Atkinson Hyperlegible'
-  | 'Roboto'
-  | 'Noto Sans'
-  | 'Lato'
-  | 'Bitter'
-  | 'Montserrat'
-  | 'Poppins'
-  | 'Raleway'
-  | 'Ubuntu'
-  | 'Comic Neue'
-  | 'Lexend'
-
-export type MonospaceFonts = 'Fira Code' | 'Roboto Mono' | 'Source Code Pro' | 'Space Mono' | 'Ubuntu Mono' | 'JetBrains Mono'
-export type FontValue = { name: string; load: () => void }
-
 export type Overrides = {
   [variable in Variables]: string
 }
@@ -58,13 +54,16 @@ export type Theme = Overrides & {
   'min-opacity'?: number
 }
 
+export type ComputedVariables = Theme & {
+  'header-height'?: string
+  'effective-bottom-offset'?: string
+}
+
+// While this isn't used, it'd be good to keep this up to date as a reference or for future use
+export type HiddenVariables = 'font' | 'ligatures' | 'app-height' | 'sidebar-active' | 'monospace-font'
+
 export interface ThemeOptions {
   base?: string
   ligatures?: boolean
   custom?: Partial<Theme>
-}
-
-export type ComputedVariables = Theme & {
-  'header-height'?: string
-  'effective-bottom-offset'?: string
 }

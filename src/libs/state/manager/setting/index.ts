@@ -26,6 +26,7 @@ export class Setting implements StoreInterface, PersistentInterface<SettingManag
   }
 
   toJSON(): unknown {
+    // console.warn('Settomg.', JSON.parse(JSON.stringify(this.data)))
     return {}
   }
 

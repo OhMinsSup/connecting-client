@@ -1,4 +1,65 @@
-import type { Fonts, MonospaceFonts } from './types'
+import type { Fonts, MonospaceFonts, Theme } from '../type/setting'
+
+export const DEFAULT_FONT = 'Open Sans'
+export const DEFAULT_MONO_FONT = 'Fira Code'
+
+// Generated from https://gitlab.insrt.uk/revolt/community/themes
+export const PRESETS: Record<string, Theme> = {
+  light: {
+    accent: '#FD6671',
+    background: '#F6F6F6',
+    foreground: '#000000',
+    block: '#414141',
+    'message-box': '#F1F1F1',
+    mention: 'rgba(251, 255, 0, 0.40)',
+    success: '#65E572',
+    warning: '#FAA352',
+    tooltip: '#FFF',
+    error: '#ED4245',
+    hover: 'rgba(0, 0, 0, 0.2)',
+    'scrollbar-thumb': '#CA525A',
+    'scrollbar-track': 'transparent',
+    'primary-background': '#FFFFFF',
+    'primary-header': '#F1F1F1',
+    'secondary-background': '#F1F1F1',
+    'secondary-foreground': '#1f1f1f',
+    'secondary-header': '#F1F1F1',
+    'tertiary-background': '#4D4D4D',
+    'tertiary-foreground': '#3a3a3a',
+    'status-online': '#3ABF7E',
+    'status-away': '#F39F00',
+    'status-busy': '#F84848',
+    'status-streaming': '#977EFF',
+    'status-invisible': '#A5A5A5',
+  },
+  dark: {
+    accent: '#FD6671',
+    background: '#191919',
+    foreground: '#F6F6F6',
+    block: '#2D2D2D',
+    'message-box': '#363636',
+    mention: 'rgba(251, 255, 0, 0.06)',
+    success: '#65E572',
+    warning: '#FAA352',
+    tooltip: '#000000',
+    error: '#ED4245',
+    hover: 'rgba(0, 0, 0, 0.1)',
+    'scrollbar-thumb': '#CA525A',
+    'scrollbar-track': 'transparent',
+    'primary-background': '#242424',
+    'primary-header': '#363636',
+    'secondary-background': '#1E1E1E',
+    'secondary-foreground': '#C8C8C8',
+    'secondary-header': '#2D2D2D',
+    'tertiary-background': '#4D4D4D',
+    'tertiary-foreground': '#848484',
+    'status-online': '#3ABF7E',
+    'status-away': '#F39F00',
+    'status-busy': '#F84848',
+    'status-streaming': '#977EFF',
+    'status-invisible': '#A5A5A5',
+  },
+}
 
 export const FONTS: Record<Fonts, { name: string; load: () => void }> = {
   'Open Sans': {
@@ -147,9 +208,3 @@ export const MONOSPACE_FONTS: Record<MonospaceFonts, { name: string; load: () =>
     load: () => import('@fontsource/jetbrains-mono/400.css'),
   },
 }
-
-export const FONT_KEYS = Object.keys(FONTS).sort()
-export const MONOSPACE_FONT_KEYS = Object.keys(MONOSPACE_FONTS).sort()
-
-export const DEFAULT_FONT = 'Open Sans'
-export const DEFAULT_MONO_FONT = 'Fira Code'

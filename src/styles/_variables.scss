@@ -1,22 +1,22 @@
 :root {
   /**
-     * Appearance
-     */
+    * Appearance
+    */
   --ligatures: none;
   --text-size: 14px;
   --font: 'Open Sans';
   --sidebar-active: var(--secondary-background);
 
   /**
-     * Native
-     */
+    * Native
+    */
   --titlebar-height: 29px;
   --titlebar-action-padding: 8px;
   --titlebar-logo-color: var(--secondary-foreground);
 
   /**
-     * Layout
-     */
+    * Layout
+    */
   --app-height: 100vh;
   --scrollbar-thickness: 3px;
   --scrollbar-thickness-ff: thin;
@@ -32,8 +32,8 @@
   --textarea-line-height: 20px;
   --message-box-padding: 14px 14px 14px 0;
 
-  --attachment-max-width: 480px;
-  --attachment-max-height: 640px;
+  --attachment-max-width: 400px;
+  --attachment-max-height: 300px;
   --attachment-default-width: 400px;
   --attachment-max-text-width: 800px;
 
