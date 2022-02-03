@@ -9,7 +9,7 @@ import Masks from './components/ui/Masks'
 // hooks
 import { useProfileQuery } from './atoms/authState'
 import { useIsomorphicLayoutEffect } from 'react-use'
-import { useThemeActionHook, useThemeValueHook } from './atoms/settingState'
+import { useThemeActionHook } from './atoms/settingState'
 
 // pages
 import HomePage from './pages/home'
@@ -21,6 +21,7 @@ import ChangePasswordPage from './pages/change-password'
 // atoms - constants
 import { FONTS, MONOSPACE_FONTS } from './atoms/constants/setting'
 import { GlobalTheme } from './atoms/utils'
+import { recoilInitializer } from './atoms/recoilInitializer'
 
 const Core: React.FC = ({ children }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -32,8 +33,7 @@ const Core: React.FC = ({ children }) => {
 }
 
 const Hydrate: React.FC = ({ children }) => {
-  const { getFont, getMonospaceFont, getLigatures, getCSS } = useThemeValueHook()
-  const { computeVariables } = useThemeActionHook()
+  const { computeVariables, getFont, getMonospaceFont, getLigatures, getCSS } = useThemeActionHook()
 
   // document element값이 변경되는 경우는 없으니깐, memo 적용
   const rootStyle = useMemo(() => document.documentElement.style, [])
@@ -65,7 +65,6 @@ const Hydrate: React.FC = ({ children }) => {
   }, [rootStyle])
 
   const variables = computeVariables()
-  console.log(`%c🐳 [Hydrate - hydrateState]:`, 'color: #0ef19a;', variables)
 
   return (
     <>
@@ -83,10 +82,11 @@ const Provider: React.FC = ({ children }) => {
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <RecoilRoot>
+        <RecoilRoot initializeState={recoilInitializer}>
           <Masks />
           <Hydrate>
-            <Core>{children}</Core>
+            {children}
+            <Core />
           </Hydrate>
         </RecoilRoot>
       </BrowserRouter>

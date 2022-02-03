@@ -1,31 +1,6 @@
 import { atom, useRecoilState, useResetRecoilState } from 'recoil'
-
-export enum QueueStatus {
-  SENDING = 'sending',
-  ERRORED = 'errored',
-}
-
-export interface Reply {
-  id: number
-  mention: boolean
-}
-
-export interface QueuedMessageData {
-  id: number
-  author: string
-  channel: string
-
-  content: string
-  replies: Reply[]
-}
-
-export interface QueuedMessageState {
-  id: number
-  channel: string
-  data: QueuedMessageData
-  status: QueueStatus
-  error?: string
-}
+import { QueueStatus } from './constants/queue'
+import type { QueuedMessageState, QueuedMessageData } from './type/queue'
 
 export const queueState = atom<QueuedMessageState[]>({
   key: 'queueState',

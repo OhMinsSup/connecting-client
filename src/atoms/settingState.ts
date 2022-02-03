@@ -14,33 +14,38 @@ export interface SettingState {
   'appearance:ligatures'?: boolean
   'appearance:transparency'?: boolean
 
-  'security:trustedOrigins'?: string[]
-
   // theme
-  'appearance:theme:overrides'?: Partial<Overrides>
   'appearance:theme:base'?: 'dark' | 'light'
+  'appearance:theme:overrides'?: Partial<Overrides>
   'appearance:theme:light': Theme['light']
   'appearance:theme:font': Theme['font']
-  'appearance:theme:css': Theme['css']
   'appearance:theme:monospaceFont': Theme['monospaceFont']
+  'appearance:theme:css': Theme['css']
   'appearance:theme:min-opacity': Theme['min-opacity']
+
+  'security:trustedOrigins'?: string[]
 }
 
 export const settingState = atom<SettingState>({
   key: 'settingState',
   default: {
+    'notifications:desktop': undefined,
+    'notifications:sounds': undefined,
+
     'appearance:emoji': undefined,
     'appearance:seasonal': undefined,
     'appearance:ligatures': undefined,
     'appearance:transparency': undefined,
     // theme
+    'appearance:theme:base': 'dark',
     'appearance:theme:overrides': undefined,
     'appearance:theme:light': false,
-    'appearance:theme:base': 'dark',
     'appearance:theme:font': DEFAULT_FONT,
-    'appearance:theme:css': undefined,
     'appearance:theme:monospaceFont': DEFAULT_MONO_FONT,
+    'appearance:theme:css': undefined,
     'appearance:theme:min-opacity': undefined,
+
+    'security:trustedOrigins': undefined,
   },
 })
 
@@ -63,8 +68,8 @@ export function useSettingValue() {
   return useRecoilValue(settingState)
 }
 
-export function useThemeValueHook() {
-  const state = useSettingValue()
+export function useThemeActionHook() {
+  const [state, setState] = useSettingState()
 
   const getBase = () => {
     return state['appearance:theme:base'] ?? 'dark'
@@ -109,25 +114,6 @@ export function useThemeValueHook() {
   const getLigatures = () => {
     return state['appearance:ligatures'] ? 'normal' : 'none'
   }
-
-  return {
-    state,
-    getBase,
-    isLight,
-    isModified,
-    getVariables,
-    getVariable,
-    getContrastingVariable,
-    getFont,
-    getMonospaceFont,
-    getLigatures,
-    getCSS,
-  }
-}
-
-export function useThemeActionHook() {
-  const { state, getVariables } = useThemeValueHook()
-  const setState = useSettingSetState()
 
   const hydrate = (data: Partial<Theme>, resetCSS = false) => {
     if (resetCSS) setCSS()
@@ -243,5 +229,15 @@ export function useThemeActionHook() {
     resetOverrideWithCSS,
     computeVariables,
     hydrate,
+    getBase,
+    isLight,
+    isModified,
+    getVariables,
+    getVariable,
+    getContrastingVariable,
+    getFont,
+    getMonospaceFont,
+    getCSS,
+    getLigatures,
   }
 }

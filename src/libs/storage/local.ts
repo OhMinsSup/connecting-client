@@ -41,11 +41,11 @@ class LocalforageStorage {
     return output
   }
 
-  async getItem(key: string) {
+  async getItem<T = any>(key: string): Promise<T | undefined> {
     const originalData = await this.localforage.getItem(key)
     try {
       const { value } = originalData as Record<string, any>
-      return value as Record<string, any> | string | number | boolean
+      return value
     } catch (error) {
       return undefined
     }

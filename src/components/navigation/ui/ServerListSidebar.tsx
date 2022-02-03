@@ -1,14 +1,17 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
 import { Swoosh } from '.'
 import ConditionalLink from '../../ui/ConditionalLink'
 
 import { isTouchscreenDevice } from '../../../libs/utils/utils'
+import UserIcon from '../../common/user/UserIcon'
+import UserHover from '../../common/user/UserHover'
 
 const ServerListSidebar = () => {
   const { pathname } = useLocation()
+  const navigate = useNavigate()
 
   const homeActive = !pathname.startsWith('/invite')
 
@@ -18,7 +21,13 @@ const ServerListSidebar = () => {
         <ConditionalLink active={homeActive} to={'/'}>
           <ServerEntry home active={homeActive}>
             <Swoosh />
-            <div>123123</div>
+            <div onContextMenu={() => console.log('???')} onClick={() => homeActive && navigate('/settings')}>
+              <UserHover>
+                <Icon size={42} unread={undefined} count={0}>
+                  <UserIcon target={undefined} size={32} status hover />
+                </Icon>
+              </UserHover>
+            </div>
           </ServerEntry>
         </ConditionalLink>
       </ServerList>
@@ -101,3 +110,33 @@ const ServerEntry = styled.div<{ active: boolean; home?: boolean }>`
       cursor: pointer;
     `}
 `
+
+function Icon({ children, unread, count, size }: { children: React.ReactNode; unread?: 'mention' | 'unread'; count: number | 0; size: number }) {
+  return (
+    <svg width={size} height={size} aria-hidden="true" viewBox="0 0 32 32">
+      <use href="#serverIndicator" />
+      <foreignObject x="0" y="0" width="32" height="32" mask={unread ? 'url(#server)' : undefined}>
+        {children}
+      </foreignObject>
+      {unread === 'unread' && <circle cx="27" cy="5" r="5" fill={'white'} />}
+      {unread === 'mention' && (
+        <>
+          <circle cx="27" cy="5" r="5" fill={'var(--error)'} />
+          <text
+            x="27"
+            y="5"
+            r="5"
+            fill={'white'}
+            fontSize={'7.5'}
+            fontWeight={600}
+            textAnchor="middle"
+            alignmentBaseline={'middle'}
+            dominantBaseline={'middle'}
+          >
+            {count < 10 ? count : '9+'}
+          </text>
+        </>
+      )}
+    </svg>
+  )
+}
