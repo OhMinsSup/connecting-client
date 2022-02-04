@@ -1,15 +1,14 @@
 import { useEffect, useCallback } from 'react'
-import { atom, useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil'
+import { atom, useRecoilState, useResetRecoilState, useSetRecoilState, useRecoilValue } from 'recoil'
 import useSWR, { useSWRConfig } from 'swr'
 
 import isEmpty from 'lodash-es/isEmpty'
 import noop from 'lodash-es/noop'
 import { useIsomorphicLayoutEffect } from 'react-use'
-import { ConnectingStorage } from '../libs/storage'
 
 // api
 import { fetcher } from '../api/fetcher'
-import { API_ENDPOINTS, STORAGE_KEY } from '../constants'
+import { API_ENDPOINTS } from '../constants'
 
 import type { SWRConfiguration, Middleware } from 'swr'
 import type { UserSchema } from '../api/schema/model'
@@ -25,6 +24,13 @@ export const authState = atom<AuthState>({
     isLoggedIn: false,
     profile: null,
   },
+  effects_UNSTABLE: [
+    ({ onSet }) => {
+      onSet((newID) => {
+        console.log(`%c🐳 [authState - state]:`, 'color: #66aee9;', newID)
+      })
+    },
+  ],
 })
 
 // useAuthState auth에 상태값 변경 및 가져오는 함수
@@ -42,14 +48,19 @@ export function useAuthSetState() {
   return useSetRecoilState(authState)
 }
 
+// useAuthValue auth에 상태값 가져오는 함수
+export function useAuthValue() {
+  return useRecoilValue(authState)
+}
+
 interface ProfileConfig extends Pick<SWRConfiguration, 'onError' | 'onSuccess'> {
   enable?: boolean
 }
 
 const middleware: Middleware = (useSWRNext) => {
   return (key, fetcher, config) => {
-    const extendedFetcher = async (...args: any[]) => {
-      const token = await ConnectingStorage.getItem(STORAGE_KEY.TOKEN_KEY)
+    const extendedFetcher = (...args: any[]) => {
+      const token = localStorage.getItem('@@Connecting-Web-App/token')
       if (!token || typeof token !== 'string') {
         return Promise.resolve<any>(null)
       }
@@ -96,7 +107,7 @@ export function useProfileQuery(config: ProfileConfig = {}) {
 
   useIsomorphicLayoutEffect(() => {
     const promise = async () => {
-      const token = await ConnectingStorage.getItem(STORAGE_KEY.TOKEN_KEY)
+      const token = localStorage.getItem('@@Connecting-Web-App/token')
       if (!token) {
         setState((state) => ({
           ...state,

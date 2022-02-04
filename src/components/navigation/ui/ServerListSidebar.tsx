@@ -1,5 +1,5 @@
 import React from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
 import { Swoosh } from '.'
@@ -8,12 +8,18 @@ import ConditionalLink from '../../ui/ConditionalLink'
 import { isTouchscreenDevice } from '../../../libs/utils/utils'
 import UserIcon from '../../common/user/UserIcon'
 import UserHover from '../../common/user/UserHover'
+import LineDivider from '../../ui/LineDivider'
+import { useWorkspacesQuery } from '../../../atoms/workspaceState'
+import Tooltip from '../../ui/Tooltip'
 
 const ServerListSidebar = () => {
   const { pathname } = useLocation()
+  const params = useParams<{ workspaceId?: string }>()
   const navigate = useNavigate()
 
   const homeActive = !pathname.startsWith('/invite')
+
+  const { workspaces } = useWorkspacesQuery()
 
   return (
     <ServersBase>
@@ -30,6 +36,30 @@ const ServerListSidebar = () => {
             </div>
           </ServerEntry>
         </ConditionalLink>
+        {/* channles */}
+        <LineDivider />
+        {/* servers */}
+        {workspaces.map((item) => {
+          const active = item.idx === Number(params.workspaceId)
+
+          // const isUnread = server.isUnread(state.notifications)
+          // const mentionCount = server.getMentions(state.notifications).length
+          const isUnread = true
+          const mentionCount = 0
+          return (
+            <ConditionalLink key={item.idx} active={active} to={'/'}>
+              <ServerEntry active={active}>
+                <Swoosh />
+                <Tooltip content={item.name} placement="right">
+                  <Icon size={42} unread={mentionCount > 0 ? 'mention' : isUnread ? 'unread' : undefined} count={mentionCount}>
+                    {/* <ServerIcon size={32} target={server} /> */}
+                    ???
+                  </Icon>
+                </Tooltip>
+              </ServerEntry>
+            </ConditionalLink>
+          )
+        })}
       </ServerList>
     </ServersBase>
   )

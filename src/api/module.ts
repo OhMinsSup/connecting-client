@@ -1,17 +1,14 @@
 import { client } from './client'
 import omit from 'lodash-es/omit'
+import { isBrowser } from '../libs/utils/utils'
 
 import type { Params, Schema } from './schema/common'
 import type { AxiosRequestConfig } from 'axios'
 
-const STORAGE_KEY = {
-  TOKEN_KEY: '',
-}
-
 class APIMoudle {
   withCredentials: boolean
   constructor() {
-    this.withCredentials = true
+    this.withCredentials = false
   }
 
   setWithCredentials(withCredentials: boolean) {
@@ -19,8 +16,8 @@ class APIMoudle {
   }
 
   authorized = () => {
-    if (typeof window === 'undefined') return null
-    const authorization = localStorage.getItem(STORAGE_KEY.TOKEN_KEY)
+    if (!isBrowser) return null
+    const authorization = localStorage.getItem('@@Connecting-Web-App/token')
     if (!authorization) return null
     return authorization
   }

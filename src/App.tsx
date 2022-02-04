@@ -24,10 +24,7 @@ import { GlobalTheme } from './atoms/utils'
 import { recoilInitializer } from './atoms/recoilInitializer'
 
 const Core: React.FC = ({ children }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { profile } = useProfileQuery()
-
-  console.log(`%c🐳 [Core - profile]:`, 'color: #66aee9;', profile)
+  useProfileQuery()
 
   return <>{children}</>
 }

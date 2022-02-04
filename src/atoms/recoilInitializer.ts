@@ -38,7 +38,6 @@ const hydrate = async (snapshot: MutableSnapshot) => {
 
 export const recoilInitializer = (snapshot: MutableSnapshot) => {
   // Load MobX store.
-  console.log('Loading store...', snapshot)
   hydrate(snapshot)
 
   return null

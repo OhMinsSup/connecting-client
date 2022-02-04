@@ -42,7 +42,7 @@ const UserIcon: React.FC<UserIconProps> = (props) => {
     url = 'https://api.revolt.chat/users/01FNRRTRS58DCD1B9XBAT6MBRT/default_avatar'
   }
 
-  console.log('url', url)
+  // console.log('url', url)
 
   return (
     <IconBase {...svgProps} width={size} height={size} hover={hover} borderRadius="--border-radius-user-icon" aria-hidden="true" viewBox="0 0 32 32">

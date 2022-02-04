@@ -33,3 +33,16 @@ export interface StatusSchema {
 // Busy = 'busy', // 바쁨
 // Invisible = 'invisible', // 보이지 않는 상태
 export type PresenceStatusType = 'online' | 'offline' | 'busy' | 'invisible'
+
+export interface WorkspaceSchema {
+  idx: number
+  name: string
+  code: string
+  description: string | null
+  imageUrl: string | null
+  backgroundImageUrl: string | null
+  createdAt: string
+  updatedAt: string
+  deletedAt: string | null
+  fk_owner_idx: number
+}

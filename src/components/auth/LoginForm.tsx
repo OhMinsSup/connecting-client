@@ -19,14 +19,13 @@ import styles from './style/auth.module.scss'
 import wideSVG from '../../assets/svg/wide.svg'
 
 // utils
-import { API_ENDPOINTS, PAGE_ENDPOINTS, STORAGE_KEY } from '../../constants'
+import { API_ENDPOINTS, PAGE_ENDPOINTS } from '../../constants'
 import { isAxiosError } from '../../libs/utils/utils'
 
 // api
 import { api } from '../../api/module'
 
 // hooks
-import { ConnectingStorage } from '../../libs/storage'
 import { useMutateProfile } from '../../atoms/authState'
 
 // types
@@ -67,7 +66,7 @@ const LoginForm: React.FC = () => {
 
       if (data.ok) {
         const { result } = data
-        await ConnectingStorage.setItem(STORAGE_KEY.TOKEN_KEY, result.accessToken)
+        localStorage.setItem('@@Connecting-Web-App/token', result.accessToken)
         await setProfile(result.accessToken)
         navigate(PAGE_ENDPOINTS.INDEX)
         return

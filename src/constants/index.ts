@@ -22,6 +22,9 @@ export const API_ENDPOINTS = {
     RESET_PASSWORD: 'users/reset-password', // 비밀번호 재설정
     CHANGE_PASSWORD: 'users/change-password', // 비밀번호 변경
   },
+  WORKSPACES: {
+    ROOT: 'workspaces', // 워크스페이스 (나의) 목록 조회
+  },
 }
 
 export const WEB_APP = '@@Connecting-Web-App'
