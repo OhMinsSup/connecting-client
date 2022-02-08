@@ -1,16 +1,23 @@
 import React from 'react'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { Cog } from '@styled-icons/boxicons-solid'
+import { Plus } from '@styled-icons/boxicons-regular'
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
 import { Swoosh } from '.'
-import ConditionalLink from '../../ui/ConditionalLink'
 
-import { isTouchscreenDevice } from '../../../libs/utils/utils'
+import ConditionalLink from '../../ui/ConditionalLink'
+import IconButton from '../../ui/IconButton'
 import UserIcon from '../../common/user/UserIcon'
 import UserHover from '../../common/user/UserHover'
 import LineDivider from '../../ui/LineDivider'
-import { useWorkspacesQuery } from '../../../atoms/workspaceState'
 import Tooltip from '../../ui/Tooltip'
+import ServerIcon from '../../common/server/ServerIcon'
+
+// utils
+import { isTouchscreenDevice } from '../../../libs/utils/utils'
+
+import { useWorkspacesQuery } from '../../../api/hooks/workspaceHook'
 
 const ServerListSidebar = () => {
   const { pathname } = useLocation()
@@ -46,21 +53,44 @@ const ServerListSidebar = () => {
           // const mentionCount = server.getMentions(state.notifications).length
           const isUnread = true
           const mentionCount = 0
+
           return (
             <ConditionalLink key={item.idx} active={active} to={'/'}>
               <ServerEntry active={active}>
                 <Swoosh />
                 <Tooltip content={item.name} placement="right">
                   <Icon size={42} unread={mentionCount > 0 ? 'mention' : isUnread ? 'unread' : undefined} count={mentionCount}>
-                    {/* <ServerIcon size={32} target={server} /> */}
-                    ???
+                    <ServerIcon size={32} target={item} />
                   </Icon>
                 </Tooltip>
               </ServerEntry>
             </ConditionalLink>
           )
         })}
+        <ServerCircle>
+          <Tooltip content="Add a Server" placement="right">
+            <div className="circle">
+              <IconButton>
+                <Plus size={32} />
+              </IconButton>
+            </div>
+          </Tooltip>
+        </ServerCircle>
       </ServerList>
+
+      {!isTouchscreenDevice && (
+        <Tooltip content={'Settings'} placement="right">
+          <ServerCircle>
+            <Link to="/settings">
+              <div className="circle">
+                <IconButton>
+                  <Cog size={24} fill="var(--secondary-foreground) !important" />
+                </IconButton>
+              </div>
+            </Link>
+          </ServerCircle>
+        </Tooltip>
+      )}
     </ServersBase>
   )
 }
@@ -139,6 +169,35 @@ const ServerEntry = styled.div<{ active: boolean; home?: boolean }>`
     css`
       cursor: pointer;
     `}
+`
+
+const ServerCircle = styled.div`
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  .circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-background);
+    border-radius: 50%;
+    height: 42px;
+    width: 42px;
+    transition: background-color 0.1s ease-in;
+    cursor: pointer;
+
+    > div svg {
+      color: var(--accent);
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
 `
 
 function Icon({ children, unread, count, size }: { children: React.ReactNode; unread?: 'mention' | 'unread'; count: number | 0; size: number }) {

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 
-interface IconButtonProps {
+interface IconButtonProps extends React.HTMLAttributes<HTMLDivElement> {
   rotate?: string
   type?: 'default' | 'circle'
 }
