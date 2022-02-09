@@ -1,15 +1,27 @@
 import React from 'react'
-// import { isTouchscreenDevice } from '../../libs/utils/utils'
-import { ServerListSidebar, SidebarBase } from './ui'
+import { Route, Routes } from 'react-router-dom'
+import { SIDEBAR_CHANNELS, useLayoutActionHook } from '../../atoms/layoutState'
+import { isTouchscreenDevice } from '../../libs/utils/utils'
+import { HomeSidebar, ServerListSidebar, SidebarBase } from './ui'
 
 interface LeftSidebarProps {}
 const LeftSidebar: React.FC<LeftSidebarProps> = () => {
-  // const isOpen = isTouchscreenDevice || layout.getSectionState(SIDEBAR_CHANNELS, true)
+  const { getSectionState } = useLayoutActionHook()
+  const isOpen = isTouchscreenDevice || getSectionState(SIDEBAR_CHANNELS, true)
 
   return (
     <SidebarBase>
-      {/* path: "/" */}
-      <ServerListSidebar />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <ServerListSidebar />
+              {isOpen && <HomeSidebar />}
+            </>
+          }
+        />
+      </Routes>
     </SidebarBase>
   )
 }

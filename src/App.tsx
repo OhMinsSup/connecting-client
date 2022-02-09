@@ -95,7 +95,7 @@ const App: React.FC = () => {
   return (
     <Provider>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/*" element={<HomePage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="signup" element={<SignupPage />} />
         <Route path="reset-password" element={<ResetPasswordPage />} />
