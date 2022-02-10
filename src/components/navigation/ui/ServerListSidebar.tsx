@@ -19,6 +19,8 @@ import { isTouchscreenDevice } from '../../../libs/utils/utils'
 
 import { useWorkspacesQuery } from '../../../api/hooks/workspaceHook'
 
+// https://developers.revolt.chat/api/#tag/Relationships
+
 const ServerListSidebar = () => {
   const { pathname } = useLocation()
   const params = useParams<{ workspaceId?: string }>()
