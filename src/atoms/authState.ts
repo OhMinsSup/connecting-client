@@ -11,11 +11,11 @@ import { fetcher } from '../api/fetcher'
 import { API_ENDPOINTS } from '../constants'
 
 import type { SWRConfiguration, Middleware } from 'swr'
-import type { UserSchema } from '../api/schema/model'
+import type { MeSchema } from '../api/schema/model'
 
 export interface AuthState {
   isLoggedIn: boolean
-  profile: UserSchema | null
+  profile: MeSchema | null
 }
 
 export const authState = atom<AuthState>({
@@ -154,7 +154,7 @@ export function useProfileQuery(config: ProfileConfig = {}) {
     },
   })
 
-  const updateProfile = async (profile?: UserSchema | null) => {
+  const updateProfile = async (profile?: MeSchema | null) => {
     if (profile) {
       // profile 정보가 존재하면 cache 데이터 업데이트
       await mutate(profile, false)

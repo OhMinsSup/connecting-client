@@ -17,7 +17,9 @@ import ServerIcon from '../../common/server/ServerIcon'
 // utils
 import { isTouchscreenDevice } from '../../../libs/utils/utils'
 
+// hooks
 import { useWorkspacesQuery } from '../../../api/hooks/workspaceHook'
+import { useProfileQuery } from '../../../atoms/authState'
 
 // https://developers.revolt.chat/api/#tag/Relationships
 
@@ -28,23 +30,29 @@ const ServerListSidebar = () => {
 
   const homeActive = !pathname.startsWith('/invite')
 
+  const { profile } = useProfileQuery()
+
   const { workspaces } = useWorkspacesQuery()
 
   return (
     <ServersBase>
       <ServerList>
-        <ConditionalLink active={homeActive} to={'/'}>
-          <ServerEntry home active={homeActive}>
-            <Swoosh />
-            <div onContextMenu={() => console.log('???')} onClick={() => homeActive && navigate('/settings')}>
-              <UserHover>
-                <Icon size={42} unread={undefined} count={0}>
-                  <UserIcon target={undefined} size={32} status hover />
-                </Icon>
-              </UserHover>
-            </div>
-          </ServerEntry>
-        </ConditionalLink>
+        {profile?.myWorkspaces.map((item) => {
+          return (
+            <ConditionalLink active={homeActive} to={'/'} key={`my-workspace-${item.idx}`}>
+              <ServerEntry home active={homeActive}>
+                <Swoosh />
+                <div onContextMenu={() => console.log('???')} onClick={() => homeActive && navigate('/settings')}>
+                  <UserHover>
+                    <Icon size={42} unread={undefined} count={0}>
+                      <UserIcon target={profile} size={32} status hover />
+                    </Icon>
+                  </UserHover>
+                </div>
+              </ServerEntry>
+            </ConditionalLink>
+          )
+        })}
         {/* channles */}
         <LineDivider />
         {/* servers */}

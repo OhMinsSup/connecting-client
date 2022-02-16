@@ -5,9 +5,9 @@ import { useStatusColor } from './hooks/useStatusColor'
 import IconBase from '../../ui/IconBase'
 
 import type { IconBaseProps } from '../../ui/IconBase'
-import type { UserSchema } from '../../../api/schema/model'
+import type { MeSchema } from '../../../api/schema/model'
 
-interface Props extends IconBaseProps<UserSchema> {
+interface Props extends IconBaseProps<MeSchema> {
   status?: boolean
   // TODO: Voice Type
   voice?: any

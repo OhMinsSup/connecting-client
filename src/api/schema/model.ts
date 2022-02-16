@@ -1,3 +1,29 @@
+// Online = 'online', // 온라인
+// Idle = 'idle', // 게으른
+// Busy = 'busy', // 바쁨
+// Invisible = 'invisible', // 보이지 않는 상태
+export type PresenceStatusType = 'online' | 'offline' | 'busy' | 'invisible'
+
+// 'enabled', // 0: 계정 사용 가능
+// 'suspended', //  1: 계정이 정지됨
+// 'deleted', // 2: 계정이 삭제됨
+// 'banned', // 4: 계정이 차단됨
+export type UserFlagsType = 'enabled' | 'suspended' | 'deleted' | 'banned'
+
+export interface WorkspaceSchema {
+  idx: number
+  name: string
+  code: string
+  isMyWorkspace: boolean
+  description: string | null
+  imageUrl: string | null
+  backgroundImageUrl: string | null
+  createdAt: string
+  updatedAt: string
+  deletedAt: string | null
+  fk_owner_idx: number
+}
+
 export interface UserSchema {
   idx: number
   email: string
@@ -22,27 +48,16 @@ export interface ProfileSchema {
 
 export interface StatusSchema {
   idx: number
+  text: string
+  flags: UserFlagsType
   presence: PresenceStatusType
   createdAt: string
   updatedAt: string
   fk_user_idx: number
 }
 
-// Online = 'online', // 온라인
-// Idle = 'idle', // 게으른
-// Busy = 'busy', // 바쁨
-// Invisible = 'invisible', // 보이지 않는 상태
-export type PresenceStatusType = 'online' | 'offline' | 'busy' | 'invisible'
-
-export interface WorkspaceSchema {
-  idx: number
-  name: string
-  code: string
-  description: string | null
-  imageUrl: string | null
-  backgroundImageUrl: string | null
-  createdAt: string
-  updatedAt: string
-  deletedAt: string | null
-  fk_owner_idx: number
+export interface MeSchema extends Pick<UserSchema, 'idx' | 'email'> {
+  profile: Omit<ProfileSchema, 'fk_user_idx' | 'updatedAt' | 'createdAt' | 'idx'>
+  status: Omit<StatusSchema, 'fk_user_idx' | 'updatedAt' | 'createdAt' | 'idx'>
+  myWorkspaces: Array<Pick<WorkspaceSchema, 'idx' | 'name'>>
 }

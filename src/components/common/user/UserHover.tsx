@@ -1,24 +1,24 @@
 import React from 'react'
 import styled from 'styled-components'
+
 import Tooltip from '../../ui/Tooltip'
+import UserStatus from './UserStatus'
+import UserShort from './UserShort'
 
-// import type { UserSchema } from '../../../api/schema/model'
+// hooks
+import { useProfileQuery } from '../../../atoms/authState'
 
-interface UserHoverProps {
-  //   user?: UserSchema
-}
+const UserHover: React.FC = ({ children }) => {
+  const { profile } = useProfileQuery()
 
-const UserHover: React.FC<UserHoverProps> = ({ children }) => {
   return (
     <Tooltip
       placement="right-end"
       content={
         <Base>
-          {/* <Username className="username" user={user} /> */}
-          Username
+          <UserShort className="username" user={profile} />
           <span className="status">
-            hoverTestigo
-            {/* <UserStatus user={user} /> */}
+            <UserStatus user={profile} />
           </span>
         </Base>
       }

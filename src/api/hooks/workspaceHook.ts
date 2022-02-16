@@ -61,8 +61,10 @@ export function useWorkspacesQuery(config: QueryConfig = {}) {
     }
   }
 
+  const workspaces = data ?? []
+
   return {
-    workspaces: data ?? [],
+    workspaces,
     updateQuery,
     clearQuery,
   }

@@ -1,8 +1,8 @@
 // import React from 'react'
-import type { UserSchema } from '../../../../api/schema/model'
+import type { MeSchema } from '../../../../api/schema/model'
 import { useThemeActionHook } from '../../../../atoms/settingState'
 
-export const useStatusColor = (user?: UserSchema) => {
+export const useStatusColor = (user?: MeSchema) => {
   const { getVariable } = useThemeActionHook()
 
   return user?.status?.presence !== 'invisible'
