@@ -12,6 +12,13 @@ export const PAGE_ENDPOINTS = {
   INVITE: {
     ROOT: '/invite',
   },
+  CHANNEL: {
+    ROOT: '/channel',
+    DETAIL: (idx: string | number) => `/channel/${idx}`,
+  },
+  FRIENDS: {
+    ROOT: '/friends',
+  },
 }
 
 export const API_ENDPOINTS = {
@@ -25,6 +32,9 @@ export const API_ENDPOINTS = {
   WORKSPACES: {
     ROOT: 'workspaces', // 워크스페이스 (나의) 목록 조회
   },
+  CHANNELS: {
+    ROOT: (idx: string | number) => `workspaces/${idx}/channels`, // 워크스페이스 채널 목록 조회
+  },
 }
 
 export const WEB_APP = '@@Connecting-Web-App'
@@ -32,6 +42,11 @@ export const WEB_APP = '@@Connecting-Web-App'
 export const STORAGE_KEY = {
   TOKEN_KEY: 'authToken',
   USER_KEY: 'userInfo',
+}
+
+export const MODAL_TYPE = {
+  CREATE_WORKSPACE: 'createWorkspace',
+  CREATE_CHANNEL: 'createChannel',
 }
 
 export const STATUS_CODE = {

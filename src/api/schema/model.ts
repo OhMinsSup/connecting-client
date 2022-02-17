@@ -10,49 +10,52 @@ export type PresenceStatusType = 'online' | 'offline' | 'busy' | 'invisible'
 // 'banned', // 4: 계정이 차단됨
 export type UserFlagsType = 'enabled' | 'suspended' | 'deleted' | 'banned'
 
-export interface WorkspaceSchema {
+export type ChannelType = 'group' | 'direct' | 'text' | 'savedMessages'
+
+interface BaseSchema {
   idx: number
+  createdAt: string
+  updatedAt: string
+  deletedAt: string | null
+}
+
+export interface ChannelSchema extends BaseSchema {
+  name: string
+  description: string
+  channelType: ChannelType
+  fk_workspace_idx: number | null
+  fk_owner_idx: number | null
+}
+
+export interface WorkspaceSchema extends BaseSchema {
   name: string
   code: string
   isMyWorkspace: boolean
   description: string | null
   imageUrl: string | null
   backgroundImageUrl: string | null
-  createdAt: string
-  updatedAt: string
-  deletedAt: string | null
   fk_owner_idx: number
 }
 
-export interface UserSchema {
-  idx: number
+export interface UserSchema extends BaseSchema {
   email: string
-  createdAt: string
-  updatedAt: string
-  deletedAt: string | null
   profile: ProfileSchema
   status: StatusSchema
 }
 
-export interface ProfileSchema {
-  idx: number
+export interface ProfileSchema extends BaseSchema {
   nickname: string
   avatarSvg: string
   profileUrl: string | null
   defaultProfile: boolean
   backgroundUrl: string | null
-  createdAt: string
-  updatedAt: string
   fk_user_idx: number
 }
 
-export interface StatusSchema {
-  idx: number
+export interface StatusSchema extends BaseSchema {
   text: string
   flags: UserFlagsType
   presence: PresenceStatusType
-  createdAt: string
-  updatedAt: string
   fk_user_idx: number
 }
 
