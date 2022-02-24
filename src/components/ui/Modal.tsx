@@ -32,6 +32,7 @@ const Modal: React.FC<ModalProps> = (props) => {
   isModalClosing = animateClose
 
   const onClose = useCallback(() => {
+    console.log('onClose???')
     setAnimateClose(true)
     setTimeout(() => onClose?.(), 2e2)
   }, [setAnimateClose, props])
@@ -43,6 +44,7 @@ const Modal: React.FC<ModalProps> = (props) => {
 
     function keyDown(e: KeyboardEvent) {
       if (e.key === 'Escape') {
+        console.log('keydown')
         onClose()
       }
     }
@@ -59,6 +61,7 @@ const Modal: React.FC<ModalProps> = (props) => {
     // ! doesn't seem to work...
     function keyDown(e: KeyboardEvent) {
       if (e.key === 'Enter') {
+        console.log('keydown')
         confirmationAction?.onClick()
       }
     }
@@ -132,26 +135,31 @@ const ModalBase = styled.div`
   position: fixed;
   max-height: 100%;
   user-select: none;
+
   animation-name: ${open};
   animation-duration: 0.2s;
+
   display: grid;
   overflow-y: auto;
   place-items: center;
+
   color: var(--foreground);
   background: rgba(0, 0, 0, 0.8);
+
   &.closing {
     animation-name: ${close};
     animation-fill-mode: forwards;
   }
+
   &.closing > div {
     animation-name: ${zoomOut};
   }
 `
-
 const ModalContainer = styled.div`
   overflow: hidden;
   max-width: calc(100vw - 20px);
   border-radius: var(--border-radius);
+
   animation-name: ${zoomIn};
   animation-duration: 0.25s;
   animation-timing-function: cubic-bezier(0.3, 0.3, 0.18, 1.1);
@@ -160,36 +168,53 @@ const ModalContainer = styled.div`
 const ModalContent = styled.div<{ [key in 'attachment' | 'noBackground' | 'border' | 'padding']?: boolean }>`
   text-overflow: ellipsis;
   border-radius: var(--border-radius);
+
   h3 {
     font-size: 14px;
     text-transform: uppercase;
-    margin-top: 0;
+    margin: 0;
+    margin-bottom: 10px;
+    color: var(--foreground);
   }
+
+  h5 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--secondary-foreground);
+  }
+
   form {
     display: flex;
     flex-direction: column;
     gap: 8px;
+
     > div {
       margin: 0;
       color: var(--secondary-foreground);
       font-size: 12px;
     }
   }
+
   ${(props) =>
     !props.noBackground &&
     css`
       background: var(--secondary-header);
     `}
+
   ${(props) =>
     props.padding &&
     css`
       padding: 1rem;
+      min-width: 450px;
     `}
+
     ${(props) =>
     props.attachment &&
     css`
       border-radius: var(--border-radius) var(--border-radius) 0 0;
     `}
+
     ${(props) =>
     props.border &&
     css`

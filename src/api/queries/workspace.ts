@@ -41,7 +41,7 @@ export function useWorkspacesQuery(config: QueryConfig = {}) {
   }
 
   const { data, mutate } = useSWR(swrKeyLoader, wrappedFetcher, {
-    refreshInterval: 0,
+    revalidateOnFocus: false,
     onSuccess: (result) => {
       if (onSuccess) onSuccess(result)
     },

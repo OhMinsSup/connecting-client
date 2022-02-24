@@ -18,7 +18,9 @@ export interface Options {
   stringifyOptions?: IStringifyOptions
 }
 
-const baseParseConfig: IParseOptions = {}
+const baseParseConfig: IParseOptions = {
+  ignoreQueryPrefix: true,
+}
 
 const baseStringifyConfig: IStringifyOptions = {
   skipNulls: true,

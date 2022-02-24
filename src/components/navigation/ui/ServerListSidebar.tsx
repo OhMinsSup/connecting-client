@@ -18,12 +18,24 @@ import ServerIcon from '../../common/server/ServerIcon'
 import { isTouchscreenDevice } from '../../../libs/utils/utils'
 
 // hooks
-import { useWorkspacesQuery } from '../../../api/hooks/workspaceHook'
+import { useWorkspacesQuery } from '../../../api/queries/workspace'
 import { useProfileQuery } from '../../../atoms/authState'
+import useUrlState from '../../../hooks/useUrlState'
+import { MODAL_TYPE } from '../../../constants'
 
 // https://developers.revolt.chat/api/#tag/Relationships
 
 const ServerListSidebar = () => {
+  const [state, setState] = useUrlState<Record<string, string | null>>(
+    {
+      modalType: null,
+    },
+    {
+      navigateMode: 'replace',
+    },
+  )
+  console.log(state)
+
   const { pathname } = useLocation()
   const params = useParams<{ workspaceId?: string }>()
   const navigate = useNavigate()
@@ -33,6 +45,17 @@ const ServerListSidebar = () => {
   const { profile } = useProfileQuery()
 
   const { workspaces } = useWorkspacesQuery()
+
+  /**
+   * @description 워크스페이스 추가 모달 생성 url state로 관리
+   * @author veloss
+   * @date 2022-02-24
+   */
+  const onClickAddWorkspace = () => {
+    setState({
+      modalType: MODAL_TYPE.CREATE_WORKSPACE,
+    })
+  }
 
   return (
     <ServersBase>
@@ -78,9 +101,9 @@ const ServerListSidebar = () => {
           )
         })}
         <ServerCircle>
-          <Tooltip content="Add a Server" placement="right">
+          <Tooltip content="워크스페이스 추가" placement="right">
             <div className="circle">
-              <IconButton>
+              <IconButton onClick={onClickAddWorkspace}>
                 <Plus size={32} />
               </IconButton>
             </div>

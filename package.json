@@ -30,7 +30,7 @@
     "recoil": "^0.6.1",
     "sass": "^1.43.4",
     "styled-components": "^5.3.3",
-    "swr": "^1.2.1",
+    "swr": "^1.2.2",
     "yup": "^0.32.11"
   },
   "devDependencies": {

@@ -1,4 +1,21 @@
 import * as yup from 'yup'
+import { isObject, isUndefined } from '../utils'
+
+function compact<T>(array: T[]): T[] {
+  return array.filter(Boolean)
+}
+
+const isNullOrUndefined = (value: unknown): value is null | undefined => value == null
+
+export function getError<T>(obj: T, path: string, defaultValue?: unknown): any {
+  if (!path || !isObject(obj)) {
+    return defaultValue
+  }
+
+  const result = compact(path.split(/[,[\].]+?/)).reduce((result, key) => (isNullOrUndefined(result) ? result : result[key as keyof {}]), obj)
+
+  return isUndefined(result) || result === obj ? (isUndefined(obj[path as keyof T]) ? defaultValue : obj[path as keyof T]) : result
+}
 
 export const common = {
   email: yup.string().email('이메일 형식으로 입력해 주세요.'),
@@ -38,4 +55,9 @@ export const schema = {
   email: yup.object().shape({
     email: common.email.required('이메일을 입력해 주세요.'),
   }),
+  worksacpe: {
+    add: yup.object().shape({
+      name: yup.string().max(20, '최대 글자수는 20자리 입니다.').required('워크스페이스를 입력해 주세요.'),
+    }),
+  },
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
+import { getError } from '../../libs/validation/schema'
 
 import type { HTMLAttributes } from 'react'
 import type { FieldError } from 'react-hook-form'
@@ -72,7 +73,7 @@ const Overline: React.FC<OverlineProps> = (props) => {
   const { children, errors, formKey, ...rest } = props
 
   const key = formKey ?? ''
-  const error = errors?.[key]
+  const error = getError(errors, key)
 
   return (
     <OverlineBase {...rest}>

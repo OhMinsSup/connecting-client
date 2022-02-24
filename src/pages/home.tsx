@@ -9,6 +9,9 @@ import LeftSidebar from '../components/navigation/LeftSidebar'
 // utils
 import { isTouchscreenDevice } from '../libs/utils/utils'
 
+// modal
+const WorkspaceAddModal = React.lazy(() => import('../components/workspace/WorkspaceAddModal'))
+
 const HomePage = () => {
   const { pathname } = useLocation()
 
@@ -31,6 +34,9 @@ const HomePage = () => {
           Home component
         </OverlappingPanels>
       </AppContainer>
+      <React.Suspense fallback={<></>}>
+        <WorkspaceAddModal />
+      </React.Suspense>
     </>
   )
 }

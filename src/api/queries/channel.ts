@@ -44,7 +44,7 @@ export function useChannlesQuery(config: QueryConfig = {}) {
   }
 
   const { data, ...reset } = useSWR(swrKeyLoader, wrappedFetcher, {
-    refreshInterval: 0,
+    revalidateOnFocus: false,
     onSuccess: (result) => {
       if (onSuccess) onSuccess(result)
     },

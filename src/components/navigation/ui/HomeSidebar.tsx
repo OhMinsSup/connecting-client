@@ -15,7 +15,7 @@ import { ButtonItem } from '../../common/button'
 import Category from '../../ui/Category'
 
 // hooks
-import { useChannlesQuery } from '../../../api/hooks/channelHook'
+import { useChannlesQuery } from '../../../api/queries/channel'
 import { useLayoutActionHook } from '../../../atoms/layoutState'
 import { useLocation, useParams } from 'react-router-dom'
 import useUrlState from '../../../hooks/useUrlState'
