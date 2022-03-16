@@ -60,4 +60,9 @@ export const schema = {
       name: yup.string().max(20, '최대 글자수는 20자리 입니다.').required('워크스페이스를 입력해 주세요.'),
     }),
   },
+  channel: {
+    add: yup.object().shape({
+      name: yup.string().max(20, '최대 글자수는 20자리 입니다.').required('채널를 입력해 주세요.'),
+    }),
+  },
 }

@@ -1,8 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 
 // constants
-import { API_ENDPOINTS, MODAL_TYPE } from '../../constants'
-import { isAxiosError } from '../../libs/utils/utils'
+import { API_ENDPOINTS, MODAL_TYPE, STATUS_CODE } from '../../constants'
 
 // components
 import Modal from '../ui/Modal'
@@ -13,28 +12,38 @@ import InputBox from '../ui/InputBox'
 import { api } from '../../api/module'
 
 // hooks
-import useUrlState from '../../hooks/useUrlState'
+import { useUrlState } from '../../hooks/useUrlState'
 import { useForm } from 'react-hook-form'
 import { useSWRConfig } from 'swr'
+
+// utils
+import { isEmpty } from '../../libs/utils'
 
 // validation
 import { yupResolver } from '@hookform/resolvers/yup'
 import { schema } from '../../libs/validation/schema'
 
+// error
+import { ApiError } from '../../libs/error'
+
 // types
 import type { SubmitHandler } from 'react-hook-form'
-import type { WorkspaceFormFieldValues } from './type/form'
 
-interface WorkspaceAddProps {}
+interface FormFieldValues {
+  name: string
+}
 
-const WorkspaceAdd: React.FC<WorkspaceAddProps> = () => {
+interface ChannelAddProps {}
+
+const ChannelAdd: React.FC<ChannelAddProps> = () => {
   const { mutate } = useSWRConfig()
   const formRef = useRef<HTMLFormElement | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [state, setState] = useUrlState<Record<string, string | null>>(
+  const [state, setState] = useUrlState<Record<string, any>>(
     {
       modalType: null,
+      workspaceIdx: null,
     },
     {
       navigateMode: 'replace',
@@ -54,15 +63,15 @@ const WorkspaceAdd: React.FC<WorkspaceAddProps> = () => {
     clearErrors,
     reset,
     formState: { errors },
-  } = useForm<WorkspaceFormFieldValues>({
+  } = useForm<FormFieldValues>({
     mode: 'onChange',
     reValidateMode: 'onChange',
-    resolver: yupResolver(schema.worksacpe.add),
+    resolver: yupResolver(schema.channel.add),
     defaultValues,
     criteriaMode: 'firstError',
   })
 
-  const visible = state.modalType === MODAL_TYPE.CREATE_WORKSPACE
+  const visible = state.modalType === MODAL_TYPE.CREATE_CHANNEL && !isEmpty(state.workspaceIdx)
 
   /**
    * @description 모달 닫기 url state로 관리
@@ -72,6 +81,7 @@ const WorkspaceAdd: React.FC<WorkspaceAddProps> = () => {
   const onClose = () => {
     setState({
       modalType: null,
+      workspaceIdx: null,
     })
   }
 
@@ -80,39 +90,40 @@ const WorkspaceAdd: React.FC<WorkspaceAddProps> = () => {
    * @author veloss
    * @date 2022-02-24
    */
-  const onSubmit: SubmitHandler<WorkspaceFormFieldValues> = async (input) => {
+  const onSubmit: SubmitHandler<FormFieldValues> = async (input) => {
     try {
       setLoading(true)
       const { data } = await api.post<{ dataId: number }>({
-        url: API_ENDPOINTS.WORKSPACES.ROOT,
+        url: API_ENDPOINTS.CHANNELS.ROOT(state.workspaceIdx),
         body: input,
       })
       setLoading(false)
 
       if (data.ok) {
-        // revalidate workspace list
-        await mutate(API_ENDPOINTS.WORKSPACES.ROOT)
+        await mutate(API_ENDPOINTS.CHANNELS.ROOT(state.workspaceIdx)) // revalidate workspace list
         onClose()
         return
       }
 
-      const error = new Error()
-      error.name = 'APIError'
-      error.message = JSON.stringify(data)
-      throw error
+      throw new ApiError(data)
     } catch (error) {
       setLoading(false)
-      if (isAxiosError(error)) {
-        console.error(error.response?.data)
-        setError('오류가 발생했습니다.\n나중에 다시 시도해 주세요.')
+      if (ApiError.isAxiosError(error)) {
+        const { response } = error
+        switch (response?.status) {
+          case STATUS_CODE.SERVER_ERROR:
+          case STATUS_CODE.BAD_GATEWAY:
+            throw error
+          default:
+            setError(ApiError.getMessage('alert.common'))
+            break
+        }
         return
       }
 
-      // custom error
-      if (error instanceof Error && error.name === 'ApiError') {
-        const { message } = error
-        const parsedError = JSON.parse(message)
-        setError(parsedError.message)
+      if (ApiError.isApiError(error)) {
+        const { message } = ApiError.toApiErrorJSON(error.message)
+        setError(message?.message || ApiError.getMessage('alert.common'))
         return
       }
     }
@@ -148,7 +159,7 @@ const WorkspaceAdd: React.FC<WorkspaceAddProps> = () => {
     <Modal
       visible={visible}
       padding
-      title={'워크스페이스 만들기'}
+      title={'채널 만들기'}
       disabled={loading}
       disallowClosing
       actions={[
@@ -167,7 +178,7 @@ const WorkspaceAdd: React.FC<WorkspaceAddProps> = () => {
       <div>
         <form className="test" ref={formRef} onSubmit={handleSubmit(onSubmit)}>
           <Overline formKey="name" errors={errors} block>
-            워크스페이스 이름
+            채널 이름
           </Overline>
           <InputBox type="text" autoComplete="on" {...register('name')} />
           {error && (
@@ -181,4 +192,4 @@ const WorkspaceAdd: React.FC<WorkspaceAddProps> = () => {
   )
 }
 
-export default WorkspaceAdd
+export default ChannelAdd

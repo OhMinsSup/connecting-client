@@ -29,7 +29,7 @@ const baseStringifyConfig: IStringifyOptions = {
 
 type UrlState = Record<string, any>
 
-const useUrlState = <S extends UrlState = UrlState>(initialState?: S | (() => S), options?: Options) => {
+export const useUrlState = <S extends UrlState = UrlState>(initialState?: S | (() => S), options?: Options) => {
   type State = Partial<{ [key in keyof S]: any }>
   const { navigateMode = 'push', parseOptions, stringifyOptions } = options || {}
 
@@ -78,5 +78,3 @@ const useUrlState = <S extends UrlState = UrlState>(initialState?: S | (() => S)
 
   return [targetQuery, setState] as const
 }
-
-export default useUrlState

@@ -2,9 +2,15 @@ import axios from 'axios'
 import qs from 'qs'
 import { isDesktop, isMobile, isTablet } from 'react-device-detect'
 
+// constants
+import { STORAGE_KEY } from '../../constants'
+
+// utils
+import { isElement } from 'lodash-es'
+
+// types
 import type { AxiosError } from 'axios'
 import type { Schema } from '../../api/schema/common'
-import { STORAGE_KEY } from '../../constants'
 
 export const isTouchscreenDevice = isDesktop || isTablet ? false : (typeof window !== 'undefined' ? navigator.maxTouchPoints > 0 : false) || isMobile
 
@@ -22,6 +28,14 @@ export function canUseDOM(): boolean {
 }
 
 export const isBrowser = canUseDOM()
+
+export function getOwnerWindow(node?: Element | null): typeof globalThis {
+  return isElement(node) ? getOwnerDocument(node)?.defaultView ?? window : window
+}
+
+export function getOwnerDocument(node?: Element | null): Document {
+  return isElement(node) ? node?.ownerDocument ?? document : document
+}
 
 export function isAxiosError<R = any>(error: any): error is AxiosError<Schema<R>> {
   return error && axios.isAxiosError(error)

@@ -10,7 +10,8 @@ import LeftSidebar from '../components/navigation/LeftSidebar'
 import { isTouchscreenDevice } from '../libs/utils/utils'
 
 // modal
-const WorkspaceAddModal = React.lazy(() => import('../components/workspace/WorkspaceAddModal'))
+const WorkspaceAddModal = React.lazy(() => import('../components/modal/WorkspaceAddModal'))
+const ChannelAddModal = React.lazy(() => import('../components/modal/ChannelAddModal'))
 
 const HomePage = () => {
   const { pathname } = useLocation()
@@ -34,9 +35,9 @@ const HomePage = () => {
           Home component
         </OverlappingPanels>
       </AppContainer>
-      <React.Suspense fallback={<></>}>
-        <WorkspaceAddModal />
-      </React.Suspense>
+
+      <WorkspaceAddModal />
+      <ChannelAddModal />
     </>
   )
 }

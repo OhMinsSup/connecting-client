@@ -1,10 +1,14 @@
-import React, { useCallback, useState, useEffect } from 'react'
+import React, { useCallback, useState, useEffect, useRef } from 'react'
 import styled, { css, keyframes } from 'styled-components'
-import Button from './Button'
 
 // components
+import Button from './Button'
 import { Portal } from '../../context/portal/context'
 
+// hooks
+import { useOutsideClick } from '../../hooks/useOutsideClick'
+
+// types
 import type { ButtonProps } from './Button'
 
 interface ModalAction extends Omit<ButtonProps, 'onClick'> {
@@ -28,16 +32,22 @@ interface ModalProps {
 export let isModalClosing = false
 
 const Modal: React.FC<ModalProps> = (props) => {
+  const ref = useRef<HTMLDivElement | null>(null)
   const [animateClose, setAnimateClose] = useState(false)
   isModalClosing = animateClose
 
   const onClose = useCallback(() => {
-    console.log('onClose???')
     setAnimateClose(true)
     setTimeout(() => onClose?.(), 2e2)
   }, [setAnimateClose, props])
 
   const confirmationAction = props.actions?.find((action) => action.confirmation)
+
+  useOutsideClick({
+    enabled: props.visible,
+    ref,
+    handler: props?.onClose,
+  })
 
   useEffect(() => {
     if (props.disallowClosing) return
@@ -86,7 +96,7 @@ const Modal: React.FC<ModalProps> = (props) => {
   return (
     <Portal>
       <ModalBase className={animateClose ? 'closing' : undefined} onClick={(!props.disallowClosing && props.onClose) || undefined}>
-        <ModalContainer onClick={(e) => (e.nativeEvent.cancelBubble = true)}>
+        <ModalContainer ref={ref} onClick={(e) => (e.nativeEvent.cancelBubble = true)}>
           {content}
           {props.actions && (
             <ModalActions>

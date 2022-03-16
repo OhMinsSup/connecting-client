@@ -1,5 +1,6 @@
 import React, { useId, useEffect } from 'react'
 import styled, { css } from 'styled-components'
+import head from 'lodash-es/head'
 
 // utils
 import { isTouchscreenDevice } from '../../../libs/utils/utils'
@@ -15,28 +16,30 @@ import { ButtonItem } from '../../common/button'
 import Category from '../../ui/Category'
 
 // hooks
+import { useUrlState } from '../../../hooks/useUrlState'
 import { useChannlesQuery } from '../../../api/queries/channel'
 import { useLayoutActionHook } from '../../../atoms/layoutState'
 import { useLocation, useParams } from 'react-router-dom'
-import useUrlState from '../../../hooks/useUrlState'
+import { useProfileQuery } from '../../../atoms/authState'
 
 const HomeSidebar = () => {
   const { pathname } = useLocation()
 
   const { channelIdx } = useParams<{ channelIdx: string }>()
+  const { profile } = useProfileQuery()
+  const myWorkspace = head(profile?.myWorkspaces)
 
-  const { channels } = useChannlesQuery()
+  const { channels } = useChannlesQuery(myWorkspace?.idx)
 
-  const [state, setState] = useUrlState(
+  const [, setState] = useUrlState<Record<string, any>>(
     {
       modalType: null,
+      workspaceIdx: null,
     },
     {
       navigateMode: 'replace',
     },
   )
-
-  console.log('HomeSidebar', state)
 
   const { setLastHomePath } = useLayoutActionHook()
 
@@ -53,7 +56,8 @@ const HomeSidebar = () => {
 
   // 채널 생성 모달 생성
   const onClickOpen = () => {
-    setState({ modalType: MODAL_TYPE.CREATE_CHANNEL })
+    if (!myWorkspace || !myWorkspace.idx) return
+    setState({ modalType: MODAL_TYPE.CREATE_CHANNEL, workspaceIdx: myWorkspace.idx })
   }
 
   return (

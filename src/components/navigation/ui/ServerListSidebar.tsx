@@ -20,13 +20,13 @@ import { isTouchscreenDevice } from '../../../libs/utils/utils'
 // hooks
 import { useWorkspacesQuery } from '../../../api/queries/workspace'
 import { useProfileQuery } from '../../../atoms/authState'
-import useUrlState from '../../../hooks/useUrlState'
+import { useUrlState } from '../../../hooks/useUrlState'
 import { MODAL_TYPE } from '../../../constants'
 
 // https://developers.revolt.chat/api/#tag/Relationships
 
 const ServerListSidebar = () => {
-  const [state, setState] = useUrlState<Record<string, string | null>>(
+  const [, setState] = useUrlState<Record<string, string | null>>(
     {
       modalType: null,
     },
@@ -34,7 +34,6 @@ const ServerListSidebar = () => {
       navigateMode: 'replace',
     },
   )
-  console.log(state)
 
   const { pathname } = useLocation()
   const params = useParams<{ workspaceId?: string }>()

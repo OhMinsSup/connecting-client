@@ -1,5 +1,4 @@
 import noop from 'lodash-es/noop'
-import head from 'lodash-es/head'
 
 // hooks
 import { useProfileQuery } from '../../atoms/authState'
@@ -22,7 +21,7 @@ interface QueryConfig extends Pick<SWRConfiguration, 'onError' | 'onSuccess'> {
   enable?: boolean
 }
 
-export function useChannlesQuery(config: QueryConfig = {}) {
+export function useChannlesQuery(workspaceIdx?: number | string | null, config: QueryConfig = {}) {
   const { enable = true, onError = noop, onSuccess = noop } = config
 
   const { profile } = useProfileQuery()
@@ -31,9 +30,8 @@ export function useChannlesQuery(config: QueryConfig = {}) {
     // enabled 이 false일 경우 가져오지 않음
     if (!enable) return null
     if (isEmpty(profile)) return null
-    const myWorkspace = head(profile?.myWorkspaces)
-    if (!myWorkspace) return null
-    return API_ENDPOINTS.CHANNELS.ROOT(myWorkspace.idx)
+    if (!workspaceIdx) return null
+    return API_ENDPOINTS.CHANNELS.ROOT(workspaceIdx)
   }
 
   const wrappedFetcher = async (url: string) => {

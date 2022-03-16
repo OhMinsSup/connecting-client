@@ -28,7 +28,7 @@ import wideSVG from '../../assets/svg/wide.svg'
 
 // types
 import type { SubmitHandler } from 'react-hook-form'
-import type { SignupFormFieldValues } from './type/form'
+import type { SignupFormFieldValues } from './types/form'
 
 const initialValues = {
   email: '',
