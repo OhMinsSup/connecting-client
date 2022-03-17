@@ -4,24 +4,23 @@ import { Plus } from '@styled-icons/boxicons-regular'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
-import { Swoosh } from '.'
-
-import ConditionalLink from '../../ui/ConditionalLink'
-import IconButton from '../../ui/IconButton'
-import UserIcon from '../../common/user/UserIcon'
-import UserHover from '../../common/user/UserHover'
-import LineDivider from '../../ui/LineDivider'
-import Tooltip from '../../ui/Tooltip'
-import ServerIcon from '../../common/server/ServerIcon'
+import Swoosh from './Swoosh'
+import ConditionalLink from '../ui/ConditionalLink'
+import IconButton from '../ui/IconButton'
+import UserIcon from '../common/user/UserIcon'
+import UserHover from '../common/user/UserHover'
+import LineDivider from '../ui/LineDivider'
+import Tooltip from '../ui/Tooltip'
+import ServerIcon from '../common/server/ServerIcon'
 
 // utils
-import { isTouchscreenDevice } from '../../../libs/utils/utils'
+import { isTouchscreenDevice } from '../../libs/utils/utils'
 
 // hooks
-import { useWorkspacesQuery } from '../../../api/queries/workspace'
-import { useProfileQuery } from '../../../atoms/authState'
-import { useUrlState } from '../../../hooks/useUrlState'
-import { MODAL_TYPE } from '../../../constants'
+import { useWorkspacesQuery } from '../../api/queries/workspace'
+import { useProfileQuery } from '../../atoms/authState'
+import { useUrlState } from '../../hooks/useUrlState'
+import { MODAL_TYPE } from '../../constants'
 
 // https://developers.revolt.chat/api/#tag/Relationships
 

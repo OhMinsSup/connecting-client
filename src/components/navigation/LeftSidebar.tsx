@@ -2,7 +2,9 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { SIDEBAR_CHANNELS, useLayoutActionHook } from '../../atoms/layoutState'
 import { isTouchscreenDevice } from '../../libs/utils/utils'
-import { HomeSidebar, ServerListSidebar, SidebarBase } from './ui'
+import HomeSidebar from './HomeSidebar'
+import ServerListSidebar from './ServerListSidebar'
+import SidebarBase from './SidebarBase'
 
 interface LeftSidebarProps {}
 const LeftSidebar: React.FC<LeftSidebarProps> = () => {

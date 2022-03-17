@@ -12,7 +12,7 @@ import { schema } from '../../libs/validation/schema'
 import Overline from '../ui/Overline'
 import InputBox from '../ui/InputBox'
 import Button from '../ui/Button'
-import { Legal } from './ui'
+import Legal from './Legal'
 
 // styles
 import styles from './style/auth.module.scss'

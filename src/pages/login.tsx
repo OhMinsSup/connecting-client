@@ -1,10 +1,10 @@
 import LoginForm from '../components/auth/LoginForm'
-import { AuthLayout } from '../components/auth/ui'
+import Layout from '../components/auth/Layout'
 
 const LoginPage = () => (
-  <AuthLayout>
+  <Layout>
     <LoginForm />
-  </AuthLayout>
+  </Layout>
 )
 
 export default LoginPage

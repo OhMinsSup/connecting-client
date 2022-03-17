@@ -16,7 +16,7 @@ import { isAxiosError } from '../../libs/utils/utils'
 import Overline from '../ui/Overline'
 import InputBox from '../ui/InputBox'
 import Button from '../ui/Button'
-import Legal from './ui/Legal'
+import Legal from './Legal'
 import Modal from '../ui/Modal'
 
 // styles

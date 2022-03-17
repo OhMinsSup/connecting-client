@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { isTouchscreenDevice } from '../../../libs/utils/utils'
+import { isTouchscreenDevice } from '../../libs/utils/utils'
 
 const IconContainer = styled.div`
   cursor: pointer;

@@ -1,8 +1,8 @@
 import React from 'react'
 import classNames from 'classnames'
-import styles from './item.module.scss'
+import styles from './styles/button.module.scss'
 
-interface ButtonItemProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children' | 'as'> {
+export interface ButtonItemProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children' | 'as'> {
   active?: boolean
   alert?: 'unread' | 'mention'
   alertCount?: number

@@ -3,24 +3,28 @@ import styled, { css } from 'styled-components'
 import head from 'lodash-es/head'
 
 // utils
-import { isTouchscreenDevice } from '../../../libs/utils/utils'
+import { isTouchscreenDevice } from '../../libs/utils/utils'
 
 // constants
-import { MODAL_TYPE, PAGE_ENDPOINTS } from '../../../constants'
+import { MODAL_TYPE, PAGE_ENDPOINTS } from '../../constants'
 
 // components
 import { Home, UserDetail, Notepad } from '@styled-icons/boxicons-solid'
-import ConditionalLink from '../../ui/ConditionalLink'
 import { GenericSidebarBase, GenericSidebarList } from './SidebarBase'
-import { ButtonItem } from '../../common/button'
-import Category from '../../ui/Category'
+import { ButtonItem } from '../common/button'
+import { ChannelButtonItem } from '../common/button'
+import ConditionalLink from '../ui/ConditionalLink'
+import Category from '../ui/Category'
 
 // hooks
-import { useUrlState } from '../../../hooks/useUrlState'
-import { useChannlesQuery } from '../../../api/queries/channel'
-import { useLayoutActionHook } from '../../../atoms/layoutState'
+import { useUrlState } from '../../hooks/useUrlState'
+import { useChannlesQuery } from '../../api/queries/channel'
+import { useLayoutActionHook } from '../../atoms/layoutState'
 import { useLocation, useParams } from 'react-router-dom'
-import { useProfileQuery } from '../../../atoms/authState'
+import { useProfileQuery } from '../../atoms/authState'
+
+// types
+import type { UserSchema } from '../../api/schema/model'
 
 const HomeSidebar = () => {
   const { pathname } = useLocation()
@@ -97,10 +101,15 @@ const HomeSidebar = () => {
         {channelList.map((channel) => {
           const to = PAGE_ENDPOINTS.CHANNEL.DETAIL(channel.idx)
           const active = channelIdx ? to === PAGE_ENDPOINTS.CHANNEL.DETAIL(channelIdx) : false
+          let user: UserSchema | undefined
+          if (channel.channelType === 'direct') {
+            user = channel.owner
+            if (!user) return null
+          }
 
           return (
             <ConditionalLink key={`channle-${channel.idx}-${id}`} active={active} to={to}>
-              {channel.name}
+              <ChannelButtonItem user={user} channel={channel} active={active} />
             </ConditionalLink>
           )
         })}

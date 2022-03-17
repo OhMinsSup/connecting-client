@@ -14,11 +14,16 @@ import { useIsomorphicLayoutEffect } from 'react-use'
 import { useThemeActionHook } from './atoms/settingState'
 
 // pages
-import HomePage from './pages/home'
-import LoginPage from './pages/login'
-import SignupPage from './pages/signup'
-import ResetPasswordPage from './pages/reset-password'
-import ChangePasswordPage from './pages/change-password'
+const HomePage = React.lazy(() => import('./pages/home'))
+const LoginPage = React.lazy(() => import('./pages/login'))
+const SignupPage = React.lazy(() => import('./pages/signup'))
+const ResetPasswordPage = React.lazy(() => import('./pages/reset-password'))
+const ChangePasswordPage = React.lazy(() => import('./pages/change-password'))
+
+// import LoginPage from './pages/login'
+// import SignupPage from './pages/signup'
+// import ResetPasswordPage from './pages/reset-password'
+// import ChangePasswordPage from './pages/change-password'
 
 // atoms - constants
 import { FONTS, MONOSPACE_FONTS } from './atoms/constants/setting'
@@ -96,13 +101,15 @@ const Provider: React.FC = ({ children }) => {
 const App: React.FC = () => {
   return (
     <Provider>
-      <Routes>
-        <Route path="/*" element={<HomePage />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route path="signup" element={<SignupPage />} />
-        <Route path="reset-password" element={<ResetPasswordPage />} />
-        <Route path="change-password" element={<ChangePasswordPage />} />
-      </Routes>
+      <React.Suspense fallback={<></>}>
+        <Routes>
+          <Route path="/*" element={<HomePage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="signup" element={<SignupPage />} />
+          <Route path="reset-password" element={<ResetPasswordPage />} />
+          <Route path="change-password" element={<ChangePasswordPage />} />
+        </Routes>
+      </React.Suspense>
     </Provider>
   )
 }

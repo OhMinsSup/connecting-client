@@ -13,7 +13,7 @@ import { schema } from '../../libs/validation/schema'
 import Overline from '../ui/Overline'
 import InputBox from '../ui/InputBox'
 import Button from '../ui/Button'
-import { Legal } from './ui'
+import Legal from './Legal'
 
 // api
 import { api } from '../../api/module'

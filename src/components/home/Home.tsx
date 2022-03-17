@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 // components
 import { Home as HomeIcon } from '@styled-icons/boxicons-solid'
 import Header from '../ui/Header'
-import { IconContainer } from './ui'
+import IconContainer from './IconContainer'
 
 // styles
 import styles from './style/home.module.scss'

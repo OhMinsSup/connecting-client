@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components'
 
-import { isTouchscreenDevice } from '../../../libs/utils/utils'
+import { isTouchscreenDevice } from '../../libs/utils/utils'
 
 export default styled.div`
   height: 100%;

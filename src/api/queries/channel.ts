@@ -2,6 +2,7 @@ import noop from 'lodash-es/noop'
 
 // hooks
 import { useProfileQuery } from '../../atoms/authState'
+import { laggy } from '../../libs/swr-utils'
 import useSWR from 'swr'
 
 // utils
@@ -35,7 +36,7 @@ export function useChannlesQuery(workspaceIdx?: number | string | null, config: 
   }
 
   const wrappedFetcher = async (url: string) => {
-    const body = await fetcher<ListSchema<Pick<ChannelSchema, 'idx' | 'name' | 'createdAt' | 'updatedAt' | 'channelType'>>>(url)
+    const body = await fetcher<ListSchema<ChannelSchema>>(url)
     if (!body || (body && !body.ok)) return []
     const { result } = body
     return result.list
@@ -43,6 +44,8 @@ export function useChannlesQuery(workspaceIdx?: number | string | null, config: 
 
   const { data, ...reset } = useSWR(swrKeyLoader, wrappedFetcher, {
     revalidateOnFocus: false,
+    use: [laggy],
+    suspense: true,
     onSuccess: (result) => {
       if (onSuccess) onSuccess(result)
     },

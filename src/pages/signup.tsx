@@ -1,12 +1,12 @@
 import React from 'react'
-import { AuthLayout } from '../components/auth/ui'
+import Layout from '../components/auth/Layout'
 import SignupForm from '../components/auth/SignupForm'
 
 const SignupPage: React.FC = () => {
   return (
-    <AuthLayout>
+    <Layout>
       <SignupForm />
-    </AuthLayout>
+    </Layout>
   )
 }
 

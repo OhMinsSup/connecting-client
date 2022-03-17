@@ -1,12 +1,12 @@
 import React from 'react'
 import EmailForm from '../components/auth/EmailForm'
-import { AuthLayout } from '../components/auth/ui'
+import Layout from '../components/auth/Layout'
 
 const ResetPasswordPage = () => {
   return (
-    <AuthLayout>
+    <Layout>
       <EmailForm isReset />
-    </AuthLayout>
+    </Layout>
   )
 }
 

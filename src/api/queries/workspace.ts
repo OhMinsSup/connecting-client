@@ -2,6 +2,7 @@ import noop from 'lodash-es/noop'
 
 // hooks
 import { useAuthValue } from '../../atoms/authState'
+import { laggy } from '../../libs/swr-utils'
 import useSWR, { useSWRConfig } from 'swr'
 
 // api
@@ -42,6 +43,8 @@ export function useWorkspacesQuery(config: QueryConfig = {}) {
 
   const { data, mutate } = useSWR(swrKeyLoader, wrappedFetcher, {
     revalidateOnFocus: false,
+    use: [laggy],
+    suspense: true,
     onSuccess: (result) => {
       if (onSuccess) onSuccess(result)
     },

@@ -21,10 +21,12 @@ interface BaseSchema {
 
 export interface ChannelSchema extends BaseSchema {
   name: string
-  description: string
+  description: string | null
   channelType: ChannelType
   fk_workspace_idx: number | null
   fk_owner_idx: number | null
+  members: UserSchema[]
+  owner: UserSchema
 }
 
 export interface WorkspaceSchema extends BaseSchema {

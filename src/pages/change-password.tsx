@@ -1,12 +1,12 @@
 import React from 'react'
 import ChangePasswordForm from '../components/auth/ChangePasswordForm'
-import { AuthLayout } from '../components/auth/ui'
+import Layout from '../components/auth/Layout'
 
 const ChangePasswordPage = () => {
   return (
-    <AuthLayout>
+    <Layout>
       <ChangePasswordForm />
-    </AuthLayout>
+    </Layout>
   )
 }
 
