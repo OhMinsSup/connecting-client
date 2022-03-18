@@ -24,7 +24,7 @@ import { useLocation, useParams } from 'react-router-dom'
 import { useProfileQuery } from '../../atoms/authState'
 
 // types
-import type { UserSchema } from '../../api/schema/model'
+import type { ChannelListSchema } from '../../api/schema/channle'
 
 const HomeSidebar = () => {
   const { pathname } = useLocation()
@@ -101,7 +101,7 @@ const HomeSidebar = () => {
         {channelList.map((channel) => {
           const to = PAGE_ENDPOINTS.CHANNEL.DETAIL(channel.idx)
           const active = channelIdx ? to === PAGE_ENDPOINTS.CHANNEL.DETAIL(channelIdx) : false
-          let user: UserSchema | undefined
+          let user: ChannelListSchema['owner'] | undefined
           if (channel.channelType === 'direct') {
             user = channel.owner
             if (!user) return null

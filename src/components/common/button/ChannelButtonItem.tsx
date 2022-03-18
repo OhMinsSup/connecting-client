@@ -14,12 +14,12 @@ import { ChannelIcon } from '../icon'
 import { X } from '@styled-icons/boxicons-regular'
 
 // types
-import type { ChannelSchema, UserSchema } from '../../../api/schema/model'
 import type { ButtonItemProps } from './ButtonItem'
+import type { ChannelListSchema } from '../../../api/schema/channle'
 
 interface ChannelButtonItemProps extends ButtonItemProps {
-  channel: ChannelSchema
-  user?: UserSchema
+  channel: ChannelListSchema
+  user?: ChannelListSchema['owner']
   compact?: boolean
 }
 
@@ -35,7 +35,7 @@ const ChannelButtonItem: React.FC<ChannelButtonItemProps> = ({ active, alert, ma
       <ChannelIcon className={styles.avatar} target={channel} size={compact ? 24 : 32} />
       <div className={styles.name}>
         <div>{channel.name}</div>
-        {channel.channelType === 'group' && <div className={styles.subText}>멤버 {channel.members.length}명</div>}
+        {channel.channelType === 'group' && <div className={styles.subText}>멤버 {channel.memberCount}명</div>}
       </div>
       <div className={styles.button}>
         {/* {alerting && (

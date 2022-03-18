@@ -14,16 +14,17 @@ import { useIsomorphicLayoutEffect } from 'react-use'
 import { useThemeActionHook } from './atoms/settingState'
 
 // pages
-const HomePage = React.lazy(() => import('./pages/home'))
-const LoginPage = React.lazy(() => import('./pages/login'))
-const SignupPage = React.lazy(() => import('./pages/signup'))
-const ResetPasswordPage = React.lazy(() => import('./pages/reset-password'))
-const ChangePasswordPage = React.lazy(() => import('./pages/change-password'))
+// const HomePage = React.lazy(() => import('./pages/home'))
+// const LoginPage = React.lazy(() => import('./pages/login'))
+// const SignupPage = React.lazy(() => import('./pages/signup'))
+// const ResetPasswordPage = React.lazy(() => import('./pages/reset-password'))
+// const ChangePasswordPage = React.lazy(() => import('./pages/change-password'))
 
-// import LoginPage from './pages/login'
-// import SignupPage from './pages/signup'
-// import ResetPasswordPage from './pages/reset-password'
-// import ChangePasswordPage from './pages/change-password'
+import HomePage from './pages/home'
+import LoginPage from './pages/login'
+import SignupPage from './pages/signup'
+import ResetPasswordPage from './pages/reset-password'
+import ChangePasswordPage from './pages/change-password'
 
 // atoms - constants
 import { FONTS, MONOSPACE_FONTS } from './atoms/constants/setting'

@@ -15,8 +15,8 @@ import { API_ENDPOINTS } from '../../constants'
 import { fetcher } from '../fetcher'
 
 import type { SWRConfiguration } from 'swr'
-import type { ChannelSchema } from '../schema/model'
 import type { ListSchema } from '../schema/common'
+import type { ChannelListSchema } from '../schema/channle'
 
 interface QueryConfig extends Pick<SWRConfiguration, 'onError' | 'onSuccess'> {
   enable?: boolean
@@ -36,7 +36,7 @@ export function useChannlesQuery(workspaceIdx?: number | string | null, config: 
   }
 
   const wrappedFetcher = async (url: string) => {
-    const body = await fetcher<ListSchema<ChannelSchema>>(url)
+    const body = await fetcher<ListSchema<ChannelListSchema>>(url)
     if (!body || (body && !body.ok)) return []
     const { result } = body
     return result.list
