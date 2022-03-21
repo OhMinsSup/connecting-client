@@ -1,6 +1,5 @@
-// import React from 'react'
-import type { MeSchema } from '../../../../api/schema/model'
 import { useThemeActionHook } from '../../../../atoms/settingState'
+import type { MeSchema } from '../../../../api/schema/model'
 
 export const useStatusColor = (user?: MeSchema) => {
   const { getVariable } = useThemeActionHook()

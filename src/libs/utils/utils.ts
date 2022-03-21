@@ -1,4 +1,5 @@
 import axios from 'axios'
+import multiavatar from '@multiavatar/multiavatar/esm'
 import qs from 'qs'
 import { isDesktop, isMobile, isTablet } from 'react-device-detect'
 
@@ -43,6 +44,23 @@ export function isAxiosError<R = any>(error: any): error is AxiosError<Schema<R>
 
 export const generateKey = () => {
   return Math.random().toString(36).substr(2, 11)
+}
+
+export const generateAvatar = (avatarKey: string) => {
+  return multiavatar(avatarKey)
+}
+
+interface GetThumbnail {
+  defaultProfile?: boolean
+  avatarSvg?: string | null
+  profileUrl?: string | null
+  name?: string
+}
+
+export const getThumbnail = (params?: GetThumbnail) => {
+  const { defaultProfile = true, avatarSvg = null, profileUrl = null, name = 'null' } = params || {}
+  const svgCode = `data:image/svg+xml;utf8,${encodeURIComponent(generateAvatar(avatarSvg ?? name))}`
+  return defaultProfile ? svgCode : profileUrl ?? svgCode
 }
 
 export const getToken = () => {

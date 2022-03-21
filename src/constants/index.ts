@@ -25,7 +25,7 @@ export const API_ENDPOINTS = {
   USERS: {
     SIGNUP: 'users/signup', // 회원가입
     LOGIN: 'users/signin', // 로그인
-    ME: '/users/me', // 내 정보 조회
+    ME: 'users/me', // 내 정보 조회
     RESET_PASSWORD: 'users/reset-password', // 비밀번호 재설정
     CHANGE_PASSWORD: 'users/change-password', // 비밀번호 변경
   },

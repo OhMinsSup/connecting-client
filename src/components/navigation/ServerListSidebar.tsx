@@ -16,14 +16,15 @@ import ServerIcon from '../common/server/ServerIcon'
 // utils
 import { isTouchscreenDevice } from '../../libs/utils/utils'
 
+// constants
+import { MODAL_TYPE } from '../../constants'
+
 // hooks
 import { useWorkspacesQuery } from '../../api/queries/workspace'
 import { useProfileQuery } from '../../atoms/authState'
 import { useUrlState } from '../../hooks/useUrlState'
-import { MODAL_TYPE } from '../../constants'
 
 // https://developers.revolt.chat/api/#tag/Relationships
-
 const ServerListSidebar = () => {
   const [, setState] = useUrlState<Record<string, string | null>>(
     {
@@ -63,7 +64,7 @@ const ServerListSidebar = () => {
             <ConditionalLink active={homeActive} to={'/'} key={`my-workspace-${item.idx}`}>
               <ServerEntry home active={homeActive}>
                 <Swoosh />
-                <div onContextMenu={() => console.log('???')} onClick={() => homeActive && navigate('/settings')}>
+                <div onClick={() => homeActive && navigate('/settings')}>
                   <UserHover>
                     <Icon size={42} unread={undefined} count={0}>
                       <UserIcon target={profile} size={32} status hover />

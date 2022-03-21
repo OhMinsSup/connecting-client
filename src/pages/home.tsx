@@ -1,10 +1,11 @@
 import React from 'react'
-import { useLocation } from 'react-router-dom'
 import { Docked, OverlappingPanels } from 'react-overlapping-panels'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-// import Home from '../components/home/Home'
 import LeftSidebar from '../components/navigation/LeftSidebar'
+
+// hooks
+import { Outlet, useLocation } from 'react-router-dom'
 
 // utils
 import { isTouchscreenDevice } from '../libs/utils/utils'
@@ -20,19 +21,21 @@ const HomePage = () => {
   // const inChannel = pathname.includes('/channel')
   // const fixedBottomNav = pathname === '/' || pathname === '/settings' || pathname.startsWith('/friends')
   // const inChannel = pathname.includes('/channel')
-  // const inServer = pathname.includes('/server')
+  const inServer = pathname.includes('/server')
   const inSpecial = (pathname.startsWith('/friends') && isTouchscreenDevice) || pathname.startsWith('/invite') || pathname.includes('/settings')
 
   return (
     <>
       <AppContainer>
         <OverlappingPanels
-          width="100%"
+          width="100vw"
           height={'var(--app-height)'}
           leftPanel={inSpecial ? undefined : { width: 292, component: <LeftSidebar /> }}
           docked={isTouchscreenDevice ? Docked.None : Docked.Left}
         >
-          Home component
+          <RoutesWrapper borders={inServer}>
+            <Outlet />
+          </RoutesWrapper>
         </OverlappingPanels>
       </AppContainer>
 
@@ -47,4 +50,27 @@ export default HomePage
 const AppContainer = styled.div`
   background-size: cover !important;
   background-position: center center !important;
+`
+
+const RoutesWrapper = styled.div.attrs({ 'data-component': 'routes' })<{
+  borders: boolean
+}>`
+  min-width: 0;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+
+  background: var(--primary-background);
+
+  ${() =>
+    isTouchscreenDevice &&
+    css`
+      overflow: hidden;
+    `}
+
+  ${(props) =>
+    props.borders &&
+    css`
+      border-start-start-radius: 8px;
+    `}
 `

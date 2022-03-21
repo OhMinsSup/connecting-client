@@ -6,6 +6,7 @@
   "main": "src/main.jsx",
   "dependencies": {
     "@hookform/resolvers": "^2.8.8",
+    "@multiavatar/multiavatar": "^1.0.7",
     "@sentry/browser": "^6.18.2",
     "@styled-icons/boxicons-regular": "^10.38.0",
     "@styled-icons/boxicons-solid": "^10.38.0",

@@ -1,5 +1,8 @@
 import React from 'react'
 
+// utils
+import { getThumbnail } from '../../../libs/utils/utils'
+
 // icon
 import { Hash } from '@styled-icons/boxicons-regular'
 import { ImageIconBase } from '../../ui/IconBase'
@@ -14,7 +17,7 @@ interface ChannelIconProps extends IconBaseProps<ChannelListSchema>, Omit<React.
 
 const ChannelIcon: React.FC<ChannelIconProps> = (props) => {
   const { size, target, attachment, isServerChannel: server, animate, ...imgProps } = props
-  const iconURL = 'https://api.revolt.chat/users/01FNRRTRS58DCD1B9XBAT6MBRT/default_avatar'
+  const iconURL = getThumbnail(target?.owner.profile)
   const isServerChannel = server || (target && target.channelType === 'text')
 
   if (typeof iconURL === 'undefined') {
