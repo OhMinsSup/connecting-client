@@ -15,7 +15,7 @@ import Button from '../ui/Button'
 import Legal from './Legal'
 
 // styles
-import styles from './style/auth.module.scss'
+import styles from '../../assets/styles/modules/auth.module.scss'
 import wideSVG from '../../assets/svg/wide.svg'
 
 // utils

@@ -29,11 +29,13 @@ import type { ChannelListSchema } from '../../api/schema/channle'
 const HomeSidebar = () => {
   const { pathname } = useLocation()
 
-  const { channelIdx } = useParams<{ channelIdx: string }>()
+  const { channelIdx, workspaceIdx } = useParams<{ channelIdx: string; workspaceIdx: string }>()
   const { profile } = useProfileQuery()
   const myWorkspace = head(profile?.myWorkspaces)
 
-  const { channels } = useChannlesQuery(myWorkspace?.idx)
+  const idx = workspaceIdx ?? myWorkspace?.idx
+
+  const { channels } = useChannlesQuery(idx)
 
   const [, setState] = useUrlState<Record<string, any>>(
     {
@@ -109,7 +111,7 @@ const HomeSidebar = () => {
 
           return (
             <ConditionalLink key={`channle-${channel.idx}-${id}`} active={active} to={to}>
-              <ChannelButtonItem user={user} channel={channel} active={active} />
+              <ChannelButtonItem workspaceIdx={idx} user={user} channel={channel} active={active} />
             </ConditionalLink>
           )
         })}

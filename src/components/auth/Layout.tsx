@@ -1,6 +1,6 @@
 import React from 'react'
 import bgImage from '../../assets/images/background.jpeg'
-import styles from './style/auth.module.scss'
+import styles from '../../assets/styles/modules/auth.module.scss'
 
 const Layout: React.FC = ({ children }) => {
   return (

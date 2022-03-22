@@ -38,7 +38,6 @@ const HomePage = () => {
           </RoutesWrapper>
         </OverlappingPanels>
       </AppContainer>
-
       <WorkspaceAddModal />
       <ChannelAddModal />
     </>

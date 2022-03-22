@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import styles from './styles/button.module.scss'
+import styles from '../../../assets/styles/modules/button.module.scss'
 
 export interface ButtonItemProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children' | 'as'> {
   active?: boolean

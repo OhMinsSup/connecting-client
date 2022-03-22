@@ -25,8 +25,10 @@ export interface ChannelSchema extends BaseSchema {
   channelType: ChannelType
   fk_workspace_idx: number | null
   fk_owner_idx: number | null
-  members: UserSchema[]
-  owner: UserSchema
+  members?: UserSchema[]
+  owner?: UserSchema
+  workspaces?: WorkspaceSchema[]
+  channelMembers?: any[]
 }
 
 export interface WorkspaceSchema extends BaseSchema {
@@ -37,12 +39,25 @@ export interface WorkspaceSchema extends BaseSchema {
   imageUrl: string | null
   backgroundImageUrl: string | null
   fk_owner_idx: number
+  owner?: UserSchema
+  members?: UserSchema[]
+  workspaceMembers?: any[]
+  channels?: ChannelSchema[]
+  dms?: any[]
 }
 
 export interface UserSchema extends BaseSchema {
   email: string
   profile: ProfileSchema
   status: StatusSchema
+  workspaceMembers?: any[]
+  channelMembers?: any[]
+  ownedWorkspaces?: WorkspaceSchema[]
+  ownedChannels?: ChannelSchema[]
+  workspaces?: WorkspaceSchema[]
+  channels?: ChannelSchema[]
+  dmSenders?: any[]
+  dmReceivers?: any[]
 }
 
 export interface ProfileSchema extends BaseSchema {

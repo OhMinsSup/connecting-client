@@ -4,6 +4,7 @@ import { Plus } from '@styled-icons/boxicons-regular'
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
+// compoentns
 import Swoosh from './Swoosh'
 import ConditionalLink from '../ui/ConditionalLink'
 import IconButton from '../ui/IconButton'
@@ -81,9 +82,7 @@ const ServerListSidebar = () => {
         {workspaces.map((item) => {
           const active = item.idx === Number(params.workspaceId)
 
-          // const isUnread = server.isUnread(state.notifications)
-          // const mentionCount = server.getMentions(state.notifications).length
-          const isUnread = true
+          const isUnread = false
           const mentionCount = 0
 
           return (

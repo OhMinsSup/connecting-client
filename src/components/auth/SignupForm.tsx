@@ -23,7 +23,7 @@ import { API_ENDPOINTS, PAGE_ENDPOINTS } from '../../constants'
 import { generateKey, isAxiosError } from '../../libs/utils/utils'
 
 // styles
-import styles from './style/auth.module.scss'
+import styles from '../../assets/styles/modules/auth.module.scss'
 import wideSVG from '../../assets/svg/wide.svg'
 
 // types

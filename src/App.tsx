@@ -20,6 +20,10 @@ const SignupPage = React.lazy(() => import('./pages/signup'))
 const ResetPasswordPage = React.lazy(() => import('./pages/reset-password'))
 const ChangePasswordPage = React.lazy(() => import('./pages/change-password'))
 
+// components
+import HomeView from './components/view/HomeView'
+import Preloader from './components/ui/Preloader'
+
 // import HomePage from './pages/home'
 // import LoginPage from './pages/login'
 // import SignupPage from './pages/signup'
@@ -30,7 +34,6 @@ const ChangePasswordPage = React.lazy(() => import('./pages/change-password'))
 import { FONTS, MONOSPACE_FONTS } from './atoms/constants/setting'
 import { GlobalTheme } from './atoms/utils'
 import { recoilInitializer } from './atoms/recoilInitializer'
-import Preloader from './components/ui/Preloader'
 
 const Core: React.FC = ({ children }) => {
   useProfileQuery()
@@ -103,15 +106,6 @@ const App: React.FC = () => {
     <Provider>
       <Routes>
         <Route
-          element={
-            <React.Suspense fallback={<Preloader type="spinner" />}>
-              <HomePage />
-            </React.Suspense>
-          }
-        >
-          <Route path="/" element={<div>Home</div>} />
-        </Route>
-        <Route
           path="login"
           element={
             <React.Suspense fallback={<Preloader type="spinner" />}>
@@ -143,6 +137,16 @@ const App: React.FC = () => {
             </React.Suspense>
           }
         />
+        <Route
+          path="*"
+          element={
+            <React.Suspense fallback={<Preloader type="spinner" />}>
+              <HomePage />
+            </React.Suspense>
+          }
+        >
+          <Route path="/*" element={<HomeView />} />
+        </Route>
       </Routes>
     </Provider>
   )

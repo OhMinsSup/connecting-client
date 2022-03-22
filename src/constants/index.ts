@@ -34,6 +34,7 @@ export const API_ENDPOINTS = {
   },
   CHANNELS: {
     ROOT: (idx: string | number) => `workspaces/${idx}/channels`, // 워크스페이스 채널 목록 조회
+    DELETE: (workspaceIdx: string | number, channelIdx: string | number) => `workspaces/${workspaceIdx}/channels/${channelIdx}`, // 워크스페이스 채널 삭제
   },
 }
 

@@ -14,6 +14,7 @@ import { API_ENDPOINTS } from '../../constants'
 // api
 import { fetcher } from '../fetcher'
 
+// types
 import type { SWRConfiguration } from 'swr'
 import type { ListSchema } from '../schema/common'
 import type { ChannelListSchema } from '../schema/channle'

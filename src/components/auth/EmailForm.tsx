@@ -20,7 +20,7 @@ import Legal from './Legal'
 import Modal from '../ui/Modal'
 
 // styles
-import styles from './style/auth.module.scss'
+import styles from '../../assets/styles/modules/auth.module.scss'
 import wideSVG from '../../assets/svg/wide.svg'
 
 import type { SubmitHandler } from 'react-hook-form'
