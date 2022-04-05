@@ -1,75 +1,42 @@
 import React from 'react'
-import { Docked, OverlappingPanels } from 'react-overlapping-panels'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
-import LeftSidebar from '../components/navigation/LeftSidebar'
+// icons
+import { Home as HomeIcon } from '@styled-icons/boxicons-solid'
 
-// hooks
-import { Outlet, useLocation } from 'react-router-dom'
+// styles
+import styles from '../assets/styles/modules/home.module.scss'
+import { PageHeader } from '../components/ui/Header'
 
-// utils
-import { isTouchscreenDevice } from '../libs/utils/utils'
+// components
 
-// modal
-const WorkspaceAddModal = React.lazy(() => import('../components/modal/WorkspaceAddModal'))
-const ChannelAddModal = React.lazy(() => import('../components/modal/ChannelAddModal'))
-
-const HomePage = () => {
-  const { pathname } = useLocation()
-
-  // const fixedBottomNav = pathname === '/' || pathname === '/settings' || pathname.startsWith('/friends')
-  // const inChannel = pathname.includes('/channel')
-  // const fixedBottomNav = pathname === '/' || pathname === '/settings' || pathname.startsWith('/friends')
-  // const inChannel = pathname.includes('/channel')
-  const inServer = pathname.includes('/server')
-  const inSpecial = (pathname.startsWith('/friends') && isTouchscreenDevice) || pathname.startsWith('/invite') || pathname.includes('/settings')
-
+interface HomePageProps {}
+const HomePage: React.FC<HomePageProps> = () => {
   return (
-    <>
-      <AppContainer>
-        <OverlappingPanels
-          width="100vw"
-          height={'var(--app-height)'}
-          leftPanel={inSpecial ? undefined : { width: 292, component: <LeftSidebar /> }}
-          docked={isTouchscreenDevice ? Docked.None : Docked.Left}
-        >
-          <RoutesWrapper borders={inServer}>
-            <Outlet />
-          </RoutesWrapper>
-        </OverlappingPanels>
-      </AppContainer>
-      <WorkspaceAddModal />
-      <ChannelAddModal />
-    </>
+    <div className={styles.home}>
+      <Overlay>
+        <div className="content">
+          <PageHeader icon={<HomeIcon size={24} />} transparent>
+            홈
+          </PageHeader>
+          <div className={styles.homeScreen}>??</div>
+        </div>
+      </Overlay>
+    </div>
   )
 }
 
 export default HomePage
 
-const AppContainer = styled.div`
-  background-size: cover !important;
-  background-position: center center !important;
-`
+const Overlay = styled.div`
+  display: grid;
+  height: 100%;
 
-const RoutesWrapper = styled.div.attrs({ 'data-component': 'routes' })<{
-  borders: boolean
-}>`
-  min-width: 0;
-  display: flex;
-  position: relative;
-  flex-direction: column;
+  > * {
+    grid-area: 1 / 1;
+  }
 
-  background: var(--primary-background);
-
-  ${() =>
-    isTouchscreenDevice &&
-    css`
-      overflow: hidden;
-    `}
-
-  ${(props) =>
-    props.borders &&
-    css`
-      border-start-start-radius: 8px;
-    `}
+  .content {
+    z-index: 1;
+  }
 `

@@ -1,17 +1,7 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 
 // provider
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import { HelmetProvider, Helmet } from 'react-helmet-async'
-import { RecoilRoot } from 'recoil'
-
-// compoentns
-import Masks from './components/ui/Masks'
-
-// hooks
-import { useProfileQuery } from './atoms/authState'
-import { useIsomorphicLayoutEffect } from 'react-use'
-import { useThemeActionHook } from './atoms/settingState'
+import { Route, Routes } from 'react-router-dom'
 
 // pages
 const HomePage = React.lazy(() => import('./pages/home'))
@@ -20,136 +10,96 @@ const SignupPage = React.lazy(() => import('./pages/signup'))
 const ResetPasswordPage = React.lazy(() => import('./pages/reset-password'))
 const ChangePasswordPage = React.lazy(() => import('./pages/change-password'))
 
+// modal
+import ChannelAddModal from './components/modal/ChannelAddModal'
+import WorkspaceAddModal from './components/modal/WorkspaceAddModal'
+
+// sidebar
+const Sidebar = React.lazy(() => import('./components/ui/Sidebar/Sidebar'))
+
 // components
-import HomeView from './components/view/HomeView'
 import Preloader from './components/ui/Preloader'
 
-// import HomePage from './pages/home'
-// import LoginPage from './pages/login'
-// import SignupPage from './pages/signup'
-// import ResetPasswordPage from './pages/reset-password'
-// import ChangePasswordPage from './pages/change-password'
+// types
+import type { MeSchema } from './api/schema/model'
 
-// atoms - constants
-import { FONTS, MONOSPACE_FONTS } from './atoms/constants/setting'
-import { GlobalTheme } from './atoms/utils'
-import { recoilInitializer } from './atoms/recoilInitializer'
-
-const Core: React.FC = ({ children }) => {
-  useProfileQuery()
-
-  return <>{children}</>
+interface AppProps {
+  profile?: MeSchema
 }
 
-const InjectStyles: React.FC = ({ children }) => {
-  const { computeVariables, getFont, getMonospaceFont, getLigatures, getCSS } = useThemeActionHook()
+const App: React.FC<AppProps> = (props) => {
+  if (!props.profile) {
+    return <PublicRoutes />
+  }
+  return <PrivateRoutes profile={props.profile} />
+}
 
-  // document element값이 변경되는 경우는 없으니깐, memo 적용
-  const rootStyle = useMemo(() => document.documentElement.style, [])
+export default App
 
-  useIsomorphicLayoutEffect(() => {
-    const font = getFont()
-    rootStyle.setProperty('--font', `"${font}"`)
-    // @ts-ignore
-    FONTS[font].load()
-  }, [rootStyle, getFont()])
-
-  useIsomorphicLayoutEffect(() => {
-    const font = getMonospaceFont()
-    rootStyle.setProperty('--monospace-font', `"${font}"`)
-    // @ts-ignore
-    MONOSPACE_FONTS[font].load()
-  }, [rootStyle, getMonospaceFont()])
-
-  useIsomorphicLayoutEffect(() => {
-    rootStyle.setProperty('--ligatures', getLigatures())
-  }, [rootStyle, getLigatures()])
-
-  useIsomorphicLayoutEffect(() => {
-    const resize = () => rootStyle.setProperty('--app-height', `${window.innerHeight}px`)
-    resize()
-
-    window.addEventListener('resize', resize)
-    return () => window.removeEventListener('resize', resize)
-  }, [rootStyle])
-
-  const variables = computeVariables()
-
+const PrivateRoutes: React.FC<Required<AppProps>> = () => {
   return (
     <>
-      <Helmet>
-        <meta name="theme-color" content={variables?.['background']} />
-      </Helmet>
-      {variables && <GlobalTheme theme={variables} />}
-      <style dangerouslySetInnerHTML={{ __html: getCSS() ?? '' }} />
-      {children}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <React.Suspense fallback={<Preloader type="spinner" />}>
+              <Sidebar />
+            </React.Suspense>
+          }
+        >
+          <Route
+            index
+            element={
+              <React.Suspense fallback={<React.Fragment />}>
+                <HomePage />
+              </React.Suspense>
+            }
+          />
+          <Route path="settings" element={<React.Suspense fallback={<React.Fragment />}>Settings</React.Suspense>} />
+        </Route>
+      </Routes>
+      <WorkspaceAddModal />
+      <ChannelAddModal />
     </>
   )
 }
 
-const Provider: React.FC = ({ children }) => {
+const PublicRoutes = () => {
   return (
-    <HelmetProvider>
-      <BrowserRouter>
-        <RecoilRoot initializeState={recoilInitializer}>
-          <Masks />
-          <InjectStyles>{children}</InjectStyles>
-          <Core />
-        </RecoilRoot>
-      </BrowserRouter>
-    </HelmetProvider>
+    <Routes>
+      <Route
+        path="login"
+        element={
+          <React.Suspense fallback={<Preloader type="spinner" />}>
+            <LoginPage />
+          </React.Suspense>
+        }
+      />
+      <Route
+        path="signup"
+        element={
+          <React.Suspense fallback={<Preloader type="spinner" />}>
+            <SignupPage />
+          </React.Suspense>
+        }
+      />
+      <Route
+        path="reset-password"
+        element={
+          <React.Suspense fallback={<Preloader type="spinner" />}>
+            <ResetPasswordPage />
+          </React.Suspense>
+        }
+      />
+      <Route
+        path="change-password"
+        element={
+          <React.Suspense fallback={<Preloader type="spinner" />}>
+            <ChangePasswordPage />
+          </React.Suspense>
+        }
+      />
+    </Routes>
   )
 }
-
-const App: React.FC = () => {
-  return (
-    <Provider>
-      <Routes>
-        <Route
-          path="login"
-          element={
-            <React.Suspense fallback={<Preloader type="spinner" />}>
-              <LoginPage />
-            </React.Suspense>
-          }
-        />
-        <Route
-          path="signup"
-          element={
-            <React.Suspense fallback={<Preloader type="spinner" />}>
-              <SignupPage />
-            </React.Suspense>
-          }
-        />
-        <Route
-          path="reset-password"
-          element={
-            <React.Suspense fallback={<Preloader type="spinner" />}>
-              <ResetPasswordPage />
-            </React.Suspense>
-          }
-        />
-        <Route
-          path="change-password"
-          element={
-            <React.Suspense fallback={<Preloader type="spinner" />}>
-              <ChangePasswordPage />
-            </React.Suspense>
-          }
-        />
-        <Route
-          path="*"
-          element={
-            <React.Suspense fallback={<Preloader type="spinner" />}>
-              <HomePage />
-            </React.Suspense>
-          }
-        >
-          <Route path="/*" element={<HomeView />} />
-        </Route>
-      </Routes>
-    </Provider>
-  )
-}
-
-export default App
