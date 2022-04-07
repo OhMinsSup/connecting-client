@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 
 // compoentns
-import IconButton from '../../IconButton'
+import IconButton from '../../Icon/IconButton'
 import LineDivider from '../../LineDivider'
 import Tooltip from '../../Tooltip'
 import MyWorksapceLink from './MyWorksapceLink'

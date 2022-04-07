@@ -11,7 +11,7 @@ import { useChannlesDeleteMutation } from '../../../api/mutations/channel'
 import { useSWRConfig } from 'swr'
 
 // components
-import IconButton from '../../ui/IconButton'
+import IconButton from '../../ui/Icon/IconButton'
 import { ChannelIcon } from '../icon'
 
 // icon

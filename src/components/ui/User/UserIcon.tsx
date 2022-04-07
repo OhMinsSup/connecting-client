@@ -1,16 +1,16 @@
 import React from 'react'
 
 // hooks
-import { useStatusColor } from './hooks/useStatusColor'
+import { useStatusColor } from '../../../hooks/useStatusColor'
 
 // components
-import IconBase from '../../ui/IconBase'
+import IconBase from '../Icon/IconBase'
 
 // utils
 import { getThumbnail } from '../../../libs/utils/utils'
 
 // types
-import type { IconBaseProps } from '../../ui/IconBase'
+import type { IconBaseProps } from '../Icon/IconBase'
 import type { MeSchema } from '../../../api/schema/model'
 
 interface Props extends IconBaseProps<MeSchema> {

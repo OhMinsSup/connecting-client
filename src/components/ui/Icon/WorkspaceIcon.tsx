@@ -1,10 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
-import { ImageIconBase } from '../../ui/IconBase'
+import { ImageIconBase } from './IconBase'
 
 // types
 import type { WorkspaceSchema } from '../../../api/schema/model'
-import type { IconBaseProps } from '../../ui/IconBase'
+import type { IconBaseProps } from './IconBase'
 
 interface Props extends IconBaseProps<WorkspaceSchema> {
   server_name?: string

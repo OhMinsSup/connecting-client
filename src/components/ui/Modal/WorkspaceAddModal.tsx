@@ -1,30 +1,27 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 
 // constants
-import { API_ENDPOINTS, MODAL_TYPE, STATUS_CODE } from '../../constants'
+import { API_ENDPOINTS, MODAL_TYPE, STATUS_CODE } from '../../../constants'
 
 // components
-import Modal from '../ui/Modal'
-import Overline from '../ui/Overline'
-import InputBox from '../ui/InputBox'
+import Modal from '../Modal'
+import Overline from '../Overline'
+import InputBox from '../InputBox'
 
 // api
-import { api } from '../../api/module'
+import { api } from '../../../api/module'
 
 // hooks
-import { useUrlState } from '../../hooks/useUrlState'
+import { useUrlState } from '../../../hooks/useUrlState'
 import { useForm } from 'react-hook-form'
 import { useSWRConfig } from 'swr'
 
-// utils
-import { isEmpty } from '../../libs/utils'
-
 // validation
 import { yupResolver } from '@hookform/resolvers/yup'
-import { schema } from '../../libs/validation/schema'
+import { schema } from '../../../libs/validation/schema'
 
 // error
-import { ApiError } from '../../libs/error'
+import { ApiError } from '../../../libs/error'
 
 // types
 import type { SubmitHandler } from 'react-hook-form'
@@ -33,17 +30,16 @@ interface FormFieldValues {
   name: string
 }
 
-interface ChannelAddProps {}
+interface WorkspaceAddProps {}
 
-const ChannelAdd: React.FC<ChannelAddProps> = () => {
+const WorkspaceAdd: React.FC<WorkspaceAddProps> = () => {
   const { mutate } = useSWRConfig()
   const formRef = useRef<HTMLFormElement | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [state, setState] = useUrlState<Record<string, any>>(
+  const [state, setState] = useUrlState<Record<string, string | null>>(
     {
       modalType: null,
-      workspaceIdx: null,
     },
     {
       navigateMode: 'replace',
@@ -66,12 +62,12 @@ const ChannelAdd: React.FC<ChannelAddProps> = () => {
   } = useForm<FormFieldValues>({
     mode: 'onChange',
     reValidateMode: 'onChange',
-    resolver: yupResolver(schema.channel.add),
+    resolver: yupResolver(schema.worksacpe.add),
     defaultValues,
     criteriaMode: 'firstError',
   })
 
-  const visible = state.modalType === MODAL_TYPE.CREATE_CHANNEL && !isEmpty(state.workspaceIdx)
+  const visible = state.modalType === MODAL_TYPE.CREATE_WORKSPACE
 
   /**
    * @description 모달 닫기 url state로 관리
@@ -81,7 +77,6 @@ const ChannelAdd: React.FC<ChannelAddProps> = () => {
   const onClose = () => {
     setState({
       modalType: null,
-      workspaceIdx: null,
     })
   }
 
@@ -94,13 +89,13 @@ const ChannelAdd: React.FC<ChannelAddProps> = () => {
     try {
       setLoading(true)
       const { data } = await api.post<{ dataId: number }>({
-        url: API_ENDPOINTS.CHANNELS.ROOT(state.workspaceIdx),
+        url: API_ENDPOINTS.WORKSPACES.ROOT,
         body: input,
       })
       setLoading(false)
 
       if (data.ok) {
-        await mutate(API_ENDPOINTS.CHANNELS.ROOT(state.workspaceIdx)) // revalidate workspace list
+        await mutate(API_ENDPOINTS.WORKSPACES.ROOT) // revalidate workspace list
         onClose()
         return
       }
@@ -159,7 +154,7 @@ const ChannelAdd: React.FC<ChannelAddProps> = () => {
     <Modal
       visible={visible}
       padding
-      title={'채널 만들기'}
+      title={'워크스페이스 만들기'}
       disabled={loading}
       disallowClosing
       actions={[
@@ -178,7 +173,7 @@ const ChannelAdd: React.FC<ChannelAddProps> = () => {
       <div>
         <form className="test" ref={formRef} onSubmit={handleSubmit(onSubmit)}>
           <Overline formKey="name" errors={errors} block>
-            채널 이름
+            워크스페이스 이름
           </Overline>
           <InputBox type="text" autoComplete="on" {...register('name')} />
           {error && (
@@ -192,4 +187,4 @@ const ChannelAdd: React.FC<ChannelAddProps> = () => {
   )
 }
 
-export default ChannelAdd
+export default WorkspaceAdd

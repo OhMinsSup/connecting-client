@@ -5,10 +5,10 @@ import { getThumbnail } from '../../../libs/utils/utils'
 
 // icon
 import { Hash } from '@styled-icons/boxicons-regular'
-import { ImageIconBase } from '../../ui/IconBase'
+import { ImageIconBase } from '../../ui/Icon/IconBase'
 
 // types
-import type { IconBaseProps } from '../../ui/IconBase'
+import type { IconBaseProps } from '../../ui/Icon/IconBase'
 import type { ChannelListSchema } from '../../../api/schema/channle'
 
 interface ChannelIconProps extends IconBaseProps<ChannelListSchema>, Omit<React.HTMLAttributes<HTMLDivElement>, 'children' | 'as'> {

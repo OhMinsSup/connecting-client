@@ -9,8 +9,8 @@ import ConditionalLink from '../../ConditionalLink'
 import WorkspaceEntry from '../styles/WorkspaceEntry'
 import Swoosh from './Swoosh'
 import Icon from './Icon'
-import UserIcon from '../../../common/user/UserIcon'
-import UserHover from '../../../common/user/UserHover'
+import UserIcon from '../../User/UserIcon'
+import UserHover from '../../User/UserHover'
 
 import type { WorkspaceSchema } from '../../../../api/schema/model'
 

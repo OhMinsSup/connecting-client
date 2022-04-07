@@ -11,8 +11,8 @@ const ResetPasswordPage = React.lazy(() => import('./pages/reset-password'))
 const ChangePasswordPage = React.lazy(() => import('./pages/change-password'))
 
 // modal
-import ChannelAddModal from './components/modal/ChannelAddModal'
-import WorkspaceAddModal from './components/modal/WorkspaceAddModal'
+import ChannelAddModal from './components/ui/Modal/ChannelAddModal'
+import WorkspaceAddModal from './components/ui/Modal/WorkspaceAddModal'
 
 // sidebar
 const Sidebar = React.lazy(() => import('./components/ui/Sidebar/Sidebar'))
