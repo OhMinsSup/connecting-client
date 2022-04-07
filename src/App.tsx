@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom'
 
 // pages
 const HomePage = React.lazy(() => import('./pages/home'))
+const ChannePage = React.lazy(() => import('./pages/channel'))
 const LoginPage = React.lazy(() => import('./pages/login'))
 const SignupPage = React.lazy(() => import('./pages/signup'))
 const ResetPasswordPage = React.lazy(() => import('./pages/reset-password'))
@@ -56,6 +57,10 @@ const PrivateRoutes: React.FC<Required<AppProps>> = () => {
               </React.Suspense>
             }
           />
+          <Route path="channel" element={<ChannePage />}>
+            <Route path=":channelIdx" element={<ChannePage />} />
+          </Route>
+
           <Route path="settings" element={<React.Suspense fallback={<React.Fragment />}>Settings</React.Suspense>} />
         </Route>
       </Routes>
