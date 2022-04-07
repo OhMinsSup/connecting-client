@@ -12,7 +12,7 @@ import { useSWRConfig } from 'swr'
 
 // components
 import IconButton from '../../ui/Icon/IconButton'
-import { ChannelIcon } from '../icon'
+import { ChannelIcon } from '../../ui/Icon'
 
 // icon
 import { X } from '@styled-icons/boxicons-regular'
