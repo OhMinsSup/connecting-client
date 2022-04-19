@@ -2,14 +2,14 @@ import React, { useCallback, useState, useEffect, useRef } from 'react'
 import styled, { css, keyframes } from 'styled-components'
 
 // components
-import Button from './Button'
-import { Portal } from '../../context/portal/context'
+import Button from '../Form/Button'
+import { Portal } from '../../../context/portal/context'
 
 // hooks
-import { useOutsideClick } from '../../hooks/useOutsideClick'
+import { useOutsideClick } from '../../../hooks/useOutsideClick'
 
 // types
-import type { ButtonProps } from './Button'
+import type { ButtonProps } from '../Form/Button'
 
 interface ModalAction extends Omit<ButtonProps, 'onClick'> {
   onClick: (...args: any[]) => void
@@ -31,7 +31,7 @@ interface ModalProps {
 
 export let isModalClosing = false
 
-const Modal: React.FC<ModalProps> = (props) => {
+const Modal: React.FC<React.PropsWithChildren<ModalProps>> = (props) => {
   const ref = useRef<HTMLDivElement | null>(null)
   const [animateClose, setAnimateClose] = useState(false)
   isModalClosing = animateClose

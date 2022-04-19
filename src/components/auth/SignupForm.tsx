@@ -10,10 +10,10 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { schema } from '../../libs/validation/schema'
 
 // components
-import Overline from '../ui/Overline'
-import InputBox from '../ui/InputBox'
-import Button from '../ui/Button'
-import Legal from './Legal'
+import Overline from '../ui/Form/Overline'
+import InputBox from '../ui/Form/InputBox'
+import Button from '../ui/Form/Button'
+import Legal from '../ui/Form/Legal'
 
 // api
 import { api } from '../../api/module'
@@ -28,7 +28,6 @@ import wideSVG from '../../assets/svg/wide.svg'
 
 // types
 import type { SubmitHandler } from 'react-hook-form'
-import type { SignupFormFieldValues } from './types/form'
 
 const initialValues = {
   email: '',
@@ -36,6 +35,14 @@ const initialValues = {
   passwordConfirm: '',
   nickname: '',
   code: undefined,
+}
+
+export interface SignupFormFieldValues {
+  email: string
+  password: string
+  passwordConfirm: string
+  nickname: string
+  code?: string
 }
 
 const SignupForm: React.FC = () => {

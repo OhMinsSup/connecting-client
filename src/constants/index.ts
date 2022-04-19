@@ -7,7 +7,7 @@ export const PAGE_ENDPOINTS = {
     ROOT: '/reset-password',
   },
   LOGIN: {
-    ROOT: '/login',
+    ROOT: '/',
   },
   INVITE: {
     ROOT: '/invite',

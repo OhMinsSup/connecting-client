@@ -9,7 +9,7 @@ interface BaseProps {
   readonly largeDescription?: boolean
 }
 
-const CategoryBase = styled.div<BaseProps>`
+const Block = styled.div<BaseProps>`
   /*height: 54px;*/
   padding: 9.8px 12px;
   border-radius: var(--border-radius);
@@ -109,9 +109,9 @@ interface Props extends BaseProps {
   action?: 'chevron' | 'external' | React.ReactNode
 }
 
-export default function CategoryButton({ icon, children, description, account, disabled, onClick, hover, action }: Props) {
+function CategoryButton({ icon, children, description, account, disabled, onClick, hover, action }: Props) {
   return (
-    <CategoryBase hover={hover || typeof onClick !== 'undefined'} onClick={onClick} disabled={disabled} account={account}>
+    <Block hover={hover || typeof onClick !== 'undefined'} onClick={onClick} disabled={disabled} account={account}>
       {icon}
       <div className="content">
         <div className="title">{children}</div>
@@ -119,6 +119,8 @@ export default function CategoryButton({ icon, children, description, account, d
         <div className="description">{description}</div>
       </div>
       <div className="action">{typeof action === 'string' ? action === 'chevron' ? <ChevronRight size={24} /> : <LinkExternal size={20} /> : action}</div>
-    </CategoryBase>
+    </Block>
   )
 }
+
+export default CategoryButton

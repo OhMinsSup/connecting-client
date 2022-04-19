@@ -30,7 +30,7 @@ export const generateVariables = (theme: Theme) => {
   })
 }
 
-export const GlobalTheme = createGlobalStyle<{ theme: Theme }>`
+export const GlobalTheme: any = createGlobalStyle<{ theme: Theme }>`
 :root {
 	${(props) => generateVariables(props.theme)}
 }

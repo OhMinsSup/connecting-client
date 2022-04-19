@@ -12,8 +12,8 @@ const ResetPasswordPage = React.lazy(() => import('./pages/reset-password'))
 const ChangePasswordPage = React.lazy(() => import('./pages/change-password'))
 
 // modal
-import ChannelAddModal from './components/ui/Modal/ChannelAddModal'
-import WorkspaceAddModal from './components/ui/Modal/WorkspaceAddModal'
+import { PublicLayout } from './components/ui/Layout'
+import { ChannelAddModal, WorkspaceAddModal } from './components/ui/Modal'
 
 // sidebar
 const Sidebar = React.lazy(() => import('./components/ui/Sidebar/Sidebar'))
@@ -73,38 +73,40 @@ const PrivateRoutes: React.FC<Required<AppProps>> = () => {
 const PublicRoutes = () => {
   return (
     <Routes>
-      <Route
-        path="login"
-        element={
-          <React.Suspense fallback={<Preloader type="spinner" />}>
-            <LoginPage />
-          </React.Suspense>
-        }
-      />
-      <Route
-        path="signup"
-        element={
-          <React.Suspense fallback={<Preloader type="spinner" />}>
-            <SignupPage />
-          </React.Suspense>
-        }
-      />
-      <Route
-        path="reset-password"
-        element={
-          <React.Suspense fallback={<Preloader type="spinner" />}>
-            <ResetPasswordPage />
-          </React.Suspense>
-        }
-      />
-      <Route
-        path="change-password"
-        element={
-          <React.Suspense fallback={<Preloader type="spinner" />}>
-            <ChangePasswordPage />
-          </React.Suspense>
-        }
-      />
+      <Route path="/" element={<PublicLayout />}>
+        <Route
+          index
+          element={
+            <React.Suspense fallback={<Preloader type="spinner" />}>
+              <LoginPage />
+            </React.Suspense>
+          }
+        />
+        <Route
+          path="signup"
+          element={
+            <React.Suspense fallback={<Preloader type="spinner" />}>
+              <SignupPage />
+            </React.Suspense>
+          }
+        />
+        <Route
+          path="reset-password"
+          element={
+            <React.Suspense fallback={<Preloader type="spinner" />}>
+              <ResetPasswordPage />
+            </React.Suspense>
+          }
+        />
+        <Route
+          path="change-password"
+          element={
+            <React.Suspense fallback={<Preloader type="spinner" />}>
+              <ChangePasswordPage />
+            </React.Suspense>
+          }
+        />
+      </Route>
     </Routes>
   )
 }

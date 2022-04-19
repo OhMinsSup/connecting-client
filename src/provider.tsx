@@ -14,7 +14,8 @@ import { Styles } from './components/ui/Styles'
 // hooks
 import { useProfileQuery } from './atoms/authState'
 
-const Core: React.FC = ({ children }) => {
+interface CoreProps {}
+const Core: React.FC<React.PropsWithChildren<CoreProps>> = ({ children }) => {
   const { profile } = useProfileQuery()
 
   const Component = React.Children.map(children, (child) => {
@@ -26,7 +27,8 @@ const Core: React.FC = ({ children }) => {
   return <>{Component}</>
 }
 
-const Provider: React.FC = ({ children }) => {
+interface ProviderProps {}
+const Provider: React.FC<React.PropsWithChildren<ProviderProps>> = ({ children }) => {
   return (
     <HelmetProvider>
       <BrowserRouter>

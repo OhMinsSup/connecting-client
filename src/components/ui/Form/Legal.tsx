@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from '../../assets/styles/modules/auth.module.scss'
+import styles from '../../../assets/styles/modules/auth.module.scss'
 
 const Legal: React.FC = () => {
   return (

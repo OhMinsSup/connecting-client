@@ -20,7 +20,7 @@ import { Home, UserDetail, Notepad } from '@styled-icons/boxicons-solid'
 import { GenericSidebarBase, GenericSidebarList } from './SidebarBase'
 import ConditionalLink from '../../ConditionalLink'
 import { ButtonItem, ChannelButtonItem } from '../../../common/button'
-import Category from '../../Category'
+import Category from '../../Form/Category'
 
 // types
 import type { ChannelListSchema } from '../../../../api/schema/channle'

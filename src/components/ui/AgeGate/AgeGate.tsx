@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 
 // compoenents
-import Button from '../Button'
-import Checkbox from '../Checkbox'
+import Button from '../Form/Button'
+import Checkbox from '../Form/Checkbox'
 
 // hooks
 import { useNavigate } from 'react-router-dom'
@@ -18,7 +18,7 @@ interface AgeGateProps {
   channel: ChannelSchema
 }
 
-const AgeGate: React.FC<AgeGateProps> = (props) => {
+const AgeGate: React.FC<React.PropsWithChildren<AgeGateProps>> = (props) => {
   const navigate = useNavigate()
   const { getSectionState, toggleSectionState } = useLayoutActionHook()
   const [ageGate, setAgeGate] = useState(false)

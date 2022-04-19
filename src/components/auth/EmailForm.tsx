@@ -13,11 +13,11 @@ import { API_ENDPOINTS, PAGE_ENDPOINTS } from '../../constants'
 import { isAxiosError } from '../../libs/utils/utils'
 
 // components
-import Overline from '../ui/Overline'
-import InputBox from '../ui/InputBox'
-import Button from '../ui/Button'
-import Legal from './Legal'
-import Modal from '../ui/Modal'
+import Overline from '../ui/Form/Overline'
+import InputBox from '../ui/Form/InputBox'
+import Button from '../ui/Form/Button'
+import Legal from '../ui/Form/Legal'
+import { Modal } from '../ui/Modal'
 
 // styles
 import styles from '../../assets/styles/modules/auth.module.scss'

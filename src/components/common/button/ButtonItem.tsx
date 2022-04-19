@@ -13,7 +13,7 @@ export interface ButtonItemProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   compact?: boolean
 }
 
-const ButtonItem: React.FC<ButtonItemProps> = (props) => {
+const ButtonItem: React.FC<React.PropsWithChildren<ButtonItemProps>> = (props) => {
   const { active, alert, alertCount, onClick, className, children, compact, ...divProps } = props
 
   return (

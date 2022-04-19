@@ -1,6 +1,6 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
-import { getError } from '../../libs/validation/schema'
+import { getError } from '../../../libs/validation/schema'
 
 import type { HTMLAttributes } from 'react'
 import type { FieldError } from 'react-hook-form'

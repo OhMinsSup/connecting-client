@@ -9,10 +9,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { schema } from '../../libs/validation/schema'
 
 // components
-import Overline from '../ui/Overline'
-import InputBox from '../ui/InputBox'
-import Button from '../ui/Button'
-import Legal from './Legal'
+import { Legal, Button, InputBox, Overline } from '../ui/Form'
 
 // styles
 import styles from '../../assets/styles/modules/auth.module.scss'
@@ -30,12 +27,14 @@ import { useMutateProfile } from '../../atoms/authState'
 
 // types
 import type { SubmitHandler } from 'react-hook-form'
-import type { LoginFormFieldValues } from './types/form'
+import type { SignupFormFieldValues } from './SignupForm'
 
 const initialValues = {
   email: '',
   password: '',
 }
+
+export interface LoginFormFieldValues extends Pick<SignupFormFieldValues, 'email' | 'password'> {}
 
 const LoginForm: React.FC = () => {
   const [error, setError] = useState('')
@@ -66,7 +65,6 @@ const LoginForm: React.FC = () => {
 
       if (data.ok) {
         const { result } = data
-        localStorage.setItem('@@Connecting-Web-App/token', result.accessToken)
         await setProfile(result.accessToken)
         navigate(PAGE_ENDPOINTS.INDEX)
         return

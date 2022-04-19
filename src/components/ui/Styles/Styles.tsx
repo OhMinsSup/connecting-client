@@ -11,7 +11,8 @@ import { GlobalTheme } from '../../../atoms/utils'
 // constants
 import { FONTS, MONOSPACE_FONTS } from '../../../atoms/constants/setting'
 
-const Styles: React.FC = ({ children }) => {
+interface StylesProps {}
+const Styles: React.FC<React.PropsWithChildren<StylesProps>> = ({ children }) => {
   const { computeVariables, getFont, getMonospaceFont, getLigatures, getCSS } = useThemeActionHook()
 
   // document element값이 변경되는 경우는 없으니깐, memo 적용

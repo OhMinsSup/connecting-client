@@ -4,9 +4,9 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { API_ENDPOINTS, MODAL_TYPE, STATUS_CODE } from '../../../constants'
 
 // components
-import Modal from '../Modal'
-import Overline from '../Overline'
-import InputBox from '../InputBox'
+import Modal from './Modal'
+import Overline from '../Form/Overline'
+import InputBox from '../Form/InputBox'
 
 // api
 import { api } from '../../../api/module'
