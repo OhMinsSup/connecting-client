@@ -127,7 +127,7 @@ type PageHeaderProps = Omit<Props, 'placement' | 'borders'> & {
   icon?: React.ReactNode
 }
 
-export const PageHeader: React.FC<PageHeaderProps> = ({ children, icon, noBurger, ...props }) => {
+export const PageHeader: React.FC<React.PropsWithChildren<PageHeaderProps>> = ({ children, icon, noBurger, ...props }) => {
   const { getSectionState, toggleSectionState } = useLayoutActionHook()
   const visible = getSectionState(SIDEBAR_CHANNELS, true)
   const { pathname } = useLocation()

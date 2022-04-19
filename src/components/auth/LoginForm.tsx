@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 
 // hooks
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 // validator
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { schema } from '../../libs/validation/schema'
+import { useLoginMutation } from '../../api/mutations/login'
 
 // components
 import { Legal, Button, InputBox, Overline } from '../ui/Form'
@@ -16,29 +17,24 @@ import styles from '../../assets/styles/modules/auth.module.scss'
 import wideSVG from '../../assets/svg/wide.svg'
 
 // utils
-import { API_ENDPOINTS, PAGE_ENDPOINTS } from '../../constants'
-import { isAxiosError } from '../../libs/utils/utils'
-
-// api
-import { api } from '../../api/module'
-
-// hooks
-import { useMutateProfile } from '../../atoms/authState'
+import { PAGE_ENDPOINTS } from '../../constants'
 
 // types
 import type { SubmitHandler } from 'react-hook-form'
 import type { SignupFormFieldValues } from './SignupForm'
 
-const initialValues = {
-  email: '',
-  password: '',
-}
-
 export interface LoginFormFieldValues extends Pick<SignupFormFieldValues, 'email' | 'password'> {}
 
 const LoginForm: React.FC = () => {
   const [error, setError] = useState('')
-  const navigate = useNavigate()
+
+  const initialValues = useMemo(
+    () => ({
+      email: '',
+      password: '',
+    }),
+    [],
+  )
 
   const {
     handleSubmit,
@@ -54,38 +50,12 @@ const LoginForm: React.FC = () => {
     criteriaMode: 'firstError',
   })
 
-  const setProfile = useMutateProfile()
+  const { mutate } = useLoginMutation()
 
   const onSubmit: SubmitHandler<LoginFormFieldValues> = async (input) => {
-    try {
-      const { data } = await api.post<{ accessToken: string }>({
-        url: API_ENDPOINTS.USERS.LOGIN,
-        body: input,
-      })
-
-      if (data.ok) {
-        const { result } = data
-        await setProfile(result.accessToken)
-        navigate(PAGE_ENDPOINTS.INDEX)
-        return
-      }
-
-      const error = new Error()
-      error.name = 'APIError'
-      error.message = JSON.stringify(data)
-      throw error
-    } catch (error) {
-      if (isAxiosError(error)) {
-        setError('오류가 발생했습니다.\n나중에 다시 시도해 주세요.')
-        throw error
-      }
-
-      // custom error
-      if (error instanceof Error) {
-        const { message } = error
-        const parsedError = JSON.parse(message)
-        setError(parsedError.message)
-      }
+    const result = await mutate(input)
+    if (!result.ok && result.message) {
+      setError(result.message)
     }
   }
 

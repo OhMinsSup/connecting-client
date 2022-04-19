@@ -10,7 +10,7 @@ import { PageHeader } from '../components/ui/Header'
 
 // components
 import { Link } from 'react-router-dom'
-import CategoryButton from '../components/ui/CategoryButton'
+import { CategoryButton } from '../components/ui/Form'
 
 interface HomePageProps {}
 const HomePage: React.FC<HomePageProps> = () => {

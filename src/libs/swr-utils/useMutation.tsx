@@ -1,24 +1,23 @@
 import { useCallback, useState } from 'react'
 import { useSWRConfig } from 'swr'
 
+// utils
+import { isFunction, isString } from '../utils/assertion'
+
+import { RESULT_CODE } from '../../constants'
+
 // error
 import { ApiError } from '../error'
 
-// utils
-import { isFunction, isString } from '../utils'
+import type { AxiosResponse } from 'axios'
+import type { Schema } from '../../api/schema/common'
 
-// constants
-import { STATUS_CODE } from '../../constants'
-
-// types
-import type { Api, Schema } from '../../api/schema/common'
-
-type Fn = (...args: any[]) => Promise<Api>
+type Fn = (...args: any[]) => Promise<AxiosResponse<Schema<any>>>
 
 interface Mutation<R> {
   ok: boolean
   data: Schema<R> | null
-  message?: string | null
+  message?: string
 }
 
 interface Options<R = any> {
@@ -28,19 +27,6 @@ interface Options<R = any> {
   onError?: (error: Mutation<R>) => any // 요청 후 에러가 발생하면 호출하는 함수
 }
 
-/**
- * @example
- * const { mutateAync, loading, data } = useMutation(API_FUNC, {
- *   invalidateKey: (data) => 'API_END_POINT' || 'API_END_POINT', // 요청이 성공하고 데이터를 invalidate를 할 때 사용 함수로 값을 받을 경우 첫번째 파라미터에 성공한 데이터가 넘어오게 된다. (default: undefined)
- *   deleteKey: 'API_END_POINT', // 해당 키가 존재하면 요청 성공시 삭제한다. (default: undefined)
- *   onSuccess: (data) => {}, // 요청이 성공 후 호출하는 함수 그리고 첫번째 파라미터에 성공한 데이터가 넘어오게 된다. (default: undefined)
- *   onError: (error) => {}, // 요청 후 에러가 발생하면 호출하는 함수 그리고 첫번째 파라미터에 실패한 에러 객체가 넘어오게 된다. (default: undefined)
- * });
- *
- * mutateAync: API 요청
- * loading: API 요청 중 상태
- * data: API 요청 성공 시 반환 데이터 (해당 데이터는 요청 성공 시 state로 데이터를 받기 위해서 사용. 요청 실패 시 null)
- */
 export function useMutation<T>(fn: Fn, options?: Options<T> | undefined) {
   const { cache, mutate } = useSWRConfig()
 
@@ -49,56 +35,77 @@ export function useMutation<T>(fn: Fn, options?: Options<T> | undefined) {
   const [error, setError] = useState<Mutation<T> | null>(null)
 
   // 요청이 성공 후 deleteKey에 해당하는 데이터 삭제
-  const onDeleteKey = () => {
+  const onDeleteKey = useCallback(() => {
     if (options?.deleteKey && isString(options.deleteKey)) {
       if (cache.get(options.deleteKey)) cache.delete(options.deleteKey)
     }
-  }
+  }, [cache, options?.deleteKey])
 
-  const onInvalidateKey = async (data: Schema<T>) => {
-    // 성공시 데이터 패칭
-    if (options?.invalidateKey) {
-      if (isString(options.invalidateKey) || isFunction(options.invalidateKey)) {
-        const key = isFunction(options.invalidateKey) ? options.invalidateKey(data) : options.invalidateKey
-        await mutate(key)
+  const onInvalidateKey = useCallback(
+    async (data: Schema<T>) => {
+      // 성공시 데이터 패칭
+      if (options?.invalidateKey) {
+        if (isString(options.invalidateKey) || isFunction(options.invalidateKey)) {
+          const key = isFunction(options.invalidateKey) ? options.invalidateKey(data) : options.invalidateKey
+          await mutate(key)
+        }
       }
-    }
-  }
+    },
+    [options, mutate],
+  )
 
-  const onSuccess = async (data: Schema<T>) => {
-    setState(data)
-    // 성공시 콜백 호출
-    if (isFunction(options?.onSuccess)) {
-      if (options?.onSuccess instanceof Promise) {
-        await options?.onSuccess(data)
-      } else {
-        options?.onSuccess(data)
+  const onSuccess = useCallback(
+    async (data: Schema<T>) => {
+      setState(data)
+      // 성공시 콜백 호출
+      if (isFunction(options?.onSuccess)) {
+        if (options?.onSuccess instanceof Promise) {
+          await options?.onSuccess(data)
+        } else {
+          options?.onSuccess(data)
+        }
       }
-    }
-  }
+    },
+    [options],
+  )
 
-  const onError = async (e: Mutation<T>) => {
-    setError(e)
-    // 실패시 콜백 호출
-    if (isFunction(options?.onError)) {
-      if (options?.onError instanceof Promise) {
-        await options?.onError(e)
-      } else {
-        options?.onError(e)
+  const onError = useCallback(
+    async (e: Mutation<T>) => {
+      setError(e)
+      // 실패시 콜백 호출
+      if (isFunction(options?.onError)) {
+        if (options?.onError instanceof Promise) {
+          await options?.onError(e)
+        } else {
+          options?.onError(e)
+        }
       }
-    }
-  }
+    },
+    [options],
+  )
+
+  const request = useCallback(
+    async (...params: any[]) => {
+      setState(null)
+      setError(null)
+      setLoading(true)
+      const result = await fn(...params)
+      setLoading(false)
+      return result
+    },
+    [fn],
+  )
 
   const mutateAsync = useCallback(
     async (...params: any[]): Promise<Mutation<T>> => {
       try {
-        setState(null)
-        setError(null)
-        setLoading(true)
-        const { data } = await fn(...params)
-        setLoading(false)
+        const result = await request(...params)
+        const { status, data } = result
+        if (status >= 200 && status < 300) {
+          if (data.resultCode !== RESULT_CODE.OK) {
+            throw new ApiError(data)
+          }
 
-        if (data.ok) {
           // 성공 시 캐시키 삭제
           onDeleteKey()
 
@@ -111,7 +118,7 @@ export function useMutation<T>(fn: Fn, options?: Options<T> | undefined) {
           return {
             ok: true,
             data,
-            message: null,
+            message: '',
           }
         }
 
@@ -123,33 +130,26 @@ export function useMutation<T>(fn: Fn, options?: Options<T> | undefined) {
         const message: Mutation<T> = {
           ok: false,
           data: null,
-          message: null,
+          message: '',
         }
 
         // http status가 실패인 경우 서버 에러
-        if (ApiError.isAxiosError(error)) {
-          const { response } = error
-          switch (response?.status) {
-            case STATUS_CODE.SERVER_ERROR:
-            case STATUS_CODE.BAD_GATEWAY:
-              throw error
-            default:
-              Object.assign(message, {
-                data,
-                message: response?.data?.message || null,
-              })
-              onError(message)
-              break
-          }
+        if (ApiError.isAxiosError(e)) {
+          const data = ApiError.toAxiosErrorJSON(e)
+          Object.assign(message, {
+            data,
+            message: data.message,
+          })
+          onError(message)
           return message
         }
 
         // http status는 성공이지만 api status가 실패인 경우
-        if (ApiError.isApiError(error)) {
-          const result = ApiError.toApiErrorJSON(error.message)
+        if (ApiError.isApiError(e)) {
+          const data = ApiError.toApiErrorJSON(e.message)
           Object.assign(message, {
-            data,
-            message: result.message?.message || ApiError.getMessage('alert.common'),
+            data: data,
+            message: data?.message ?? e.message,
           })
           onError(message)
           return message
@@ -159,7 +159,7 @@ export function useMutation<T>(fn: Fn, options?: Options<T> | undefined) {
         return message
       }
     },
-    [options, fn],
+    [request, onDeleteKey, onInvalidateKey, onSuccess, onError],
   )
 
   return {

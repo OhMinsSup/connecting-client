@@ -77,8 +77,29 @@ class ApiError extends Error {
       message = null
     }
 
+    return message
+  }
+
+  static toAxiosErrorJSON(error: unknown) {
+    const { response } = error as AxiosError
+    if (!response) {
+      return {
+        message: ApiError.getMessage('alert.common'),
+        ok: false,
+        result: null,
+        resultCode: 0,
+      }
+    }
+    const { data } = response
+    const matchingError = (function () {
+      if (!data) return ''
+      if (data.message) return data.message
+      return ApiError.getMessage('alert.common') || response.statusText
+    })()
+
     return {
-      message,
+      ...data,
+      message: matchingError,
     }
   }
 }

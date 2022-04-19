@@ -1,5 +1,4 @@
-export * from './useInfinitePages'
 export * from './useMatchMutate'
-export * from './useInfiniteList'
 export * from './middleware'
 export * from './useMutation'
+export * from './useQuery'
