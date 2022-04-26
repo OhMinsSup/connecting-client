@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 
 import { isTouchscreenDevice } from '../../../../libs/utils/utils'
 
-const SidebarBase: React.FC = (props) => {
+const SidebarBase = (props: React.PropsWithChildren<any>) => {
   return <Block>{props.children}</Block>
 }
 

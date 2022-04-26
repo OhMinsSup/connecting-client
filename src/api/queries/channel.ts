@@ -6,7 +6,7 @@ import { laggy } from '../../libs/swr-utils'
 import useSWR from 'swr'
 
 // utils
-import { isEmpty } from '../../libs/utils'
+import { isEmpty, isUndefined } from '../../libs/utils'
 
 // constants
 import { API_ENDPOINTS } from '../../constants'
@@ -60,28 +60,25 @@ export function useChannlesQuery(workspaceIdx?: number | string | null, config: 
 
   return {
     channels,
+    isLoading: isUndefined(data) && !reset.error,
     ...reset,
   }
 }
 
 export function useChannleQuery(workspaceIdx?: number | string | null, channleIdx?: number | string | null, config: QueryConfig = {}) {
-  const { enable = true, onError = noop, onSuccess = noop } = config
+  const { onError = noop, onSuccess = noop } = config
 
   const { profile } = useProfileQuery()
 
   const swrKeyLoader = () => {
-    // enabled 이 false일 경우 가져오지 않음
-    if (!enable) return null
     if (isEmpty(profile)) return null
     if (!workspaceIdx || !channleIdx) return null
     return API_ENDPOINTS.CHANNELS.DELETE(workspaceIdx, channleIdx)
   }
 
   const wrappedFetcher = async (url: string) => {
-    const body = await fetcher<ListSchema<ChannelSchema>>(url)
-    if (!body || (body && !body.ok)) return []
-    const { result } = body
-    return result.list
+    const body = await fetcher<ChannelSchema>(url)
+    return body.result
   }
 
   const { data, ...reset } = useSWR(swrKeyLoader, wrappedFetcher, {
@@ -98,6 +95,7 @@ export function useChannleQuery(workspaceIdx?: number | string | null, channleId
 
   return {
     channel: data,
+    isLoading: isUndefined(data) && !reset.error,
     ...reset,
   }
 }

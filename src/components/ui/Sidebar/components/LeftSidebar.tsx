@@ -20,10 +20,10 @@ const LeftSidebar: React.FC = () => {
   const isOpen = isTouchscreenDevice || getSectionState(SIDEBAR_CHANNELS, true)
 
   const isHome = pathname.match(/^\/$/)
-  const isChannel = pathname.match(/^\/channel/)
+  const isWorkspaceForChannel = pathname.match(/workspace\/(\d+)\/channel\/(\d+)/)
 
   const Sidebar = () => {
-    if ([isHome, isChannel].some(Boolean) && isOpen) {
+    if ([isHome, isWorkspaceForChannel].some(Boolean) && isOpen) {
       return <HomeSidebar />
     }
 

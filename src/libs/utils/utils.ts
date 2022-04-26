@@ -13,8 +13,6 @@ import { isElement } from 'lodash-es'
 import type { AxiosError } from 'axios'
 import type { Schema } from '../../api/schema/common'
 
-export const isTouchscreenDevice = isDesktop || isTablet ? false : (typeof window !== 'undefined' ? navigator.maxTouchPoints > 0 : false) || isMobile
-
 export const makeQueryString = (params: any) => {
   const stringify = qs.stringify(params, {
     arrayFormat: 'comma',
@@ -29,6 +27,8 @@ export function canUseDOM(): boolean {
 }
 
 export const isBrowser = canUseDOM()
+
+export const isTouchscreenDevice = isDesktop || isTablet ? false : (isBrowser ? navigator.maxTouchPoints > 0 : false) || isMobile
 
 export function getOwnerWindow(node?: Element | null): typeof globalThis {
   return isElement(node) ? getOwnerDocument(node)?.defaultView ?? window : window

@@ -1,8 +1,6 @@
 import React from 'react'
 import SignupForm from '../components/auth/SignupForm'
 
-const SignupPage: React.FC = () => {
-  return <SignupForm />
-}
+const SignupPage = () => <SignupForm />
 
 export default SignupPage

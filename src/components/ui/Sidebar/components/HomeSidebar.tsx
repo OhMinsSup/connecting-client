@@ -28,7 +28,7 @@ import type { ChannelListSchema } from '../../../../api/schema/channle'
 const HomeSidebar = () => {
   const { pathname } = useLocation()
 
-  const { channelIdx, workspaceIdx } = useParams<{ channelIdx: string; workspaceIdx: string }>()
+  const { channelIdx, workspaceIdx } = useParams()
   const { profile } = useProfileQuery()
   const myWorkspace = head(profile?.myWorkspaces)
 
@@ -89,8 +89,9 @@ const HomeSidebar = () => {
           </>
         )}
         {savedMessages.map((channel) => {
-          const to = PAGE_ENDPOINTS.CHANNEL.DETAIL(channel.idx)
-          const active = channelIdx ? to === PAGE_ENDPOINTS.CHANNEL.DETAIL(channelIdx) : false
+          console.log(channel)
+          const to = PAGE_ENDPOINTS.WORKSPACE.CHANNEL.ID(channel.fk_workspace_idx, channel.idx)
+          const active = [channelIdx, channelIdx].every(Boolean) ? to === PAGE_ENDPOINTS.WORKSPACE.CHANNEL.ID(workspaceIdx, channelIdx) : false
 
           return (
             <ConditionalLink active={active} to={to} key={`channle-${channel.idx}-${id}`}>
@@ -103,8 +104,8 @@ const HomeSidebar = () => {
         })}
         <Category text="대화" action={onClickOpen} />
         {channelList.map((channel) => {
-          const to = PAGE_ENDPOINTS.CHANNEL.DETAIL(channel.idx)
-          const active = channelIdx ? to === PAGE_ENDPOINTS.CHANNEL.DETAIL(channelIdx) : false
+          const to = PAGE_ENDPOINTS.WORKSPACE.CHANNEL.ID(channel.fk_workspace_idx, channel.idx)
+          const active = [channelIdx, channelIdx].every(Boolean) ? to === PAGE_ENDPOINTS.WORKSPACE.CHANNEL.ID(workspaceIdx, channelIdx) : false
           let user: ChannelListSchema['owner'] | undefined
           if (channel.channelType === 'direct') {
             user = channel.owner

@@ -12,10 +12,11 @@ import { isTouchscreenDevice } from '../../../libs/utils/utils'
 // components
 import LeftSidebar from './components/LeftSidebar'
 
-const Sidebar: React.FC = () => {
+const Sidebar = () => {
   const { pathname } = useLocation()
 
-  const inServer = pathname.includes('/server')
+  const isWorkspaceForChannel = pathname.match(/workspace\/(\d+)\/channel\/(\d+)/)
+  const inWorkspace = !!isWorkspaceForChannel
   const inSpecial = (pathname.startsWith('/friends') && isTouchscreenDevice) || pathname.startsWith('/invite') || pathname.includes('/settings')
 
   return (
@@ -26,7 +27,7 @@ const Sidebar: React.FC = () => {
         leftPanel={inSpecial ? undefined : { width: 292, component: <LeftSidebar /> }}
         docked={isTouchscreenDevice ? Docked.None : Docked.Left}
       >
-        <Wrapper borders={inServer}>
+        <Wrapper borders={inWorkspace}>
           <Outlet />
         </Wrapper>
       </OverlappingPanels>

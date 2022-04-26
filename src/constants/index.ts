@@ -12,9 +12,15 @@ export const PAGE_ENDPOINTS = {
   INVITE: {
     ROOT: '/invite',
   },
-  CHANNEL: {
-    ROOT: '/channel',
-    DETAIL: (idx: string | number) => `/channel/${idx}`,
+  WORKSPACE: {
+    CHANNEL: {
+      ID: (workspaceIdx?: number | string | null, channelIdx?: number | string | null) => {
+        if (!workspaceIdx || !channelIdx) {
+          return ''
+        }
+        return `/workspace/${workspaceIdx}/channel/${channelIdx}`
+      },
+    },
   },
   FRIENDS: {
     ROOT: '/friends',

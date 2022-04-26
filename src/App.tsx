@@ -57,10 +57,14 @@ const PrivateRoutes: React.FC<Required<AppProps>> = () => {
               </React.Suspense>
             }
           />
-          <Route path="channel" element={<ChannePage />}>
-            <Route path=":channelIdx" element={<ChannePage />} />
-          </Route>
-
+          <Route
+            path="workspace/:workspaceIdx/channel/:channelIdx"
+            element={
+              <React.Suspense fallback={<Preloader type="spinner" />}>
+                <ChannePage />
+              </React.Suspense>
+            }
+          />
           <Route path="settings" element={<React.Suspense fallback={<React.Fragment />}>Settings</React.Suspense>} />
         </Route>
       </Routes>

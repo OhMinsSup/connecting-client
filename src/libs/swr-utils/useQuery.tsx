@@ -6,7 +6,7 @@ import { useAuthValue } from '../../atoms/authState'
 import { fetcherResult } from '../../api/fetcher'
 
 // utils
-import { isEmpty, isFunction, isObject, isString } from '../utils/assertion'
+import { isEmpty, isFunction, isObject, isString, isUndefined } from '../utils/assertion'
 
 import type { SWRConfiguration } from 'swr'
 import type { IStringifyOptions } from 'qs'
@@ -117,8 +117,11 @@ export function useQuery<Data = any, Error = any>(key: string | (() => string | 
     ...option,
   })
 
+  const isLoading = isUndefined(result.data) && !result.error
+
   return {
     ...result,
+    isLoading,
     currentKey: swrKeyLoader(),
   }
 }
