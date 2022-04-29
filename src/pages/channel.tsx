@@ -5,14 +5,15 @@ import styled from 'styled-components'
 
 // hooks
 import { useParams } from 'react-router-dom'
-import { useLayoutActionHook } from '../atoms/layoutState'
+// import { useLayoutActionHook } from '../atoms/layoutState'
 import { useChannleQuery } from '../api/queries/channel'
 
 // utils
-import { SIDEBAR_MEMBERS } from '../atoms/layoutState'
+// import { SIDEBAR_MEMBERS } from '../atoms/layoutState'
 // import { isTouchscreenDevice } from '../libs/utils/utils'
 
 // components
+import MessageArea from '../components/channel/MessageArea'
 import ChannelHeader from '../components/channel/ChannelHeader'
 import { Hash } from '@styled-icons/boxicons-regular'
 import { Ghost } from '@styled-icons/boxicons-solid'
@@ -21,13 +22,11 @@ import { PageHeader } from '../components/ui/Header'
 
 const ChannelPage = () => {
   const { channelIdx, workspaceIdx } = useParams()
-  const { getSectionState } = useLayoutActionHook()
-  const sectionState = getSectionState(SIDEBAR_MEMBERS, true)
-
-  console.log('channelIdx', channelIdx, workspaceIdx, sectionState)
+  // const { getSectionState } = useLayoutActionHook()
+  // const sectionState = getSectionState(SIDEBAR_MEMBERS, true)
 
   const { channel, isLoading } = useChannleQuery(workspaceIdx, channelIdx)
-  console.log(channel)
+
   if (isLoading) {
     return (
       <PlaceholderBase>
@@ -52,7 +51,9 @@ const ChannelPage = () => {
     <AgeGate type="channel" channel={channel} gated={!!(channel.channelType === 'text' || channel.channelType === 'group')}>
       <ChannelHeader channel={channel} />
       <ChannelMain>
-        <ChannelContent>{/*  */}</ChannelContent>
+        <ChannelContent>
+          <MessageArea />
+        </ChannelContent>
 
         {/* {!isTouchscreenDevice && sectionState && <RightSidebar />} */}
       </ChannelMain>

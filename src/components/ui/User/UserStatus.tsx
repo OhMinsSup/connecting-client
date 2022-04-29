@@ -4,10 +4,10 @@ import React from 'react'
 import Tooltip from '../Tooltip'
 
 // types
-import type { MeSchema } from '../../../api/schema/model'
+import type { MeSchema, UserSchema } from '../../../api/schema/model'
 
 interface UserStatusProps {
-  user?: MeSchema | null
+  user?: MeSchema | UserSchema | null
   tooltip?: boolean
 }
 

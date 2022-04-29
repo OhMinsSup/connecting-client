@@ -1,23 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
 
+// hooks
+import { useStatusColor } from '../../hooks/useStatusColor'
+
 // components
-// import UserStatus from '../ui/User/UserStatus'
-import {
-  At,
-  // ChevronLeft, ChevronRight,
-  Hash,
-} from '@styled-icons/boxicons-regular'
+import UserStatus from '../ui/User/UserStatus'
+import { At, Hash } from '@styled-icons/boxicons-regular'
 import { Notepad, Group } from '@styled-icons/boxicons-solid'
 import { PageHeader } from '../ui/Header'
 
 // utils
 import { isTouchscreenDevice } from '../../libs/utils/utils'
 
-import type {
-  ChannelSchema,
-  // UserSchema
-} from '../../api/schema/model'
+import type { ChannelSchema, UserSchema } from '../../api/schema/model'
 
 interface ChannelHeaderProps {
   channel: ChannelSchema
@@ -28,14 +24,14 @@ interface ChannelHeaderProps {
 const ChannelHeader: React.FC<ChannelHeaderProps> = ({ channel }) => {
   const name = channel.name || '채널 없음'
   let icon = undefined
-  // let recipient: UserSchema | undefined
+  let recipient: UserSchema | undefined
   switch (channel.channelType) {
     case 'savedMessages':
       icon = <Notepad size={24} />
       break
     case 'direct':
       icon = <At size={24} />
-      // recipient = undefined
+      recipient = channel.owner
       break
     case 'group':
       icon = <Group size={24} />
@@ -52,18 +48,18 @@ const ChannelHeader: React.FC<ChannelHeaderProps> = ({ channel }) => {
         {isTouchscreenDevice && channel.channelType === 'direct' && (
           <>
             <div className="divider" />
-            {/* <span className="desc">
+            <span className="desc">
               <div
                 className="status"
                 style={{
-                  backgroundColor: useStatusColour(recipient),
+                  backgroundColor: useStatusColor(recipient),
                 }}
               />
               <UserStatus user={recipient} />
-            </span> */}
+            </span>
           </>
         )}
-        {!isTouchscreenDevice && (channel.channelType === 'group' || channel.channelType === 'text') && channel.description && (
+        {/* {!isTouchscreenDevice && (channel.channelType === 'group' || channel.channelType === 'text') && channel.description && (
           <>
             <div className="divider" />
             <span
@@ -73,14 +69,13 @@ const ChannelHeader: React.FC<ChannelHeaderProps> = ({ channel }) => {
                 //   id: 'channel_info',
                 //   channel,
                 // })
-              }}
-            >
-              {/* <Markdown content={channel.description.split('\n')[0] ?? ''} disallowBigEmoji /> */}
+              }}>
+              <Markdown content={channel.description.split('\n')[0] ?? ''} disallowBigEmoji />
             </span>
           </>
-        )}
+        )} */}
       </Info>
-      {/* <HeaderActions channel={channel} /> */}
+      {/* <RightHeaderActionGroups channel={channel} /> */}
     </PageHeader>
   )
 }

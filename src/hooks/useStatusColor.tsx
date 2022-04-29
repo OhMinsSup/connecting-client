@@ -1,7 +1,7 @@
 import { useThemeActionHook } from '../atoms/settingState'
-import type { MeSchema } from '../api/schema/model'
+import type { MeSchema, UserSchema } from '../api/schema/model'
 
-export const useStatusColor = (user?: MeSchema) => {
+export const useStatusColor = (user?: MeSchema | UserSchema) => {
   const { getVariable } = useThemeActionHook()
 
   return user?.status?.presence !== 'invisible'
