@@ -5,8 +5,8 @@ import { useParams } from 'react-router-dom'
 
 // components
 import { WorkspaceIcon } from '../../Icon'
-import ConditionalLink from '../../ConditionalLink'
-import Tooltip from '../../Tooltip'
+import ConditionalLink from '../../Link/ConditionalLink'
+import Tooltip from '../../Tooltip/Tooltip'
 import WorkspaceEntry from '../styles/WorkspaceEntry'
 import Icon from './Icon'
 import Swoosh from './Swoosh'

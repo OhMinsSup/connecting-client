@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { useProfileQuery } from '../../../../atoms/authState'
 
 // components
-import ConditionalLink from '../../ConditionalLink'
+import ConditionalLink from '../../Link/ConditionalLink'
 import WorkspaceEntry from '../styles/WorkspaceEntry'
 import Swoosh from './Swoosh'
 import Icon from './Icon'

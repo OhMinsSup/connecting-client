@@ -15,10 +15,12 @@ import { useChannleQuery } from '../api/queries/channel'
 // components
 import MessageArea from '../components/channel/MessageArea'
 import ChannelHeader from '../components/channel/ChannelHeader'
+import MessageBox from '../components/channel/MessageBox'
+
 import { Hash } from '@styled-icons/boxicons-regular'
 import { Ghost } from '@styled-icons/boxicons-solid'
 import { AgeGate } from '../components/ui/AgeGate'
-import { PageHeader } from '../components/ui/Header'
+import { PageHeader } from '../components/ui/Layout/Header'
 
 const ChannelPage = () => {
   const { channelIdx, workspaceIdx } = useParams()
@@ -53,6 +55,7 @@ const ChannelPage = () => {
       <ChannelMain>
         <ChannelContent>
           <MessageArea />
+          <MessageBox />
         </ChannelContent>
 
         {/* {!isTouchscreenDevice && sectionState && <RightSidebar />} */}

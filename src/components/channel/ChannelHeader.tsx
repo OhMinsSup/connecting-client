@@ -8,7 +8,7 @@ import { useStatusColor } from '../../hooks/useStatusColor'
 import UserStatus from '../ui/User/UserStatus'
 import { At, Hash } from '@styled-icons/boxicons-regular'
 import { Notepad, Group } from '@styled-icons/boxicons-solid'
-import { PageHeader } from '../ui/Header'
+import { PageHeader } from '../ui/Layout/Header'
 
 // utils
 import { isTouchscreenDevice } from '../../libs/utils/utils'

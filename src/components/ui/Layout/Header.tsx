@@ -7,10 +7,10 @@ import { useLocation } from 'react-router-dom'
 import { ChevronLeft, ChevronRight, Menu } from '@styled-icons/boxicons-regular'
 
 // utils
-import { isTouchscreenDevice } from '../../libs/utils/utils'
+import { isTouchscreenDevice } from '../../../libs/utils/utils'
 
 // constants
-import { SIDEBAR_CHANNELS, useLayoutActionHook } from '../../atoms/layoutState'
+import { SIDEBAR_CHANNELS, useLayoutActionHook } from '../../../atoms/layoutState'
 
 interface Props {
   topBorder?: boolean

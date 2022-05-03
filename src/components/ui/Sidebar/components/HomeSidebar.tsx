@@ -18,7 +18,7 @@ import { useLayoutActionHook } from '../../../../atoms/layoutState'
 // components
 import { Home, UserDetail, Notepad } from '@styled-icons/boxicons-solid'
 import { GenericSidebarBase, GenericSidebarList } from './SidebarBase'
-import ConditionalLink from '../../ConditionalLink'
+import ConditionalLink from '../../Link/ConditionalLink'
 import { ButtonItem, ChannelButtonItem } from '../../../common/button'
 import Category from '../../Form/Category'
 

@@ -1,7 +1,7 @@
 import React from 'react'
 
 // components
-import Tooltip from '../Tooltip'
+import Tooltip from '../Tooltip/Tooltip'
 
 // types
 import type { MeSchema, UserSchema } from '../../../api/schema/model'

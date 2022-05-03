@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import Tooltip from '../Tooltip'
+import Tooltip from '../Tooltip/Tooltip'
 import UserStatus from './UserStatus'
 import UserShort from './UserShort'
 

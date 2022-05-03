@@ -6,8 +6,8 @@ import styled, { css } from 'styled-components'
 
 // compoentns
 import IconButton from '../../Icon/IconButton'
-import LineDivider from '../../LineDivider'
-import Tooltip from '../../Tooltip'
+import LineDivider from '../../Layout/LineDivider'
+import Tooltip from '../../Tooltip/Tooltip'
 import MyWorksapceLink from './MyWorksapceLink'
 import WorkspaceLink from './WorkspaceLink'
 import WorkspaceCircle from '../styles/WorkspaceCircle'

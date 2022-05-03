@@ -6,7 +6,7 @@ import { Home as HomeIcon, Cog, PlusCircle } from '@styled-icons/boxicons-solid'
 
 // styles
 import styles from '../assets/styles/modules/home.module.scss'
-import { PageHeader } from '../components/ui/Header'
+import { PageHeader } from '../components/ui/Layout/Header'
 
 // components
 import { Link } from 'react-router-dom'

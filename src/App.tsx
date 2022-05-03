@@ -19,7 +19,7 @@ import { ChannelAddModal, WorkspaceAddModal } from './components/ui/Modal'
 const Sidebar = React.lazy(() => import('./components/ui/Sidebar/Sidebar'))
 
 // components
-import Preloader from './components/ui/Preloader'
+import Preloader from './components/ui/Layout/Preloader'
 
 // types
 import type { MeSchema } from './api/schema/model'

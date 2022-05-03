@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import styled from 'styled-components'
-import { MessageAreaWidthProvider } from '../../context/messageAreaWidth/context'
+import { MessageAreaWidthProvider } from '../../context/message-area-width/context'
 import { useResizeObserver } from '../../hooks/useResizeObserver'
 
 const MessageArea = () => {

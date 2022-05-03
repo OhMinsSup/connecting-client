@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-const LineDivider: React.FC = ({ children }) => {
+const LineDivider: React.FC<React.PropsWithChildren<any>> = ({ children }) => {
   return <LineDividerBlock>{children}</LineDividerBlock>
 }
 
