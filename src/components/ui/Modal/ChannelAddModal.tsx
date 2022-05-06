@@ -122,7 +122,7 @@ const ChannelAdd: React.FC<ChannelAddProps> = () => {
       }
 
       if (ApiError.isApiError(error)) {
-        const { message } = ApiError.toApiErrorJSON(error.message)
+        const message = ApiError.toApiErrorJSON(error.message)
         setError(message?.message || ApiError.getMessage('alert.common'))
         return
       }

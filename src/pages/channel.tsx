@@ -55,7 +55,7 @@ const ChannelPage = () => {
       <ChannelMain>
         <ChannelContent>
           <MessageArea />
-          <MessageBox />
+          <MessageBox channel={channel} />
         </ChannelContent>
 
         {/* {!isTouchscreenDevice && sectionState && <RightSidebar />} */}

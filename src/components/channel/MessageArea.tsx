@@ -3,9 +3,15 @@ import styled from 'styled-components'
 import { MessageAreaWidthProvider } from '../../context/message-area-width/context'
 import { useResizeObserver } from '../../hooks/useResizeObserver'
 
+import type { ScrollState } from '../../libs/state/renderer/types'
+
 const MessageArea = () => {
   const ref = useRef<HTMLDivElement>(null)
   const size = useResizeObserver(ref)
+
+  // ? useRef to avoid re-renders
+  const scrollState = useRef<ScrollState>({ type: 'Free' })
+  console.log('state', scrollState)
 
   return (
     <MessageAreaWidthProvider width={size?.width}>

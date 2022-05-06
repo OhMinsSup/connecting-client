@@ -117,7 +117,7 @@ const WorkspaceAdd: React.FC<WorkspaceAddProps> = () => {
       }
 
       if (ApiError.isApiError(error)) {
-        const { message } = ApiError.toApiErrorJSON(error.message)
+        const message = ApiError.toApiErrorJSON(error.message)
         setError(message?.message || ApiError.getMessage('alert.common'))
         return
       }
